@@ -139,6 +139,14 @@ INNER JOIN Costumes AS co ON r.CostumeID = co.CostumeID
 WHERE r.ReturnDate IS NULL
 ORDER BY r.DueDate;
 
-
+-- Check stock consistency: should return zero rows for the sample data.
+--  application must keep AvailableQuantity in sync with rentals.
+SELECT co.CostumeID, co.CostumeName, co.AvailableQuantity,
+       co.TotalQuantity - COUNT(r.RentalID) AS ExpectedAvailable
+FROM Costumes AS co
+LEFT JOIN Rentals AS r
+  ON r.CostumeID = co.CostumeID AND r.ReturnDate IS NULL
+GROUP BY co.CostumeID, co.CostumeName, co.AvailableQuantity, co.TotalQuantity
+HAVING co.AvailableQuantity <> ExpectedAvailable;
 
 
