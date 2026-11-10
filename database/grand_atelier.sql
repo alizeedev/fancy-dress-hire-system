@@ -1,12 +1,5 @@
--- ============================================================
--- THE GRAND ATELIER | Royal & Historical Costume Hire System
--- MySQL 8.0.31 | Database schema + fictional demonstration data
--- Run this file in MySQL Workbench on a test database.
--- It does not delete existing tables or data.
--- Re-running will skip existing sample IDs without overwriting them.
--- ============================================================
 
--- 1. Create and select the database
+-- 1.Create and select the database
 SET NAMES utf8mb4;
 
 CREATE DATABASE IF NOT EXISTS grand_atelier
@@ -78,7 +71,7 @@ VALUES
     ('GA008', 'Edwardian Opera Cape',       'Historical', 'Edwardian',  'M',   700.00, 5, 5)
 ON DUPLICATE KEY UPDATE CostumeID = CostumeID;
 
--- 6. Add fictional customers (Mauritian, French and international names)
+-- 6. Add fictional customers 
 INSERT INTO Customers (CustomerID, FullName)
 VALUES
     ('CU001', 'Sahana Beeharry'),
@@ -105,9 +98,9 @@ VALUES
     ('R007', 'CU008', 'GA001', '2026-10-20', '2026-10-24', '2026-10-24')
 ON DUPLICATE KEY UPDATE RentalID = RentalID;
 
--- ============================================================
+
 -- 8. PRESENTATION QUERIES: safe to run repeatedly
--- ============================================================
+
 
 -- Show every costume
 SELECT * FROM Costumes ORDER BY Category, CostumeName;
@@ -147,7 +140,7 @@ WHERE r.ReturnDate IS NULL
 ORDER BY r.DueDate;
 
 -- Check stock consistency: should return zero rows for the sample data.
--- Note: the application must keep AvailableQuantity in sync with rentals.
+--  application must keep AvailableQuantity in sync with rentals.
 SELECT co.CostumeID, co.CostumeName, co.AvailableQuantity,
        co.TotalQuantity - COUNT(r.RentalID) AS ExpectedAvailable
 FROM Costumes AS co
@@ -156,15 +149,4 @@ LEFT JOIN Rentals AS r
 GROUP BY co.CostumeID, co.CostumeName, co.AvailableQuantity, co.TotalQuantity
 HAVING co.AvailableQuantity <> ExpectedAvailable;
 
--- ============================================================
--- 9. OPTIONAL CRUD DEMO (do not run automatically)
--- Select these three statements in Workbench and execute together
--- if your lecturer asks to see INSERT, UPDATE and DELETE.
--- This temporary costume is not used in any rental.
--- ============================================================
--- INSERT INTO Costumes (CostumeID, CostumeName, Category, Era, Size,
---                       DailyHirePrice, TotalQuantity, AvailableQuantity)
--- VALUES ('GA999', 'Demonstration Court Cape', 'Royal', 'Regency', 'M',
---         500.00, 1, 1);
--- UPDATE Costumes SET DailyHirePrice = 550.00 WHERE CostumeID = 'GA999';
--- DELETE FROM Costumes WHERE CostumeID = 'GA999';
+
