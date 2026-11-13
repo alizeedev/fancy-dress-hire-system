@@ -1,13 +1,9 @@
 # THE GRAND ATELIER
-## Meeting 01 — Project Kickoff & Initial Planning
+## Meeting 01. Project Kickoff & Initial Planning
 
-**Document status:** Draft — pending team verification
+**Date:** Monday, 26 October 2026 
 
-**Date:** Monday, 26 October 2026 (confirm meeting date)
-
-**Time:** To be confirmed from WhatsApp call history
-
-**Platform:** WhatsApp Group Call (confirm)
+**Platform:** WhatsApp Group Call 
 
 **Project:** The Grand Atelier — A Royal & Historical Costume Hire System
 
@@ -23,7 +19,7 @@
 | Preyashi | Developer 2 |
 | Sakshee | Tester |
 
-**Meeting attendance:** To be verified by the Secretary.
+**Meeting attendance:** Everyone
 
 ### 2. Meeting Objectives
 
@@ -72,7 +68,7 @@ SQL database integration and unit testing will also be necessary.
 
 Team members still a bit unfamiliar with Git branches, pull requests and resolving merge conflicts.
 
-*Suggested action:* Establish a common Git workflow and have each member practise cloning, committing and pushing changes.
+*Suggested action:* have each member practise cloning, committing and pushing changes.
 
 **Concern 3 — Data structure selection**
 
@@ -110,7 +106,7 @@ The group needs to balance implementation, testing, documentation, Scrum activit
 
 ### 9. Next Meeting
 
-**Proposed date:** Monday, 9 November 2026
+**Proposed date:** 27/10/2026
 
 **Proposed platform:** WhatsApp Group Call
 
