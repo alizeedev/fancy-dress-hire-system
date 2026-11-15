@@ -1,13 +1,9 @@
 # THE GRAND ATELIER
-## Meeting 01 — Project Kickoff & Initial Planning
+## Meeting 01 : Project Kickoff & Initial Planning
 
-**Document status:** Draft — pending team verification
+**Date:** Monday, 26 October 2026 
 
-**Date:** Monday, 26 October 2026 (confirm meeting date)
-
-**Time:** To be confirmed from WhatsApp call history
-
-**Platform:** WhatsApp Group Call (confirm)
+**Platform:** WhatsApp Group Call 
 
 **Project:** The Grand Atelier — A Royal & Historical Costume Hire System
 
@@ -23,12 +19,12 @@
 | Preyashi | Developer 2 |
 | Sakshee | Tester |
 
-**Meeting attendance:** To be verified by the Secretary.
+**Participants:** Everyone
 
 ### 2. Meeting Objectives
 
 - Confirm the team's roles and responsibilities.
-- Review the concept and scope of The Grand Atelier.
+- Review the scope of The Grand Atelier.
 - Identify the main functions of the application.
 - Discuss the technical requirements of the coursework.
 - Prepare the initial tasks for Sprint 1.
@@ -60,19 +56,19 @@ The team has selected the following features for the project:
 
 The project will use C# and .NET.
 
-The coursework requires the team to design and implement an appropriate custom data structure for storing and searching data, rather than relying entirely on built-in collections.
+The coursework requires the team to design and implement an appropriate custom data structure for storing and searching data, instead of relying on built-in collections.
 
-The team will need to evaluate suitable data structures, develop algorithms, analyse their time complexity and provide pseudocode before implementation.
+We will need to evaluate suitable data structures, develop algorithms, analyse their time complexity and provide pseudocode before implementation.
 
 SQL database integration and unit testing will also be necessary.
 
-### 6. Suggested Concerns and Potential Blockers
+### 6.Concerns
 
 **Concern 1 — GitHub collaboration**
 
 Team members still a bit unfamiliar with Git branches, pull requests and resolving merge conflicts.
 
-*Suggested action:* Establish a common Git workflow and have each member practise cloning, committing and pushing changes.
+*Suggested action:* have each member practise cloning, committing and pushing changes.
 
 **Concern 3 — Data structure selection**
 
@@ -80,11 +76,6 @@ We need to research which structure is most suitable for costume searching and i
 
 *Suggested action:* Compare possible approaches, including arrays and hash tables, before making the final design decision.
 
-**Concern 4 — Time management**
-
-The group needs to balance implementation, testing, documentation, Scrum activities and the final demonstration before the submission deadline of 18 December 2026.
-
-*Suggested action:* Divide work into short sprints, assign clear responsibilities and monitor progress using GitHub Projects.
 
 ### 7. Proposed Sprint 1 Responsibilities
 
