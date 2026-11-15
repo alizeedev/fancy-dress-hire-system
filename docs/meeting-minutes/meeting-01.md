@@ -1,5 +1,5 @@
 # THE GRAND ATELIER
-## Meeting 01 : Project Kickoff & Initial Planning
+## Meeting 01. Project Kickoff & Initial Planning
 
 **Date:** Monday, 26 October 2026 
 
@@ -19,7 +19,7 @@
 | Preyashi | Developer 2 |
 | Sakshee | Tester |
 
-**Participants:** Everyone
+**Meeting attendance:** Everyone
 
 ### 2. Meeting Objectives
 
@@ -101,7 +101,7 @@ We need to research which structure is most suitable for costume searching and i
 
 ### 9. Next Meeting
 
-**Proposed date:** Monday, 9 November 2026
+**Proposed date:** 27/10/2026
 
 **Proposed platform:** WhatsApp Group Call
 
