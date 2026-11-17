@@ -1,6 +1,6 @@
 Meeting 13 : Decision changes and feedback review with lecturer
 
-Date: Friday, 13 November 2026
+Date: Tuesday, 17 November 2026
 
 Format: In-person meeting Participants: Everyone Minutes prepared by: Faheem
 
