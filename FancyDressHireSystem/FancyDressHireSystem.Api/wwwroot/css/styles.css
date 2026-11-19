@@ -1,0 +1,892 @@
+/* ============================================================
+   THE GRAND ATELIER — shared stylesheet
+   Plain CSS only (no Bootstrap / no frameworks), as the
+   coursework requires. This one file styles every page:
+   login, dashboard, costumes and rentals.
+   ============================================================ */
+
+/* ---- Design tokens: all our colours named in ONE place ----
+   A "CSS variable" lets us name a colour once and reuse it
+   everywhere. Change it here and it changes across every page. */
+:root {
+    --emerald-deep:  #071B17;   /* darkest green (backgrounds) */
+    --emerald:       #0C241F;   /* main deep green */
+    --emerald-light: #14332C;   /* slightly lighter green */
+
+    --gold-light:    #D8C19A;   /* pale gold (text on dark) */
+    --gold:          #C9A56A;   /* main antique gold */
+    --gold-deep:     #B88A44;   /* darker gold (labels) */
+
+    --ivory:         #FBF8F2;   /* warm off-white (page background) */
+    --ivory-warm:    #F4EEE3;   /* slightly deeper ivory */
+
+    --burgundy:      #5B1F25;   /* deep red (overdue, wax seal) */
+    --burgundy-light:#7A2D35;   /* lighter red */
+    --charcoal:      #2B2B2B;   /* near-black body text */
+
+    --ok:      #2f6b4f;   /* green  = available */
+    --warn:    #B88A44;   /* gold   = on hire   */
+    --danger:  #7A2D35;   /* red    = overdue   */
+
+    /* Fonts: a serif for headings, a sans-serif for body text */
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans:  "Jost", "Helvetica Neue", Arial, sans-serif;
+
+    /* Layered shadows for real depth (soft + tight) */
+    --shadow-soft: 0 10px 40px rgba(7, 27, 23, 0.18);
+    --shadow-card: 0 2px 6px rgba(7,27,23,0.04), 0 14px 38px rgba(7,27,23,0.10);
+    --shadow-lift: 0 4px 10px rgba(7,27,23,0.08), 0 22px 60px rgba(7,27,23,0.22);
+    --radius: 6px;                 /* standard corner rounding */
+    --radius-lg: 12px;             /* larger panels */
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);   /* smooth, refined easing */
+}
+
+/* ---- Reset: remove the browser's default spacing ----
+   The * means "every element". box-sizing makes width
+   calculations predictable (padding counted inside the width). */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---- The page itself ---- */
+/* A faint page texture: barely-there gold flecks on the ivory,
+   so large empty areas don't feel flat. */
+body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(201,165,106,0.05), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(12,36,31,0.04), transparent 45%);
+    pointer-events: none;
+}
+
+body {
+    font-family: var(--sans);      /* use our sans-serif font */
+    color: var(--charcoal);        /* near-black text */
+    background: var(--ivory);      /* warm off-white background */
+    line-height: 1.6;              /* comfortable spacing between lines */
+    -webkit-font-smoothing: antialiased;  /* crisper text on Mac/Chrome */
+}
+
+/* ---- Headings all use the serif font ---- */
+h1, h2, h3, .serif {
+    font-family: var(--serif);
+    font-weight: 500;
+}
+
+/* Links: no underline, inherit their colour from the parent */
+a { color: inherit; text-decoration: none; }
+
+/* ---- Thin gold divider line (reused across the pages) ----
+   A horizontal line that fades gold in the middle. */
+.gold-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem 0;
+}
+/* A version that fades from the left only */
+.gold-divider--left {
+    background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* ============================================================
+   NAVIGATION BAR (top of dashboard / costumes / rentals)
+   ============================================================ */
+.nav {
+    display: flex;              /* lay children in a row, side by side */
+    align-items: center;        /* line them up vertically centred */
+    padding: 0 3.5rem;          /* generous side space, institution feel */
+    height: 84px;
+    color: var(--ivory);
+    /* The nav floats OVER the hero. A soft dark gradient at the very
+       top keeps the gold text readable, then fades to nothing so the
+       bar "merges" into the image rather than sitting in a box. */
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    background: linear-gradient(180deg, rgba(7,27,23,0.80) 0%, rgba(7,27,23,0.30) 55%, transparent 100%);
+    border-bottom: none;
+}
+/* Solid variant kept for any page without a dark hero behind the nav. */
+.nav--solid {
+    position: static;
+    background: var(--emerald-deep);
+    border-bottom: 1px solid rgba(201,165,106,0.4);
+}
+/* The logo is a link back to the dashboard; remove the link underline */
+.nav__brand { text-decoration: none; cursor: pointer; }
+.nav__brand:hover .nav__title { color: var(--gold); transition: color 0.25s var(--ease); }
+.nav__brand { display: flex; align-items: center; gap: 0.9rem; }
+
+/* The transparent GA monogram on the left of the nav */
+.nav__logo {
+    height: 46px;               /* width adjusts automatically */
+    width: auto;
+    object-fit: contain;        /* show the whole logo, no cropping */
+}
+/* (Old text-based monogram kept for anywhere we still use it) */
+.nav__monogram {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+.nav__title {
+    font-family: var(--serif);
+    letter-spacing: 3px;
+    font-size: 1.05rem;
+    color: var(--ivory);
+}
+
+/* The menu links (Dashboard, Collection, Reservations) */
+.nav__links {
+    display: flex;
+    gap: 2rem;                  /* space between each link */
+    margin: 0 auto;             /* auto both sides = pushes to the centre */
+    list-style: none;           /* remove the bullet points */
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;      /* spread letters apart (elegant look) */
+    text-transform: uppercase;  /* ALL CAPS */
+}
+/* Links get an animated gold underline that grows from the centre */
+.nav__links a {
+    position: relative;
+    padding-bottom: 6px;
+    color: var(--ivory-warm);
+    transition: color 0.25s var(--ease);
+}
+.nav__links a::after {
+    content: "";
+    position: absolute; left: 50%; bottom: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transform: translateX(-50%);
+    transition: width 0.3s var(--ease);
+}
+.nav__links a:hover { color: var(--gold); }
+.nav__links a:hover::after { width: 100%; }
+/* The current page's link keeps a full gold underline */
+.nav__links a.is-active { color: var(--gold); }
+.nav__links a.is-active::after { width: 100%; }
+
+.nav__right { display: flex; align-items: center; gap: 1.2rem; }
+.nav__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--gold-deep); color: var(--emerald-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 0.85rem;
+}
+.nav__user { font-size: 0.85rem; letter-spacing: 1px; color: var(--ivory-warm); }
+
+/* ============================================================
+   BUTTONS — editorial emerald with a fine gold outline
+   (not a flat gold fill)
+   ============================================================ */
+.btn {
+    position: relative;
+    overflow: hidden;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.9rem 1.9rem;     /* top/bottom  left/right space inside */
+    border-radius: var(--radius);
+    cursor: pointer;            /* show the hand cursor on hover */
+    border: 1px solid transparent;
+    transition: all 0.28s var(--ease);
+}
+/* A soft gold sheen that sweeps across the button on hover */
+.btn::after {
+    content: "";
+    position: absolute; top: 0; left: -120%;
+    width: 60%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(216,193,154,0.35), transparent);
+    transition: left 0.6s var(--ease);
+}
+.btn:hover::after { left: 130%; }
+/* Main button: deep green with a gold border */
+.btn--primary {
+    background: var(--emerald);
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
+}
+.btn--primary:hover {
+    background: var(--emerald-deep);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px var(--gold-light);  /* inner gold line */
+}
+/* Outline-only button for dark backgrounds */
+.btn--ghost {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+}
+.btn--ghost:hover { background: rgba(201,165,106,0.12); color: #fff; }
+/* Quiet text button with a gold underline on hover */
+.btn--link {
+    background: none; border: none; padding: 0.4rem 0;
+    color: var(--gold-deep); letter-spacing: 1.5px;
+    border-bottom: 1px solid transparent;
+}
+.btn--link:hover { border-bottom-color: var(--gold); }
+/* A quiet outline button for light backgrounds (e.g. modal cancel) */
+.btn--outline {
+    background: transparent;
+    border: 1px solid #d8d2c4;
+    color: var(--charcoal);
+}
+.btn--outline:hover { border-color: var(--gold); color: var(--gold-deep); }
+.btn--block { width: 100%; }   /* stretch full width (login form) */
+
+/* ============================================================
+   FORMS (login fields, add-costume form, hire form)
+   ============================================================ */
+.field { margin-bottom: 1.2rem; }
+.field label {
+    display: block;             /* label sits on its own line above the box */
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 0.4rem;
+}
+/* The actual input boxes / dropdowns / text areas */
+.field input, .field select, .field textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid #e0d9cb;
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    background: #fffdf9;        /* a hair warmer than pure white */
+    color: var(--charcoal);
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+}
+.field input::placeholder { color: #bdb6a8; }
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--gold-deep); }
+/* When a box is clicked into (focused), give it a gold border + glow */
+.field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(201,165,106,0.18);
+}
+/* Make the date-picker calendar icon match our gold theme */
+.field input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.field input[type="date"]:hover::-webkit-calendar-picker-indicator { opacity: 0.9; }
+/* Custom dropdown arrow for selects */
+.field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B88A44' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+/* ---- Password field with a Show/Hide button inside it ---- */
+.password-wrap { position: relative; }   /* lets us place the icon inside */
+.password-wrap input { padding-right: 3rem; }   /* room for the eye icon */
+.password-toggle {
+    position: absolute;
+    right: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);   /* vertically centre the icon */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;             /* size of the eye icon */
+    line-height: 1;
+    opacity: 0.7;
+}
+.password-toggle:hover { opacity: 1; }
+
+/* Validation / error messages under a form */
+.message { font-size: 0.85rem; margin-top: 0.3rem; min-height: 1.2rem; }
+.message--error { color: var(--danger); }   /* red for errors */
+.message--ok    { color: var(--ok); }        /* green for success */
+
+/* ============================================================
+   STATUS BADGES  (green = available, gold = on hire, red = overdue)
+   ============================================================ */
+.badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 2px;
+    font-weight: 600;
+}
+.badge--available { background: rgba(47,107,79,0.12);  color: var(--ok); }
+.badge--onhire    { background: rgba(184,138,68,0.15); color: var(--gold-deep); }
+.badge--overdue   { background: rgba(122,45,53,0.12);  color: var(--danger); }
+
+/* ============================================================
+   LOGIN PAGE  (two halves: photo panel + sign-in form)
+   ============================================================ */
+.login-wrap {
+    min-height: 100vh;          /* 100vh = full height of the screen */
+    display: flex;              /* the two halves sit side by side */
+}
+/* LEFT HALF: the photo panel with a dark emerald tint over it
+   so the white title stays readable on top of the image. */
+.login-hero {
+    flex: 1;                    /* grow to fill the remaining space */
+    background-image:
+        linear-gradient(160deg, rgba(7,27,23,0.80) 0%, rgba(7,27,23,0.45) 55%, rgba(7,27,23,0.70) 100%),
+        url("../images/atelier-hero.jpg");
+    background-size: cover;     /* photo fills the panel, no stretching */
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;     /* stack the text items vertically */
+    justify-content: center;
+    padding: 4rem;
+    color: var(--ivory);
+    overflow: hidden;
+}
+.login-hero__eyebrow {
+    font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+}
+.login-hero__title {
+    font-family: var(--serif);
+    font-size: 3.4rem;
+    line-height: 1.05;
+    letter-spacing: 2px;
+}
+.login-hero__sub {
+    margin-top: 1.2rem; max-width: 24rem;
+    color: var(--ivory-warm); font-size: 1rem;
+}
+.login-hero__quote {
+    position: absolute; bottom: 3rem; left: 4rem;
+    font-family: var(--serif); font-style: italic;
+    color: var(--gold-light); font-size: 1.05rem;
+}
+
+/* RIGHT HALF: the sign-in form panel */
+.login-panel {
+    width: 460px;
+    background: var(--ivory);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 4rem 3.5rem;
+}
+.login-panel__brand {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+.login-panel__monogram {
+    width: 44px; height: 44px; border: 1px solid var(--gold);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--gold-deep); font-family: var(--serif); font-size: 1.2rem;
+}
+.login-panel__name {
+    font-family: var(--serif); letter-spacing: 3px; font-size: 1.1rem;
+    color: var(--emerald);
+}
+/* The full transparent logo badge at the top of the login form */
+.login-panel__logo {
+    width: 190px;
+    height: auto;
+    margin: 0 auto 0.5rem;
+    display: block;
+}
+.login-panel h1 {
+    font-size: 2rem; color: var(--emerald); margin: 1rem 0 0.3rem;
+    text-align: center;
+}
+.login-panel__hint { text-align: center; }
+.login-panel__hint { font-size: 0.9rem; color: #7a756b; margin-bottom: 1.8rem; }
+.login-panel__footer {
+    margin-top: 2rem; font-size: 0.75rem; color: #9a948a; text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+.dash { background: var(--ivory); min-height: 100vh; }
+
+/* Cinematic hero with the costume-rail photo behind it */
+.dash-hero {
+    position: relative;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    /* Extra top padding (7rem) pushes the welcome text + buttons down,
+       clear of the floating nav, for a more cinematic, spacious hero. */
+    padding: 7rem 3.5rem 4rem;
+    color: var(--ivory);
+    /* Two layers: a dark gradient ON TOP of the photo (so text reads) */
+    background-image:
+        linear-gradient(90deg, rgba(7,27,23,0.94) 0%, rgba(7,27,23,0.70) 40%, rgba(7,27,23,0.15) 75%, rgba(7,27,23,0.30) 100%),
+        url("../images/dashboard-hero.jpg");
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid var(--gold);
+}
+.dash-hero__inner { max-width: 620px; position: relative; z-index: 1; }
+.dash-hero__eyebrow {
+    font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+}
+.dash-hero__welcome {
+    font-family: var(--serif);
+    font-size: 3.4rem; line-height: 1.08; letter-spacing: 1px;
+}
+.dash-hero__welcome span { color: var(--gold-light); font-style: italic; }
+/* Small decorative rule with a ✦ at the end */
+.dash-hero__rule {
+    width: 90px; height: 1px; margin: 1.4rem 0;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    position: relative;
+}
+.dash-hero__rule::after {
+    content: "✦"; color: var(--gold); font-size: 0.7rem;
+    position: absolute; left: 100px; top: -0.7rem;
+}
+.dash-hero__sub { color: var(--ivory-warm); max-width: 28rem; font-size: 1.02rem; }
+
+/* ---- Inline statistics inside the hero (like the design) ----
+   Four figures in a row, separated by thin gold dividers. */
+.hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin: 2rem 0;
+}
+.hero-stat { position: relative; padding-right: 2.5rem; }
+/* A faint gold divider line after each stat except the last */
+.hero-stat:not(:last-child)::after {
+    content: "";
+    position: absolute; right: 0; top: 10%;
+    width: 1px; height: 80%;
+    background: rgba(216,193,154,0.3);
+}
+.hero-stat__value {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    color: #fff;
+    line-height: 1;
+}
+.hero-stat__label {
+    font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold-light); margin-top: 0.4rem;
+}
+
+.dash-hero__actions { margin-top: 0.5rem; display: flex; gap: 1rem; }
+.dash-hero__quote {
+    margin-top: 2rem; font-family: var(--serif); font-style: italic;
+    color: var(--gold-light); font-size: 1.05rem;
+}
+
+/* ---- Main content area below the hero ---- */
+.dash-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* A white "panel" box that wraps each section (search, table) */
+.panel {
+    position: relative;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 2.2rem 2.4rem;
+    overflow: hidden;
+}
+/* A whisper-thin gold line along the very top of each panel */
+.panel::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.6;
+}
+/* The heading row at the top of a panel */
+.panel__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--ivory-warm);
+}
+.panel__head h2 { font-size: 1.7rem; color: var(--emerald); }
+.panel__hint { font-size: 0.82rem; color: #9a948a; }
+
+/* Search row inside the panel */
+.dash-search__row { display: flex; gap: 0.8rem; }
+.dash-search__row input { flex: 1; }   /* input grows, button stays its size */
+.dash-search__results { margin-top: 1.2rem; }
+.search-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--ivory); border: 1px solid var(--ivory-warm);
+    border-left: 2px solid var(--gold);
+    padding: 0.8rem 1rem; margin-bottom: 0.5rem; border-radius: var(--radius);
+}
+.search-item__name { font-family: var(--serif); font-size: 1.15rem; color: var(--emerald); }
+.search-item__meta { font-size: 0.8rem; color: #8a847a; }
+
+/* ============================================================
+   TABLES  (reused on dashboard, costumes and rentals)
+   ============================================================ */
+.table-wrap { padding: 0.5rem 3.5rem 3rem; }
+table.atelier {
+    width: 100%;
+    border-collapse: collapse;   /* no gaps between cells */
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+/* The header row: emerald background, gold text */
+table.atelier thead th {
+    background: var(--emerald);
+    color: var(--gold-light);
+    font-family: var(--sans); font-weight: 500;
+    font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+    text-align: left; padding: 1rem 1.2rem;
+}
+/* The body cells */
+table.atelier tbody td {
+    padding: 1.1rem 1.3rem;
+    border-bottom: 1px solid var(--ivory-warm);
+    font-size: 0.92rem;
+    transition: background 0.2s var(--ease);
+}
+table.atelier tbody tr:last-child td { border-bottom: none; }
+table.atelier tbody tr { transition: background 0.2s var(--ease); }
+table.atelier tbody tr:hover { background: var(--ivory-warm); }   /* highlight row on hover */
+table.atelier tbody tr.is-overdue { background: rgba(122,45,53,0.06); }  /* overdue rows tinted red */
+table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
+
+/* ---- Page shell (title area used on costumes / rentals) ---- */
+.page { max-width: 1240px; margin: 0 auto; padding: 2.5rem; }
+.page__eyebrow {
+    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-deep);
+}
+.page__title { font-size: 2.4rem; color: var(--emerald); }
+.page__sub { color: #7a756b; margin-top: 0.2rem; }
+
+/* Message shown when a table/list is empty */
+.empty-state {
+    text-align: center; padding: 2.5rem; color: #9a948a;
+    font-family: var(--serif); font-style: italic; font-size: 1.1rem;
+}
+
+/* ============================================================
+   LOGOUT CONFIRMATION MODAL
+   ============================================================ */
+/* The dark overlay that covers the page. Hidden by default. */
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(7,27,23,0.6);
+    display: none;                  /* shown by JS when needed */
+    align-items: center; justify-content: center;
+    padding: 1rem;
+}
+.modal-overlay.is-open { display: flex; }   /* JS adds this class to show it */
+
+/* The white dialog box in the middle */
+.modal {
+    background: var(--ivory);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+    max-width: 400px; width: 100%;
+    padding: 2.5rem 2.2rem;
+    text-align: center;
+    border-top: 3px solid var(--gold);
+}
+.modal__icon {
+    width: 54px; height: 54px; margin: 0 auto 1rem;
+}
+.modal__icon img { width: 100%; height: 100%; object-fit: contain; }
+.modal__title { font-family: var(--serif); font-size: 1.6rem; color: var(--emerald); }
+.modal__text { color: #7a756b; font-size: 0.95rem; margin: 0.5rem 0 1.8rem; }
+.modal__actions { display: flex; gap: 0.8rem; justify-content: center; }
+.modal__actions .btn { flex: 1; }
+
+/* ---- Wax-seal footer flourish (the GA seal + quote) ---- */
+.atelier-foot {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 2rem 0 3rem; gap: 1rem;
+}
+.wax-seal {
+    width: 70px; height: 70px;
+    display: flex; align-items: center; justify-content: center;
+}
+/* The GA monogram logo inside the footer flourish */
+.wax-seal img { width: 100%; height: 100%; object-fit: contain; }
+.atelier-foot__quote {
+    font-family: var(--serif); font-style: italic;
+    color: #8a847a; font-size: 1rem;
+}
+
+/* ============================================================
+   COSTUME CATALOGUE PAGE
+   ============================================================ */
+/* The banner at the top of the catalogue */
+.catalogue-hero {
+    background: linear-gradient(120deg, var(--emerald-deep), var(--emerald-light));
+    border-bottom: 1px solid var(--gold);
+    /* Extra top padding so the floating nav merges over this banner */
+    padding: 8rem 3.5rem 3.5rem;
+    color: var(--ivory);
+}
+.catalogue-hero__title {
+    font-size: 3rem; color: #fff; margin: 0.3rem 0;
+}
+.catalogue-hero__sub { color: var(--ivory-warm); font-size: 1.05rem; }
+
+/* The main area that holds the filter bar and the grid */
+.catalogue { max-width: 1200px; margin: 0 auto; padding: 2.5rem; }
+
+/* Filter bar: category tabs on the left, search on the right */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;   /* wrap to a new line on small screens */
+}
+.filter-tabs {
+    display: flex; gap: 0.3rem; flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.3);
+    border-radius: 30px;          /* pill-shaped container, like the design */
+    padding: 0.3rem;
+}
+/* Each category tab */
+.filter-tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--charcoal);
+    padding: 0.5rem 1.1rem;
+    border-radius: 30px;
+    transition: all 0.2s;
+}
+.filter-tab:hover { color: var(--gold-deep); }
+/* The currently selected tab: filled emerald pill */
+.filter-tab.is-active {
+    background: var(--emerald);
+    color: var(--gold-light);
+}
+
+/* Right side of the filter bar: search + Filters button */
+.filter-right { display: flex; gap: 0.6rem; align-items: center; }
+
+/* Search box with the magnifier icon inside it */
+.filter-search { position: relative; }
+.filter-search__icon {
+    position: absolute; left: 0.8rem; top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem; opacity: 0.5;
+}
+.filter-search input {
+    padding: 0.7rem 1rem 0.7rem 2.3rem;   /* extra left padding for the icon */
+    border: 1px solid #d8d2c4;
+    border-radius: 30px;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    min-width: 260px;
+    background: #fff;
+}
+.filter-search input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+}
+
+/* The "Filters" button */
+.filter-btn {
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.4);
+    border-radius: 30px;
+    padding: 0.7rem 1.2rem;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--charcoal);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--gold); color: var(--gold-deep); }
+
+/* The grid of costume cards: auto-fit as many as fit per row */
+.costume-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.8rem;
+}
+/* One costume card */
+.costume-card {
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.costume-card:hover {
+    transform: translateY(-6px);   /* lift on hover */
+    box-shadow: var(--shadow-lift);
+}
+/* The faint "GA" placeholder drifts up gently as the card lifts */
+.costume-card:hover .costume-card__placeholder { transform: scale(1.08); }
+.costume-card__placeholder { transition: transform 0.5s var(--ease); }
+/* The image area (elegant gold-framed placeholder for now) */
+.costume-card__image {
+    position: relative;
+    height: 230px;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-deep));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--gold);
+}
+/* The big faint "GA" monogram standing in for a photo */
+.costume-card__placeholder {
+    font-family: var(--serif);
+    font-size: 3rem;
+    color: rgba(216,193,154,0.35);
+    letter-spacing: 2px;
+}
+/* The status badge sits in the top-left corner of the image */
+.costume-card__badge { position: absolute; top: 0.8rem; left: 0.8rem; }
+/* The favourite heart sits in the top-right corner */
+.costume-card__heart {
+    position: absolute; top: 0.8rem; right: 0.8rem;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.9); border: none; cursor: pointer;
+    font-size: 1rem; color: var(--burgundy);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+}
+.costume-card__heart:hover { background: #fff; transform: scale(1.1); }
+
+/* Card text area */
+.costume-card__body { padding: 1.2rem 1.3rem; }
+.costume-card__name {
+    font-family: var(--serif); font-size: 1.3rem; color: var(--emerald);
+}
+.costume-card__era {
+    font-size: 0.78rem; color: #9a948a; margin: 0.1rem 0 0.7rem;
+}
+.costume-card__price {
+    font-family: var(--serif); font-size: 1.15rem; color: var(--charcoal);
+    margin-bottom: 1rem;
+}
+/* The View Details button fills the card width */
+.costume-card__view {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 0.72rem;
+}
+
+/* ============================================================
+   RESERVATIONS PAGE
+   ============================================================ */
+.reservations {
+    max-width: 1100px; margin: 0 auto; padding: 2.5rem;
+    display: flex; flex-direction: column; gap: 2rem;
+}
+
+/* ---- Availability calendar strip ---- */
+.calendar-legend { display: flex; gap: 1.2rem; font-size: 0.78rem; color: #7a756b; }
+.legend-item { display: flex; align-items: center; gap: 0.4rem; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.legend-dot--ok     { background: var(--ok); }
+.legend-dot--warn   { background: var(--warn); }
+.legend-dot--danger { background: var(--danger); }
+
+.calendar-strip {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);   /* 14 days in a row */
+    gap: 0.4rem;
+}
+/* One day block */
+.cal-day {
+    text-align: center;
+    padding: 0.7rem 0.2rem;
+    border-radius: var(--radius);
+    border-top: 3px solid transparent;
+    background: var(--ivory);
+}
+.cal-day__dow { display: block; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: #9a948a; }
+.cal-day__num { display: block; font-family: var(--serif); font-size: 1.2rem; color: var(--emerald); }
+/* Status colours along the top of each day */
+.cal-day--ok     { border-top-color: var(--ok); }
+.cal-day--warn   { border-top-color: var(--warn); }
+.cal-day--danger { border-top-color: var(--danger); }
+
+/* ---- Two-column layout: hire form | rentals table ---- */
+.reservations__grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;   /* form fixed width, table fills rest */
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Two date fields side by side */
+.field-row { display: flex; gap: 1rem; }
+.field-row .field { flex: 1; }
+
+/* ---- Cost summary box ---- */
+.cost-summary {
+    background: var(--ivory);
+    border: 1px solid var(--ivory-warm);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin: 0.5rem 0 1.2rem;
+}
+.cost-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.9rem; padding: 0.3rem 0;
+    color: #7a756b;
+}
+.cost-row--total {
+    border-top: 1px solid var(--ivory-warm);
+    margin-top: 0.3rem; padding-top: 0.6rem;
+    font-family: var(--serif); font-size: 1.2rem; color: var(--emerald);
+}
+
+/* Return button in the rentals table */
+.return-btn { color: var(--burgundy); }
+.return-btn:hover { border-bottom-color: var(--burgundy); }
+
+/* ============================================================
+   RESPONSIVE: adjust for smaller screens
+   @media = "apply these rules only when the screen is this size"
+   ============================================================ */
+@media (max-width: 900px) {
+    .nav__links { display: none; }                     /* hide the centre menu */
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }      /* stats wrap on small screens */
+    .reservations__grid { grid-template-columns: 1fr; }/* stack form above table */
+    .calendar-strip { grid-template-columns: repeat(7, 1fr); }  /* 7 days per row */
+}
+@media (max-width: 820px) {
+    .login-hero { display: none; }   /* hide the photo panel on narrow screens */
+    .login-panel { width: 100%; }    /* form fills the width */
+}

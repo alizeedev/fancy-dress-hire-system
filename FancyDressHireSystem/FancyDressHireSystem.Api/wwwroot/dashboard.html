@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Atelier — Dashboard</title>
+
+    <!-- Google Fonts: serif (Cormorant) + sans-serif (Jost) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Our shared stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dash">
+
+    <!-- ===== TOP NAVIGATION (appears on every page) ===== -->
+    <nav class="nav">
+        <a href="dashboard.html" class="nav__brand">
+            <img src="images/logo-mono.png" alt="The Grand Atelier logo" class="nav__logo">
+            <span class="nav__title">THE GRAND ATELIER</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="dashboard.html" class="is-active">Dashboard</a></li>
+            <li><a href="costumes.html">Collection</a></li>
+            <li><a href="rentals.html">Reservations</a></li>
+        </ul>
+        <div class="nav__right">
+            <span class="nav__user" id="navUser">Sophia</span>
+            <span class="nav__avatar" id="navAvatar">S</span>
+            <button class="btn btn--link" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ===== CINEMATIC HERO (photo + welcome + inline stats) ===== -->
+    <header class="dash-hero">
+        <div class="dash-hero__inner">
+            <p class="dash-hero__eyebrow">A Legacy in Every Stitch</p>
+
+            <h1 class="dash-hero__welcome">Welcome back,<br><span id="welcomeName">Sophia</span></h1>
+
+            <div class="dash-hero__rule"></div>
+
+            <p class="dash-hero__sub">
+                Museum-quality costumes for theatre, opera and film.
+            </p>
+
+            <!-- Inline statistics, like the design (filled by dashboard.js) -->
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat__value" id="statTotal">—</div>
+                    <div class="hero-stat__label">Total Costumes</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat__value" id="statAvailable">—</div>
+                    <div class="hero-stat__label">Available</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat__value" id="statOnHire">—</div>
+                    <div class="hero-stat__label">On Hire</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat__value" id="statOverdue">—</div>
+                    <div class="hero-stat__label">Overdue</div>
+                </div>
+            </div>
+
+            <!-- Two buttons, like the design -->
+            <div class="dash-hero__actions">
+                <a href="costumes.html" class="btn btn--primary">Explore Collection →</a>
+                <a href="rentals.html" class="btn btn--ghost">New Reservation</a>
+            </div>
+
+            <p class="dash-hero__quote">"Costume is the silent storyteller."</p>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT AREA ===== -->
+    <main class="dash-body">
+
+        <!-- COSTUME SEARCH -->
+        <section class="panel">
+            <div class="panel__head">
+                <h2>Find a Costume</h2>
+                <span class="panel__hint">Search the collection by name or category</span>
+            </div>
+            <div class="dash-search__row">
+                <input type="text" id="searchInput" placeholder="Search costumes…">
+                <button class="btn btn--primary" id="searchBtn">Search</button>
+            </div>
+            <div class="dash-search__results" id="searchResults"></div>
+        </section>
+
+        <!-- RECENT RESERVATIONS -->
+        <section class="panel">
+            <div class="panel__head">
+                <h2>Recent Reservations</h2>
+                <a href="rentals.html" class="btn btn--link">View All →</a>
+            </div>
+            <table class="atelier">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Costume</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="recentBody"></tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <!-- ===== WAX-SEAL FOOTER ===== -->
+    <footer class="atelier-foot">
+        <hr class="gold-divider" style="width:200px;">
+        <div class="wax-seal"><img src="images/logo-mono.png" alt="The Grand Atelier"></div>
+        <p class="atelier-foot__quote">"Preserving the past for extraordinary tomorrows."</p>
+    </footer>
+
+    <!-- ===== LOGOUT CONFIRMATION MODAL ===== -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal">
+            <div class="modal__icon"><img src="images/logo-mono.png" alt=""></div>
+            <h2 class="modal__title">Leave the Atelier?</h2>
+            <p class="modal__text">You are about to sign out of the management platform.</p>
+            <div class="modal__actions">
+                <button class="btn btn--outline" id="logoutCancel">Cancel</button>
+                <button class="btn btn--primary" id="logoutConfirm">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our scripts: api.js (shared helper), dashboard.js, logout.js -->
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/logout.js"></script>
+</body>
+</html>
