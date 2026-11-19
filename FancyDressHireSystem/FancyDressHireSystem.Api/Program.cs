@@ -15,7 +15,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+// Default page = login.html (ref: Microsoft Learn, "Static files in ASP.NET Core")
+var defaultFiles = new DefaultFilesOptions();
+defaultFiles.DefaultFileNames.Clear();
+defaultFiles.DefaultFileNames.Add("login.html");
+app.UseDefaultFiles(defaultFiles);
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();
