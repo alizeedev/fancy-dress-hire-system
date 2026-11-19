@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Atelier — Sign In</title>
+
+    <!-- Google Fonts: serif (Cormorant) + sans-serif (Jost) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Our shared stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- The whole login screen: two halves side by side -->
+    <div class="login-wrap">
+
+        <!-- LEFT HALF: photo panel with the title over it -->
+        <section class="login-hero">
+            <p class="login-hero__eyebrow">A Legacy in Every Stitch</p>
+            <h1 class="login-hero__title">THE GRAND<br>ATELIER</h1>
+            <p class="login-hero__sub">
+                Museum-quality costumes for theatre, opera and film.
+                A curated archive of historical and themed garments.
+            </p>
+            <p class="login-hero__quote">"Costume is the silent storyteller."</p>
+        </section>
+
+        <!-- RIGHT HALF: the sign-in form -->
+        <section class="login-panel">
+
+            <!-- Logo + name at the top of the form -->
+            <div class="login-panel__brand">
+                <span class="login-panel__monogram serif">GA</span>
+                <span class="login-panel__name">THE GRAND ATELIER</span>
+            </div>
+
+            <h1>Welcome back</h1>
+            <p class="login-panel__hint">Please sign in to the management platform.</p>
+
+            <!-- novalidate = we do our own checking in JavaScript -->
+            <form id="loginForm" novalidate>
+
+                <!-- Username field -->
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username"
+                           autocomplete="username" placeholder="e.g. admin">
+                </div>
+
+                <!-- Password field, with a show/hide button beside it -->
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="password-wrap">
+                        <input type="password" id="password" name="password"
+                               autocomplete="current-password" placeholder="••••••••">
+                        <!-- Clicking this eye toggles the password visibility -->
+                        <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password">👁</button>
+                    </div>
+                </div>
+
+                <!-- Error message appears here if login fails -->
+                <p id="loginMessage" class="message message--error" role="alert"></p>
+
+                <!-- type="submit" sends the form (runs our JavaScript) -->
+                <button type="submit" class="btn btn--primary btn--block">Sign In</button>
+            </form>
+
+            <hr class="gold-divider">
+
+            <p class="login-panel__footer">
+                The Grand Atelier · Costume Management Platform<br>
+                Authorised staff access only
+            </p>
+        </section>
+    </div>
+
+    <!-- Our JavaScript that handles the login -->
+    <script src="js/login.js"></script>
+</body>
+</html>

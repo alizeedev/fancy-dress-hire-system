@@ -1,0 +1,510 @@
+/* ============================================================
+   THE GRAND ATELIER — shared stylesheet
+   Plain CSS only (no Bootstrap / no frameworks), as the
+   coursework requires. This one file styles every page:
+   login, dashboard, costumes and rentals.
+   ============================================================ */
+
+/* ---- Design tokens: all our colours named in ONE place ----
+   A "CSS variable" lets us name a colour once and reuse it
+   everywhere. Change it here and it changes across every page. */
+:root {
+    --emerald-deep:  #071B17;   /* darkest green (backgrounds) */
+    --emerald:       #0C241F;   /* main deep green */
+    --emerald-light: #14332C;   /* slightly lighter green */
+
+    --gold-light:    #D8C19A;   /* pale gold (text on dark) */
+    --gold:          #C9A56A;   /* main antique gold */
+    --gold-deep:     #B88A44;   /* darker gold (labels) */
+
+    --ivory:         #FBF8F2;   /* warm off-white (page background) */
+    --ivory-warm:    #F4EEE3;   /* slightly deeper ivory */
+
+    --burgundy:      #5B1F25;   /* deep red (overdue, wax seal) */
+    --burgundy-light:#7A2D35;   /* lighter red */
+    --charcoal:      #2B2B2B;   /* near-black body text */
+
+    --ok:      #2f6b4f;   /* green  = available */
+    --warn:    #B88A44;   /* gold   = on hire   */
+    --danger:  #7A2D35;   /* red    = overdue   */
+
+    /* Fonts: a serif for headings, a sans-serif for body text */
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans:  "Jost", "Helvetica Neue", Arial, sans-serif;
+
+    --shadow-soft: 0 10px 40px rgba(7, 27, 23, 0.18);  /* soft drop shadow */
+    --radius: 4px;                                      /* standard corner rounding */
+}
+
+/* ---- Reset: remove the browser's default spacing ----
+   The * means "every element". box-sizing makes width
+   calculations predictable (padding counted inside the width). */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---- The page itself ---- */
+body {
+    font-family: var(--sans);      /* use our sans-serif font */
+    color: var(--charcoal);        /* near-black text */
+    background: var(--ivory);      /* warm off-white background */
+    line-height: 1.6;              /* comfortable spacing between lines */
+    -webkit-font-smoothing: antialiased;  /* crisper text on Mac/Chrome */
+}
+
+/* ---- Headings all use the serif font ---- */
+h1, h2, h3, .serif {
+    font-family: var(--serif);
+    font-weight: 500;
+}
+
+/* Links: no underline, inherit their colour from the parent */
+a { color: inherit; text-decoration: none; }
+
+/* ---- Thin gold divider line (reused across the pages) ----
+   A horizontal line that fades gold in the middle. */
+.gold-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem 0;
+}
+/* A version that fades from the left only */
+.gold-divider--left {
+    background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* ============================================================
+   NAVIGATION BAR (top of dashboard / costumes / rentals)
+   ============================================================ */
+.nav {
+    display: flex;              /* lay children in a row, side by side */
+    align-items: center;        /* line them up vertically centred */
+    background: var(--emerald-deep);
+    border-bottom: 1px solid var(--gold);   /* thin gold underline */
+    padding: 0 2.5rem;          /* space on left and right */
+    height: 72px;
+    color: var(--ivory);
+}
+.nav__brand { display: flex; align-items: center; gap: 0.9rem; }
+
+/* The "GA" logo circle on the left */
+.nav__monogram {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;         /* 50% turns a square into a circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;    /* centre the "GA" text inside */
+    color: var(--gold);
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+.nav__title {
+    font-family: var(--serif);
+    letter-spacing: 3px;
+    font-size: 1.05rem;
+    color: var(--ivory);
+}
+
+/* The menu links (Dashboard, Collection, Reservations) */
+.nav__links {
+    display: flex;
+    gap: 2rem;                  /* space between each link */
+    margin: 0 auto;             /* auto both sides = pushes to the centre */
+    list-style: none;           /* remove the bullet points */
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;      /* spread letters apart (elegant look) */
+    text-transform: uppercase;  /* ALL CAPS */
+}
+.nav__links a { padding-bottom: 4px; color: var(--ivory-warm); }
+.nav__links a:hover { color: var(--gold); }   /* gold when hovered */
+/* The current page's link is underlined in gold */
+.nav__links a.is-active { color: var(--gold); border-bottom: 1px solid var(--gold); }
+
+.nav__right { display: flex; align-items: center; gap: 1.2rem; }
+.nav__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--gold-deep); color: var(--emerald-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 0.85rem;
+}
+.nav__user { font-size: 0.85rem; letter-spacing: 1px; color: var(--ivory-warm); }
+
+/* ============================================================
+   BUTTONS — editorial emerald with a fine gold outline
+   (not a flat gold fill)
+   ============================================================ */
+.btn {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.85rem 1.8rem;    /* top/bottom  left/right space inside */
+    border-radius: var(--radius);
+    cursor: pointer;            /* show the hand cursor on hover */
+    border: 1px solid transparent;
+    transition: all 0.2s ease;  /* smooth change on hover */
+}
+/* Main button: deep green with a gold border */
+.btn--primary {
+    background: var(--emerald);
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
+}
+.btn--primary:hover {
+    background: var(--emerald-deep);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px var(--gold-light);  /* inner gold line */
+}
+/* Outline-only button for dark backgrounds */
+.btn--ghost {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+}
+.btn--ghost:hover { background: rgba(201,165,106,0.12); color: #fff; }
+/* Quiet text button with a gold underline on hover */
+.btn--link {
+    background: none; border: none; padding: 0.4rem 0;
+    color: var(--gold-deep); letter-spacing: 1.5px;
+    border-bottom: 1px solid transparent;
+}
+.btn--link:hover { border-bottom-color: var(--gold); }
+.btn--block { width: 100%; }   /* stretch full width (login form) */
+
+/* ============================================================
+   FORMS (login fields, add-costume form, hire form)
+   ============================================================ */
+.field { margin-bottom: 1.2rem; }
+.field label {
+    display: block;             /* label sits on its own line above the box */
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 0.4rem;
+}
+/* The actual input boxes / dropdowns / text areas */
+.field input, .field select, .field textarea {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid #d8d2c4;
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    background: #fff;
+    color: var(--charcoal);
+    transition: border 0.2s;
+}
+/* When a box is clicked into (focused), give it a gold border + glow */
+.field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+}
+
+/* ---- Password field with a Show/Hide button inside it ---- */
+.password-wrap { position: relative; }   /* lets us place the icon inside */
+.password-wrap input { padding-right: 3rem; }   /* room for the eye icon */
+.password-toggle {
+    position: absolute;
+    right: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);   /* vertically centre the icon */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;             /* size of the eye icon */
+    line-height: 1;
+    opacity: 0.7;
+}
+.password-toggle:hover { opacity: 1; }
+
+/* Validation / error messages under a form */
+.message { font-size: 0.85rem; margin-top: 0.3rem; min-height: 1.2rem; }
+.message--error { color: var(--danger); }   /* red for errors */
+.message--ok    { color: var(--ok); }        /* green for success */
+
+/* ============================================================
+   STATUS BADGES  (green = available, gold = on hire, red = overdue)
+   ============================================================ */
+.badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 2px;
+    font-weight: 600;
+}
+.badge--available { background: rgba(47,107,79,0.12);  color: var(--ok); }
+.badge--onhire    { background: rgba(184,138,68,0.15); color: var(--gold-deep); }
+.badge--overdue   { background: rgba(122,45,53,0.12);  color: var(--danger); }
+
+/* ============================================================
+   LOGIN PAGE  (two halves: photo panel + sign-in form)
+   ============================================================ */
+.login-wrap {
+    min-height: 100vh;          /* 100vh = full height of the screen */
+    display: flex;              /* the two halves sit side by side */
+}
+/* LEFT HALF: the photo panel with a dark emerald tint over it
+   so the white title stays readable on top of the image. */
+.login-hero {
+    flex: 1;                    /* grow to fill the remaining space */
+    background-image:
+        linear-gradient(160deg, rgba(7,27,23,0.80) 0%, rgba(7,27,23,0.45) 55%, rgba(7,27,23,0.70) 100%),
+        url("../images/atelier-hero.jpg");
+    background-size: cover;     /* photo fills the panel, no stretching */
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;     /* stack the text items vertically */
+    justify-content: center;
+    padding: 4rem;
+    color: var(--ivory);
+    overflow: hidden;
+}
+.login-hero__eyebrow {
+    font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+}
+.login-hero__title {
+    font-family: var(--serif);
+    font-size: 3.4rem;
+    line-height: 1.05;
+    letter-spacing: 2px;
+}
+.login-hero__sub {
+    margin-top: 1.2rem; max-width: 24rem;
+    color: var(--ivory-warm); font-size: 1rem;
+}
+.login-hero__quote {
+    position: absolute; bottom: 3rem; left: 4rem;
+    font-family: var(--serif); font-style: italic;
+    color: var(--gold-light); font-size: 1.05rem;
+}
+
+/* RIGHT HALF: the sign-in form panel */
+.login-panel {
+    width: 460px;
+    background: var(--ivory);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 4rem 3.5rem;
+}
+.login-panel__brand {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+.login-panel__monogram {
+    width: 44px; height: 44px; border: 1px solid var(--gold);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--gold-deep); font-family: var(--serif); font-size: 1.2rem;
+}
+.login-panel__name {
+    font-family: var(--serif); letter-spacing: 3px; font-size: 1.1rem;
+    color: var(--emerald);
+}
+.login-panel h1 {
+    font-size: 2rem; color: var(--emerald); margin: 1.5rem 0 0.3rem;
+}
+.login-panel__hint { font-size: 0.9rem; color: #7a756b; margin-bottom: 1.8rem; }
+.login-panel__footer {
+    margin-top: 2rem; font-size: 0.75rem; color: #9a948a; text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+.dash { background: var(--ivory); min-height: 100vh; }
+
+/* Cinematic hero with the costume-rail photo behind it */
+.dash-hero {
+    position: relative;
+    min-height: 440px;
+    display: flex;
+    align-items: center;
+    padding: 4rem 3.5rem;
+    color: var(--ivory);
+    /* Two layers: a dark gradient ON TOP of the photo (so text reads) */
+    background-image:
+        linear-gradient(90deg, rgba(7,27,23,0.94) 0%, rgba(7,27,23,0.70) 40%, rgba(7,27,23,0.15) 75%, rgba(7,27,23,0.30) 100%),
+        url("../images/dashboard-hero.jpg");
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid var(--gold);
+}
+/* A fine gold frame drawn just inside the hero edges */
+.dash-hero::after {
+    content: "";                /* required for ::after to appear */
+    position: absolute;
+    inset: 1.4rem;              /* 1.4rem in from all four sides */
+    border: 1px solid rgba(216,193,154,0.35);
+    pointer-events: none;       /* frame doesn't block clicks */
+}
+.dash-hero__inner { max-width: 620px; position: relative; z-index: 1; }
+.dash-hero__eyebrow {
+    font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+}
+.dash-hero__welcome {
+    font-family: var(--serif);
+    font-size: 3.4rem; line-height: 1.08; letter-spacing: 1px;
+}
+.dash-hero__welcome span { color: var(--gold-light); font-style: italic; }
+/* Small decorative rule with a ✦ at the end */
+.dash-hero__rule {
+    width: 90px; height: 1px; margin: 1.4rem 0;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    position: relative;
+}
+.dash-hero__rule::after {
+    content: "✦"; color: var(--gold); font-size: 0.7rem;
+    position: absolute; left: 100px; top: -0.7rem;
+}
+.dash-hero__sub { color: var(--ivory-warm); max-width: 28rem; font-size: 1.02rem; }
+.dash-hero__actions { margin-top: 1.8rem; display: flex; gap: 1rem; }
+
+/* The 4 stat cards. They float up slightly over the hero. */
+.stats {
+    display: grid;                          /* grid = rows AND columns */
+    grid-template-columns: repeat(4, 1fr);  /* 4 equal columns */
+    gap: 1.5rem;
+    padding: 0 3.5rem;
+    max-width: 1240px;
+    margin: -3.5rem auto 1rem;              /* negative top = lift over hero */
+    position: relative;
+    z-index: 2;                             /* sit above the hero */
+}
+.stat {
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.3);
+    border-radius: var(--radius);
+    padding: 1.8rem 1.5rem;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
+/* A gold bar across the top of each card */
+.stat::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold-deep));
+}
+.stat__value {
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    color: var(--emerald);
+    line-height: 1;
+}
+.stat__label {
+    font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--gold-deep); margin-top: 0.7rem;
+}
+.stat__label::before {
+    content: ""; display: block; width: 28px; height: 1px;
+    background: var(--gold); margin-bottom: 0.6rem;
+}
+
+/* Search bar on the dashboard */
+.dash-search { padding: 1.5rem 3.5rem; }
+.dash-search__row { display: flex; gap: 0.8rem; max-width: 640px; }
+.dash-search__row input { flex: 1; }   /* input grows, button stays its size */
+.dash-search__results { margin-top: 1rem; max-width: 640px; }
+.search-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #fff; border: 1px solid var(--ivory-warm);
+    border-left: 2px solid var(--gold);
+    padding: 0.8rem 1rem; margin-bottom: 0.5rem; border-radius: var(--radius);
+}
+.search-item__name { font-family: var(--serif); font-size: 1.1rem; color: var(--emerald); }
+.search-item__meta { font-size: 0.8rem; color: #8a847a; }
+
+/* A section heading row (title on the left, link on the right) */
+.section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 1.5rem 3.5rem 0.5rem;
+}
+.section-head h2 { font-size: 1.8rem; color: var(--emerald); }
+
+/* ============================================================
+   TABLES  (reused on dashboard, costumes and rentals)
+   ============================================================ */
+.table-wrap { padding: 0.5rem 3.5rem 3rem; }
+table.atelier {
+    width: 100%;
+    border-collapse: collapse;   /* no gaps between cells */
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+/* The header row: emerald background, gold text */
+table.atelier thead th {
+    background: var(--emerald);
+    color: var(--gold-light);
+    font-family: var(--sans); font-weight: 500;
+    font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+    text-align: left; padding: 1rem 1.2rem;
+}
+/* The body cells */
+table.atelier tbody td {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--ivory-warm);
+    font-size: 0.92rem;
+}
+table.atelier tbody tr:last-child td { border-bottom: none; }
+table.atelier tbody tr:hover { background: var(--ivory-warm); }   /* highlight row on hover */
+table.atelier tbody tr.is-overdue { background: rgba(122,45,53,0.06); }  /* overdue rows tinted red */
+
+/* ---- Page shell (title area used on costumes / rentals) ---- */
+.page { max-width: 1240px; margin: 0 auto; padding: 2.5rem; }
+.page__eyebrow {
+    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-deep);
+}
+.page__title { font-size: 2.4rem; color: var(--emerald); }
+.page__sub { color: #7a756b; margin-top: 0.2rem; }
+
+/* Message shown when a table/list is empty */
+.empty-state {
+    text-align: center; padding: 2.5rem; color: #9a948a;
+    font-family: var(--serif); font-style: italic; font-size: 1.1rem;
+}
+
+/* ---- Wax-seal footer flourish (the GA seal + quote) ---- */
+.atelier-foot {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 2rem 0 3rem; gap: 1rem;
+}
+.wax-seal {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--burgundy-light), var(--burgundy));
+    color: var(--gold-light); font-family: var(--serif);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; letter-spacing: 1px;
+    box-shadow: inset 0 0 0 2px rgba(216,193,154,0.4), var(--shadow-soft);
+}
+.atelier-foot__quote {
+    font-family: var(--serif); font-style: italic;
+    color: #8a847a; font-size: 1rem;
+}
+
+/* ============================================================
+   RESPONSIVE: adjust for smaller screens
+   @media = "apply these rules only when the screen is this size"
+   ============================================================ */
+@media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }  /* 4 cards -> 2 per row */
+    .nav__links { display: none; }                     /* hide the centre menu */
+}
+@media (max-width: 820px) {
+    .login-hero { display: none; }   /* hide the photo panel on narrow screens */
+    .login-panel { width: 100%; }    /* form fills the width */
+}
