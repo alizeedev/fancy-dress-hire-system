@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Atelier — Reservations</title>
+
+    <!-- Google Fonts: serif (Cormorant) + sans-serif (Jost) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Our shared stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dash">
+
+    <!-- ===== TOP NAVIGATION (floating, consistent across pages) ===== -->
+    <nav class="nav">
+        <a href="dashboard.html" class="nav__brand">
+            <img src="images/logo-mono.png" alt="The Grand Atelier logo" class="nav__logo">
+            <span class="nav__title">THE GRAND ATELIER</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="costumes.html">Collection</a></li>
+            <li><a href="rentals.html" class="is-active">Reservations</a></li>
+        </ul>
+        <div class="nav__right">
+            <span class="nav__user" id="navUser">Sophia</span>
+            <span class="nav__avatar" id="navAvatar">S</span>
+            <button class="btn btn--link" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <header class="catalogue-hero">
+        <div class="catalogue-hero__inner">
+            <p class="page__eyebrow">Reservations &amp; Availability</p>
+            <h1 class="catalogue-hero__title">Manage Reservations</h1>
+            <p class="catalogue-hero__sub">
+                Create a hire, track returns and view availability.
+            </p>
+        </div>
+    </header>
+
+    <main class="reservations">
+
+        <!-- ===== AVAILABILITY CALENDAR STRIP (visual) ===== -->
+        <section class="panel">
+            <div class="panel__head">
+                <h2>Availability Timeline</h2>
+                <div class="calendar-legend">
+                    <span class="legend-item"><span class="legend-dot legend-dot--ok"></span> Available</span>
+                    <span class="legend-item"><span class="legend-dot legend-dot--warn"></span> Reserved</span>
+                    <span class="legend-item"><span class="legend-dot legend-dot--danger"></span> Overdue</span>
+                </div>
+            </div>
+            <!-- The row of days is drawn by rentals.js -->
+            <div class="calendar-strip" id="calendarStrip"></div>
+        </section>
+
+        <!-- ===== HIRE FORM + ACTIVE RENTALS (two columns) ===== -->
+        <div class="reservations__grid">
+
+            <!-- LEFT: New hire form -->
+            <section class="panel">
+                <div class="panel__head"><h2>New Reservation</h2></div>
+
+                <form id="hireForm" novalidate>
+                    <!-- Customer name -->
+                    <div class="field">
+                        <label for="customerName">Customer Name</label>
+                        <input type="text" id="customerName" placeholder="e.g. Emma Wilson">
+                    </div>
+
+                    <!-- Costume dropdown (only available ones) -->
+                    <div class="field">
+                        <label for="costumeSelect">Costume</label>
+                        <select id="costumeSelect"></select>
+                    </div>
+
+                    <!-- Dates -->
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        <div class="field">
+                            <label for="dueDate">Due Date</label>
+                            <input type="date" id="dueDate">
+                        </div>
+                    </div>
+
+                    <!-- Live cost summary -->
+                    <div class="cost-summary">
+                        <div class="cost-row"><span>Duration</span><span id="costDays">0 days</span></div>
+                        <div class="cost-row cost-row--total"><span>Total Cost</span><span id="costTotal">Rs 0</span></div>
+                    </div>
+
+                    <!-- Validation / success message -->
+                    <p id="hireMessage" class="message message--error"></p>
+
+                    <button type="submit" class="btn btn--primary btn--block">Confirm Reservation</button>
+                </form>
+            </section>
+
+            <!-- RIGHT: Active rentals table -->
+            <section class="panel">
+                <div class="panel__head">
+                    <h2>Active Rentals</h2>
+                    <span class="panel__hint">Overdue shown in red</span>
+                </div>
+                <table class="atelier">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Costume</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="rentalsBody"></tbody>
+                </table>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ===== WAX-SEAL FOOTER ===== -->
+    <footer class="atelier-foot">
+        <hr class="gold-divider" style="width:200px;">
+        <div class="wax-seal"><img src="images/logo-mono.png" alt="The Grand Atelier"></div>
+        <p class="atelier-foot__quote">"Preserving the past for extraordinary tomorrows."</p>
+    </footer>
+
+    <!-- ===== LOGOUT CONFIRMATION MODAL ===== -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal">
+            <div class="modal__icon"><img src="images/logo-mono.png" alt=""></div>
+            <h2 class="modal__title">Leave the Atelier?</h2>
+            <p class="modal__text">You are about to sign out of the management platform.</p>
+            <div class="modal__actions">
+                <button class="btn btn--outline" id="logoutCancel">Cancel</button>
+                <button class="btn btn--primary" id="logoutConfirm">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our scripts: api.js (shared helper), rentals.js, logout.js -->
+    <script src="js/api.js"></script>
+    <script src="js/rentals.js"></script>
+    <script src="js/logout.js"></script>
+</body>
+</html>

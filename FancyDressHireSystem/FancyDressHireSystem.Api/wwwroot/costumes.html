@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Atelier — Collection</title>
+
+    <!-- Google Fonts: serif (Cormorant) + sans-serif (Jost) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Our shared stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dash">
+
+    <!-- ===== TOP NAVIGATION (floating, consistent across pages) ===== -->
+    <nav class="nav">
+        <a href="dashboard.html" class="nav__brand">
+            <img src="images/logo-mono.png" alt="The Grand Atelier logo" class="nav__logo">
+            <span class="nav__title">THE GRAND ATELIER</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="costumes.html" class="is-active">Collection</a></li>
+            <li><a href="rentals.html">Reservations</a></li>
+        </ul>
+        <div class="nav__right">
+            <span class="nav__user" id="navUser">Sophia</span>
+            <span class="nav__avatar" id="navAvatar">S</span>
+            <button class="btn btn--link" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ===== CATALOGUE HEADER BANNER ===== -->
+    <header class="catalogue-hero">
+        <div class="catalogue-hero__inner">
+            <p class="page__eyebrow">Our Collection</p>
+            <h1 class="catalogue-hero__title">Costume Catalogue</h1>
+            <p class="catalogue-hero__sub">
+                Explore a curated collection of historical and themed garments.
+            </p>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="catalogue">
+
+        <!-- FILTER BAR: category tabs + search box -->
+        <div class="filter-bar">
+            <!-- Category tabs. "All" starts active. -->
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab is-active" data-category="All">All</button>
+                <button class="filter-tab" data-category="Historical">Historical</button>
+                <button class="filter-tab" data-category="Theatre">Theatre</button>
+                <button class="filter-tab" data-category="Film">Film</button>
+                <button class="filter-tab" data-category="Fantasy">Fantasy</button>
+                <button class="filter-tab" data-category="Masquerade">Masquerade</button>
+            </div>
+            <!-- Search box with a magnifier icon, + a Filters button -->
+            <div class="filter-right">
+                <div class="filter-search">
+                    <span class="filter-search__icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search costumes…">
+                </div>
+                <button class="filter-btn" id="filtersBtn">⚟ Filters</button>
+            </div>
+        </div>
+
+        <!-- COSTUME CARD GRID (filled by costumes.js) -->
+        <div class="costume-grid" id="costumeGrid"></div>
+
+    </main>
+
+    <!-- ===== WAX-SEAL FOOTER ===== -->
+    <footer class="atelier-foot">
+        <hr class="gold-divider" style="width:200px;">
+        <div class="wax-seal"><img src="images/logo-mono.png" alt="The Grand Atelier"></div>
+        <p class="atelier-foot__quote">"Preserving the past for extraordinary tomorrows."</p>
+    </footer>
+
+    <!-- ===== LOGOUT CONFIRMATION MODAL ===== -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="modal">
+            <div class="modal__icon"><img src="images/logo-mono.png" alt=""></div>
+            <h2 class="modal__title">Leave the Atelier?</h2>
+            <p class="modal__text">You are about to sign out of the management platform.</p>
+            <div class="modal__actions">
+                <button class="btn btn--outline" id="logoutCancel">Cancel</button>
+                <button class="btn btn--primary" id="logoutConfirm">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our scripts: api.js (shared helper), costumes.js, logout.js -->
+    <script src="js/api.js"></script>
+    <script src="js/costumes.js"></script>
+    <script src="js/logout.js"></script>
+</body>
+</html>

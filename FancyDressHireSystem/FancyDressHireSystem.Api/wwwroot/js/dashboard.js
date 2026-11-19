@@ -34,11 +34,7 @@ async function init() {
         if (e.key === "Enter") runSearch();
     });
 
-    /* 4. Logout button. */
-    document.getElementById("logoutBtn").addEventListener("click", async function () {
-        try { await apiPost("/api/auth/logout", {}); } catch (e) {}
-        window.location.href = "login.html";
-    });
+    /* 4. Logout is handled by logout.js (shows a confirmation modal). */
 }
 
 /* Helper: put a value into an element by its id. */
