@@ -50,7 +50,7 @@ Response (200):
 ```
 Empty fields return 400. A wrong username or password returns 401 with:
 ```json
-{ "message": "Invalid username or password" }
+{ "error": "Invalid username or password" }
 ```
 The message is the same for both cases, so it doesn't give away which usernames exist.
 
