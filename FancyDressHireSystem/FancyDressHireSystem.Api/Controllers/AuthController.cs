@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using FancyDressHireSystem.Core.Data;
 
 namespace FancyDressHireSystem.Api.Controllers;
 
@@ -11,6 +12,14 @@ namespace FancyDressHireSystem.Api.Controllers;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
+    
+    private readonly UserRepository _users;
+
+    public AuthController(UserRepository users)
+    {
+        _users = users;
+    }
+    
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
