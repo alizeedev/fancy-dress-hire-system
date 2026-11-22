@@ -1,9 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using FancyDressHireSystem.Core.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+//database:connection string comes from appsettings.json
+string connectionString = builder.Configuration.GetConnectionString("GrandAtelier")
+    ?? throw new InvalidOperationException("Connection string 'GrandAtelier' not found.");
+builder.Services.AddSingleton(new DatabaseConnection(connectionString));
+builder.Services.AddSingleton<UserRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
