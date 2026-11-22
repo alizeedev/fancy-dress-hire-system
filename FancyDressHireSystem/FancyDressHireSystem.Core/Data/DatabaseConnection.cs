@@ -16,12 +16,12 @@ namespace FancyDressHireSystem.Core.Data
         public DatabaseConnection(string connectionString)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
-                throw new ArgumentException("Connection string is missing in appsetting.json");
+                throw new ArgumentException("Connection string is missing in appsettings.json");
             _connectionString = connectionString;
         }
 
         /// <summary>
-        /// Opena a new connection to the database
+        /// Opens a new connection to the database
         /// in order to always close the connection, it is used inside a block.
         /// </summary>
         /// <returns> An open SqlConnection</returns>
