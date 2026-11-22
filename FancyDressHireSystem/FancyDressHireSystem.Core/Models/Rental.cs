@@ -15,6 +15,7 @@ namespace FancyDressHireSystem.Core.Models
         private DateTime _dueDate = DateTime.MinValue;
         private DateTime? _returnDate; // Null = Has not returned yet
         private decimal _totalCost;
+        private decimal _lateFee;      // 0 until returned late
 
 
         //Constructor
@@ -22,9 +23,10 @@ namespace FancyDressHireSystem.Core.Models
         /// Creates a rental.
         /// StartDate is set before DueDate and ReturnDate.
         /// ReturnDate is nullable
+        /// LateFee and LateFeePaid are optional (default 0 and false)
         /// </summary>
         public Rental(string rentalId, string costumeId, string customerId, DateTime startDate, DateTime dueDate,
-            DateTime? returnDate, decimal totalCost)
+            DateTime? returnDate, decimal totalCost, decimal lateFee = 0, bool lateFeePaid = false)
         {
             RentalId = rentalId;
             CostumeId = costumeId;
@@ -33,6 +35,8 @@ namespace FancyDressHireSystem.Core.Models
             DueDate = dueDate;
             TotalCost = totalCost;
             ReturnDate = returnDate;
+            LateFee = lateFee;
+            LateFeePaid = lateFeePaid;
         }
         /// <summary>
         /// Unique rental code.
@@ -132,9 +136,29 @@ namespace FancyDressHireSystem.Core.Models
             }
         }
         /// <summary>
+        /// Late fee owed if the costume came back after DueDate.
+        /// Cannot be negative.
+        /// </summary>
+        public decimal LateFee
+        {
+            get => _lateFee;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Late fee cannot be negative.");
+                _lateFee = value;
+            }
+        }
+        /// <summary>
+        /// True once the customer has paid the late fee.
+        /// </summary>
+        public bool LateFeePaid { get; set; }
+        
+        /// <summary>
         /// True if the costume has been returned.
         /// </summary>
         public bool IsReturned => _returnDate != null;
+        
         /// <summary>
         /// True if the costume is not returned and today is after DueDate.
         /// </summary>
