@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     
     // Checks the username and password against the database
     [HttpPost("login")]
-    public IActionResult Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
         {
@@ -42,8 +42,19 @@ public class AuthController : ControllerBase
         {
             return Unauthorized(new { error = "Invalid username or password" });
         }
+        
+        Claim[] claims =
+        {
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Role, user.UserRole)
+        };
+        
+        ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+        
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-        return Ok();
+        return Ok(new { username = user.UserName, role = user.UserRole });
     }
     
     // Logs the user out by deleting their login cookie
