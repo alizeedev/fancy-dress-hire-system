@@ -70,10 +70,10 @@
                 <div class="panel__head"><h2>New Reservation</h2></div>
 
                 <form id="hireForm" novalidate>
-                    <!-- Customer name -->
+                    <!-- Customer dropdown (filled from GET /api/customers) -->
                     <div class="field">
-                        <label for="customerName">Customer Name</label>
-                        <input type="text" id="customerName" placeholder="e.g. Emma Wilson">
+                        <label for="customerSelect">Customer</label>
+                        <select id="customerSelect"></select>
                     </div>
 
                     <!-- Costume dropdown (only available ones) -->

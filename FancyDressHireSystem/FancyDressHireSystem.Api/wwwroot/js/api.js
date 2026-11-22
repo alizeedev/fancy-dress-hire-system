@@ -28,6 +28,14 @@ const FAKE = {
         { costumeId: "GA011", costumeName: "Empire Ballgown", category: "Historical", era: "Regency", size: "M", dailyHirePrice: 1100, totalQuantity: 3, availableQuantity: 2 },
         { costumeId: "GA012", costumeName: "Royal Hunt Ensemble", category: "Royal", era: "Stuart", size: "S", dailyHirePrice: 1250, totalQuantity: 2, availableQuantity: 1 }
     ],
+    /* Sample customers for the hire-form dropdown (GET /api/customers). */
+    customers: [
+        { customerId: "C001", fullName: "Emma Wilson" },
+        { customerId: "C002", fullName: "James Carter" },
+        { customerId: "C003", fullName: "Priya Ramjee" },
+        { customerId: "C004", fullName: "Daniel Brown" },
+        { customerId: "C005", fullName: "Olivia Smith" }
+    ],
     recentRentals: [
         { customerName: "Priya Ramjee", costumeName: "Highwayman Coat", dueDate: "2026-12-02", status: "Overdue" },
         { customerName: "Emma Wilson", costumeName: "Victorian Ball Gown", dueDate: "2026-12-10", status: "On Hire" },
@@ -77,7 +85,8 @@ function fakeGet(url) {
         return Promise.resolve(hits);
     }
     if (url.startsWith("/api/costumes")) return Promise.resolve(FAKE.costumes);
-    if (url.startsWith("/api/rentals")) return Promise.resolve(FAKE.activeRentals);
+    if (url.startsWith("/api/customers")) return Promise.resolve(FAKE.customers);
+    if (url.startsWith("/api/rentals/active")) return Promise.resolve(FAKE.activeRentals);
     return Promise.resolve([]);
 }
 

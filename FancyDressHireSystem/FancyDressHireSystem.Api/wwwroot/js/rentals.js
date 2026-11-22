@@ -18,8 +18,9 @@ async function init() {
         document.getElementById("navAvatar").textContent = me.userName.charAt(0).toUpperCase();
     } catch (e) { return; }
 
-    drawCalendar();           /* the visual availability strip */
+    drawCalendar();           /* the visual availability calendar */
     await loadCostumes();     /* fill the costume dropdown */
+    await loadCustomers();    /* fill the customer dropdown */
     await loadRentals();      /* fill the active-rentals table */
 
     /* When dates or costume change, recalculate the cost. */
@@ -98,6 +99,20 @@ async function loadCostumes() {
     });
 }
 
+/* ---- Fill the customer dropdown (GET /api/customers) ---- */
+async function loadCustomers() {
+    const customers = await apiGet("/api/customers");
+
+    const select = document.getElementById("customerSelect");
+    select.innerHTML = "<option value=''>— Choose a customer —</option>";
+    customers.forEach(function (cust) {
+        const opt = document.createElement("option");
+        opt.value = cust.customerId;
+        opt.textContent = cust.fullName;
+        select.appendChild(opt);
+    });
+}
+
 /* ---- 2b. Work out the cost from the chosen costume + dates ---- */
 function updateCost() {
     const start = document.getElementById("startDate").value;
@@ -135,14 +150,15 @@ async function submitHire(event) {
     msg.className = "message message--error";
     msg.textContent = "";
 
-    const customer = document.getElementById("customerName").value.trim();
+    const customerId = document.getElementById("customerSelect").value;
     const id = document.getElementById("costumeSelect").value;
     const start = document.getElementById("startDate").value;
     const due = document.getElementById("dueDate").value;
 
     /* --- Validation (this earns code-quality marks) --- */
-    if (customer === "") { msg.textContent = "Please enter the customer's name."; return; }
+    if (customerId === "") { msg.textContent = "Please choose a customer."; return; }
     if (id === "") { msg.textContent = "Please choose a costume."; return; }
+
     if (start === "") { msg.textContent = "Please choose a start date."; return; }
     if (due === "") { msg.textContent = "Please choose a due date."; return; }
     if (new Date(due) < new Date(start)) {
@@ -154,7 +170,7 @@ async function submitHire(event) {
        costumeId is a string code like "GA001" in the backend. */
     try {
         await apiPost("/api/rentals", {
-            customerName: customer,
+            customerId: customerId,
             costumeId: id,
             startDate: start,
             dueDate: due
@@ -162,7 +178,7 @@ async function submitHire(event) {
 
         /* Success message in green, then refresh the table. */
         msg.className = "message message--ok";
-        msg.textContent = "Reservation confirmed for " + customer + ".";
+        msg.textContent = "Reservation confirmed.";
         document.getElementById("hireForm").reset();
         updateCost();
         await loadRentals();
@@ -173,7 +189,7 @@ async function submitHire(event) {
 
 /* ---- 3. Load active rentals and draw the table ---- */
 async function loadRentals() {
-    const rentals = await apiGet("/api/rentals");
+    const rentals = await apiGet("/api/rentals/active");
     const body = document.getElementById("rentalsBody");
     body.innerHTML = "";
 
@@ -207,7 +223,7 @@ async function loadRentals() {
    rentalId is a string code like "R001" in the backend. */
 async function returnCostume(rentalId) {
     try {
-        await apiPost("/api/rentals/return", { rentalId: rentalId });
+        await apiPost("/api/rentals/" + rentalId + "/return", {});
         await loadRentals();      /* refresh so the returned one disappears */
         await loadCostumes();     /* it's available again now */
     } catch (e) {
