@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using FancyDressHireSystem.Api.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
 namespace FancyDressHireSystem.Api.Controllers;
 
 [ApiController]
@@ -25,5 +28,16 @@ public class AuthController : ControllerBase
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return Ok();
+    }
+    
+    // Returns the user who is currently logged in
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult CurrentUser()
+    {
+        string? username = User.Identity?.Name;
+        string? role = User.FindFirst(ClaimTypes.Role)?.Value;
+
+        return Ok(new { username, role });
     }
 }
