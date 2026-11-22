@@ -26,7 +26,7 @@ namespace FancyDressHireSystem.Core.Services
         }
 
         ///<summary>
-        ///Hashes the password with the salt
+        ///Hashes the password with the salt.
         ///</summary>
         ///<returns>The hash is Base64 text.</returns>
         public static string Hash(string password,string salt)
