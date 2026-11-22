@@ -1,6 +1,7 @@
 /* costumes.js — the Costume Catalogue page.
    Loads all costumes, shows them as cards, and lets the user
-   filter by category (the tabs) and search by text (the box). */
+   filter by category (the tabs) and search by text (the box).
+   Field names match the backend Costume class. */
 
 /* We keep the full list here once loaded, so filtering is instant
    and doesn't need to ask the server again every keystroke. */
@@ -14,8 +15,8 @@ async function init() {
     /* Show who is logged in, in the nav. */
     try {
         const me = await apiGet("/api/auth/me");
-        document.getElementById("navUser").textContent   = me.username;
-        document.getElementById("navAvatar").textContent = me.username.charAt(0).toUpperCase();
+        document.getElementById("navUser").textContent = me.userName;
+        document.getElementById("navAvatar").textContent = me.userName.charAt(0).toUpperCase();
     } catch (e) { return; }
 
     /* Load every costume once, then show them. */
@@ -52,9 +53,9 @@ function render() {
     /* Keep only costumes that match BOTH the category and the search. */
     const shown = allCostumes.filter(function (c) {
         const matchesCategory = (activeCategory === "All") || (c.category === activeCategory);
-        const matchesSearch   = (term === "") ||
-                                c.name.toLowerCase().includes(term) ||
-                                c.category.toLowerCase().includes(term);
+        const matchesSearch = (term === "") ||
+            c.costumeName.toLowerCase().includes(term) ||
+            c.category.toLowerCase().includes(term);
         return matchesCategory && matchesSearch;
     });
 
@@ -74,8 +75,8 @@ function drawGrid(costumes) {
 
     /* One card per costume. */
     costumes.forEach(function (c) {
-        /* Work out the status label + badge colour. */
-        const status = c.isAvailable ? "Available" : "On Hire";
+        /* A costume is available when at least one is free (backend rule). */
+        const status = isCostumeAvailable(c) ? "Available" : "On Hire";
         /* Use the era if we have one, otherwise fall back to the category. */
         const subtitle = c.era ? c.era : c.category;
 
@@ -84,16 +85,16 @@ function drawGrid(costumes) {
         card.innerHTML =
             /* Image placeholder with a status badge and a favourite heart */
             "<div class='costume-card__image'>" +
-                "<span class='costume-card__badge'>" + statusBadge(status) + "</span>" +
-                "<button class='costume-card__heart' aria-label='Add to favourites'>♡</button>" +
-                "<span class='costume-card__placeholder'>GA</span>" +
+            "<span class='costume-card__badge'>" + statusBadge(status) + "</span>" +
+            "<button class='costume-card__heart' aria-label='Add to favourites'>♡</button>" +
+            "<span class='costume-card__placeholder'>GA</span>" +
             "</div>" +
             /* Card details */
             "<div class='costume-card__body'>" +
-                "<h3 class='costume-card__name'>" + escapeHtml(c.name) + "</h3>" +
-                "<p class='costume-card__era'>" + escapeHtml(subtitle) + "</p>" +
-                "<p class='costume-card__price'>Rs " + c.pricePerDay + " / day</p>" +
-                "<button class='btn btn--primary costume-card__view'>View Details →</button>" +
+            "<h3 class='costume-card__name'>" + escapeHtml(c.costumeName) + "</h3>" +
+            "<p class='costume-card__era'>" + escapeHtml(subtitle) + "</p>" +
+            "<p class='costume-card__price'>Rs " + c.dailyHirePrice + " / day</p>" +
+            "<button class='btn btn--primary costume-card__view'>View Details →</button>" +
             "</div>";
         grid.appendChild(card);
     });

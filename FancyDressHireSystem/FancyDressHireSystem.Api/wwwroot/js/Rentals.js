@@ -2,7 +2,8 @@
    Three jobs:
      1. Draw a simple availability calendar strip (visual).
      2. Let staff create a new hire (with live cost + validation).
-     3. Show active rentals and let staff return a costume. */
+     3. Show active rentals and let staff return a costume.
+   Field names match the backend model classes. */
 
 let availableCostumes = [];   /* costumes we can hire out */
 
@@ -13,8 +14,8 @@ async function init() {
     /* Show who is logged in. */
     try {
         const me = await apiGet("/api/auth/me");
-        document.getElementById("navUser").textContent   = me.username;
-        document.getElementById("navAvatar").textContent = me.username.charAt(0).toUpperCase();
+        document.getElementById("navUser").textContent = me.userName;
+        document.getElementById("navAvatar").textContent = me.userName.charAt(0).toUpperCase();
     } catch (e) { return; }
 
     drawCalendar();           /* the visual availability strip */
@@ -38,7 +39,7 @@ function drawCalendar() {
     const strip = document.getElementById("calendarStrip");
     const today = new Date();
     /* A few sample states so the strip looks alive. */
-    const sample = ["ok","ok","warn","ok","ok","danger","ok","warn","ok","ok","ok","warn","ok","ok"];
+    const sample = ["ok", "ok", "warn", "ok", "ok", "danger", "ok", "warn", "ok", "ok", "ok", "warn", "ok", "ok"];
 
     for (let i = 0; i < 14; i++) {
         const d = new Date(today);
@@ -56,14 +57,14 @@ function drawCalendar() {
 /* ---- 2a. Fill the costume dropdown with available costumes ---- */
 async function loadCostumes() {
     const all = await apiGet("/api/costumes");
-    availableCostumes = all.filter(c => c.isAvailable);   /* only ones we can hire */
+    availableCostumes = all.filter(isCostumeAvailable);   /* only ones with stock free */
 
     const select = document.getElementById("costumeSelect");
     select.innerHTML = "<option value=''>— Choose a costume —</option>";
     availableCostumes.forEach(function (c) {
         const opt = document.createElement("option");
         opt.value = c.costumeId;
-        opt.textContent = c.name + " (Rs " + c.pricePerDay + "/day)";
+        opt.textContent = c.costumeName + " (Rs " + c.dailyHirePrice + "/day)";
         select.appendChild(opt);
     });
 }
@@ -71,23 +72,23 @@ async function loadCostumes() {
 /* ---- 2b. Work out the cost from the chosen costume + dates ---- */
 function updateCost() {
     const start = document.getElementById("startDate").value;
-    const due   = document.getElementById("dueDate").value;
-    const id    = document.getElementById("costumeSelect").value;
+    const due = document.getElementById("dueDate").value;
+    const id = document.getElementById("costumeSelect").value;
 
     const costume = availableCostumes.find(c => String(c.costumeId) === id);
 
     /* Need all three to calculate. */
     if (!costume || start === "" || due === "") {
-        document.getElementById("costDays").textContent  = "0 days";
+        document.getElementById("costDays").textContent = "0 days";
         document.getElementById("costTotal").textContent = "Rs 0";
         return;
     }
 
     /* Days between the two dates (at least 1). */
     const days = daysBetween(start, due);
-    const total = days * costume.pricePerDay;
+    const total = days * costume.dailyHirePrice;
 
-    document.getElementById("costDays").textContent  = days + (days === 1 ? " day" : " days");
+    document.getElementById("costDays").textContent = days + (days === 1 ? " day" : " days");
     document.getElementById("costTotal").textContent = "Rs " + total;
 }
 
@@ -106,25 +107,26 @@ async function submitHire(event) {
     msg.textContent = "";
 
     const customer = document.getElementById("customerName").value.trim();
-    const id       = document.getElementById("costumeSelect").value;
-    const start    = document.getElementById("startDate").value;
-    const due      = document.getElementById("dueDate").value;
+    const id = document.getElementById("costumeSelect").value;
+    const start = document.getElementById("startDate").value;
+    const due = document.getElementById("dueDate").value;
 
     /* --- Validation (this earns code-quality marks) --- */
-    if (customer === "")   { msg.textContent = "Please enter the customer's name.";  return; }
-    if (id === "")         { msg.textContent = "Please choose a costume.";           return; }
-    if (start === "")      { msg.textContent = "Please choose a start date.";        return; }
-    if (due === "")        { msg.textContent = "Please choose a due date.";          return; }
+    if (customer === "") { msg.textContent = "Please enter the customer's name."; return; }
+    if (id === "") { msg.textContent = "Please choose a costume."; return; }
+    if (start === "") { msg.textContent = "Please choose a start date."; return; }
+    if (due === "") { msg.textContent = "Please choose a due date."; return; }
     if (new Date(due) < new Date(start)) {
         msg.textContent = "The due date must be after the start date.";
         return;
     }
 
-    /* Send it (fake for now, real API later). */
+    /* Send it (fake for now, real API later).
+       costumeId is a string code like "GA001" in the backend. */
     try {
         await apiPost("/api/rentals", {
             customerName: customer,
-            costumeId: Number(id),
+            costumeId: id,
             startDate: start,
             dueDate: due
         });
@@ -157,9 +159,9 @@ async function loadRentals() {
         if (overdue) row.className = "is-overdue";
         row.innerHTML =
             "<td>" + escapeHtml(r.customerName) + "</td>" +
-            "<td>" + escapeHtml(r.costumeName)  + "</td>" +
-            "<td>" + escapeHtml(r.dueDate)      + "</td>" +
-            "<td>" + statusBadge(r.status)      + "</td>" +
+            "<td>" + escapeHtml(r.costumeName) + "</td>" +
+            "<td>" + escapeHtml(r.dueDate) + "</td>" +
+            "<td>" + statusBadge(r.status) + "</td>" +
             "<td><button class='btn btn--link return-btn' data-id='" + r.rentalId + "'>Return</button></td>";
         body.appendChild(row);
     });
@@ -172,10 +174,11 @@ async function loadRentals() {
     });
 }
 
-/* Return a costume: tell the server, then refresh the table. */
+/* Return a costume: tell the server, then refresh the table.
+   rentalId is a string code like "R001" in the backend. */
 async function returnCostume(rentalId) {
     try {
-        await apiPost("/api/rentals/return", { rentalId: Number(rentalId) });
+        await apiPost("/api/rentals/return", { rentalId: rentalId });
         await loadRentals();      /* refresh so the returned one disappears */
         await loadCostumes();     /* it's available again now */
     } catch (e) {

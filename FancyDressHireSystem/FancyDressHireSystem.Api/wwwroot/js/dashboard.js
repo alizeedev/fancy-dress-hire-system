@@ -1,5 +1,6 @@
 /* dashboard.js — fills the dashboard with data and wires up
-   the search bar and logout button. Uses api.js. */
+   the search bar and logout button. Uses api.js.
+   Field names match the backend model classes. */
 
 /* Run once the page has finished loading. */
 document.addEventListener("DOMContentLoaded", init);
@@ -9,9 +10,9 @@ async function init() {
     /* 1. Who is logged in? Show their name in the nav and hero. */
     try {
         const me = await apiGet("/api/auth/me");
-        document.getElementById("welcomeName").textContent = me.username;
-        document.getElementById("navUser").textContent     = me.username;
-        document.getElementById("navAvatar").textContent   = me.username.charAt(0).toUpperCase();
+        document.getElementById("welcomeName").textContent = me.userName;
+        document.getElementById("navUser").textContent = me.userName;
+        document.getElementById("navAvatar").textContent = me.userName.charAt(0).toUpperCase();
     } catch (e) {
         return;   /* not logged in: api.js already sent us to login */
     }
@@ -19,10 +20,10 @@ async function init() {
     /* 2. Fill the four stat cards and the recent-rentals table. */
     try {
         const stats = await apiGet("/api/dashboard/stats");
-        setText("statTotal",     stats.totalCostumes);
+        setText("statTotal", stats.totalCostumes);
         setText("statAvailable", stats.available);
-        setText("statOnHire",    stats.onHire);
-        setText("statOverdue",   stats.overdue);
+        setText("statOnHire", stats.onHire);
+        setText("statOverdue", stats.overdue);
         fillRecent(stats.recentRentals || []);
     } catch (e) {
         /* If data can't load, leave the dashes showing. */
@@ -59,9 +60,9 @@ function fillRecent(rentals) {
         if (r.status === "Overdue") row.className = "is-overdue";   /* red tint */
         row.innerHTML =
             "<td>" + escapeHtml(r.customerName) + "</td>" +
-            "<td>" + escapeHtml(r.costumeName)  + "</td>" +
-            "<td>" + escapeHtml(r.dueDate)      + "</td>" +
-            "<td>" + statusBadge(r.status)      + "</td>";
+            "<td>" + escapeHtml(r.costumeName) + "</td>" +
+            "<td>" + escapeHtml(r.dueDate) + "</td>" +
+            "<td>" + statusBadge(r.status) + "</td>";
         body.appendChild(row);
     });
 }
@@ -69,7 +70,7 @@ function fillRecent(rentals) {
 /* Run a costume search and show the results. */
 async function runSearch() {
     const term = document.getElementById("searchInput").value.trim();
-    const box  = document.getElementById("searchResults");
+    const box = document.getElementById("searchResults");
     box.innerHTML = "";
 
     if (term === "") return;   /* nothing typed: do nothing */
@@ -88,12 +89,12 @@ async function runSearch() {
             item.className = "search-item";
             item.innerHTML =
                 "<div>" +
-                    "<div class='search-item__name'>" + escapeHtml(c.name) + "</div>" +
-                    "<div class='search-item__meta'>" + escapeHtml(c.category) +
-                        " · Size " + escapeHtml(c.size) +
-                        " · Rs " + c.pricePerDay + "/day</div>" +
+                "<div class='search-item__name'>" + escapeHtml(c.costumeName) + "</div>" +
+                "<div class='search-item__meta'>" + escapeHtml(c.category) +
+                " · Size " + escapeHtml(c.size) +
+                " · Rs " + c.dailyHirePrice + "/day</div>" +
                 "</div>" +
-                (c.isAvailable ? statusBadge("Available") : statusBadge("On Hire"));
+                (isCostumeAvailable(c) ? statusBadge("Available") : statusBadge("On Hire"));
             box.appendChild(item);
         });
     } catch (e) {
