@@ -14,8 +14,8 @@
 </head>
 <body class="dash">
 
-    <!-- ===== TOP NAVIGATION (floating, consistent across pages) ===== -->
-    <nav class="nav">
+    <!-- ===== TOP NAVIGATION (solid: light title area sits below it) ===== -->
+    <nav class="nav nav--solid">
         <a href="dashboard.html" class="nav__brand">
             <img src="images/logo-mono.png" alt="The Grand Atelier logo" class="nav__logo">
             <span class="nav__title">THE GRAND ATELIER</span>
@@ -48,8 +48,7 @@
 
         <!-- FILTER BAR: category tabs + search box -->
         <div class="filter-bar">
-            <!-- Category tabs. "All" starts active.
-                 Categories match the backend rule: Royal, Historical, Masquerade. -->
+            <!-- Category tabs. "All" starts active. -->
             <div class="filter-tabs" id="filterTabs">
                 <button class="filter-tab is-active" data-category="All">All</button>
                 <button class="filter-tab" data-category="Royal">Royal</button>

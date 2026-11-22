@@ -978,23 +978,36 @@ table.atelier {
    COSTUME CATALOGUE PAGE
    ============================================================ */
 /* The banner at the top of the catalogue */
+/* Light page-title area that sits cleanly BELOW the nav,
+   clearly separated from it (no more dark-on-dark slab). */
 .catalogue-hero {
-    background: linear-gradient(120deg, var(--emerald-deep), var(--emerald-light));
-    border-bottom: 1px solid var(--gold);
-    /* Extra top padding so the floating nav merges over this banner */
-    padding: 8rem 3.5rem 3.5rem;
-    color: var(--ivory);
+    background: var(--ivory);
+    border-bottom: 1px solid rgba(201,165,106,0.3);
+    padding: 3rem 3.5rem 2.5rem;
+    text-align: center;
 }
 
+    .catalogue-hero .page__eyebrow {
+        color: var(--gold-deep);
+    }
+
 .catalogue-hero__title {
-    font-size: 3rem;
-    color: #fff;
-    margin: 0.3rem 0;
+    font-size: 3.2rem;
+    color: var(--emerald);
+    margin: 0.4rem 0 0.3rem;
 }
 
 .catalogue-hero__sub {
-    color: var(--ivory-warm);
+    color: #7a756b;
     font-size: 1.05rem;
+}
+/* A small gold flourish under the title */
+.catalogue-hero__inner::after {
+    content: "✦";
+    display: block;
+    color: var(--gold);
+    font-size: 0.8rem;
+    margin-top: 1rem;
 }
 
 /* The main area that holds the filter bar and the grid */
@@ -1353,15 +1366,21 @@ table.atelier {
 }
 
 /* Two date fields side by side */
+/* Stack the two date fields vertically so each gets full width
+   and the year is never cut off. */
 .field-row {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0;
 }
 
     .field-row .field {
-        flex: 1;
+        width: 100%;
     }
 
+        .field-row .field input {
+            width: 100%;
+        }
 /* ---- Cost summary box ---- */
 .cost-summary {
     background: var(--ivory);
