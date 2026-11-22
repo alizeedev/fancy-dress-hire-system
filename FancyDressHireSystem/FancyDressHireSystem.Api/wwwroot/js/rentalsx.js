@@ -33,24 +33,53 @@ async function init() {
     /* Logout is handled by logout.js (shows a confirmation modal). */
 }
 
-/* ---- 1. Availability calendar strip (visual only) ----
-   Draws the next 14 days as little blocks with a status colour. */
+/* ---- 1. Availability calendar (visual only) ----
+   Draws a proper month grid for the current month, with a few
+   days marked as reserved or overdue so the view looks real. */
 function drawCalendar() {
-    const strip = document.getElementById("calendarStrip");
+    const grid = document.getElementById("calendarGrid");
+    const title = document.getElementById("calendarMonth");
     const today = new Date();
-    /* A few sample states so the strip looks alive. */
-    const sample = ["ok", "ok", "warn", "ok", "ok", "danger", "ok", "warn", "ok", "ok", "ok", "warn", "ok", "ok"];
+    const year = today.getFullYear();
+    const month = today.getMonth();   /* 0 = January */
 
-    for (let i = 0; i < 14; i++) {
-        const d = new Date(today);
-        d.setDate(today.getDate() + i);
+    /* Show the month name and year as the heading. */
+    title.textContent = today.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
 
-        const day = document.createElement("div");
-        day.className = "cal-day cal-day--" + sample[i];
-        day.innerHTML =
-            "<span class='cal-day__dow'>" + d.toLocaleDateString("en-GB", { weekday: "short" }) + "</span>" +
-            "<span class='cal-day__num'>" + d.getDate() + "</span>";
-        strip.appendChild(day);
+    /* Weekday header row (Mon..Sun). */
+    const dows = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    dows.forEach(function (d) {
+        const cell = document.createElement("div");
+        cell.className = "cal2-dow";
+        cell.textContent = d;
+        grid.appendChild(cell);
+    });
+
+    /* Work out which weekday the 1st falls on (Mon = 0). */
+    const firstDay = new Date(year, month, 1);
+    let startOffset = firstDay.getDay() - 1;        /* JS: Sun=0, so shift */
+    if (startOffset < 0) startOffset = 6;           /* Sunday wraps to end */
+
+    /* Blank cells before the 1st so dates line up under weekdays. */
+    for (let i = 0; i < startOffset; i++) {
+        const blank = document.createElement("div");
+        blank.className = "cal2-cell cal2-cell--empty";
+        grid.appendChild(blank);
+    }
+
+    /* A few sample statuses so the month looks alive (demo data). */
+    const reserved = [8, 14, 21, 27];
+    const overdue = [5, 16];
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement("div");
+        cell.className = "cal2-cell";
+        if (day === today.getDate()) cell.classList.add("cal2-cell--today");
+        if (reserved.includes(day)) cell.classList.add("cal2-cell--reserved");
+        if (overdue.includes(day)) cell.classList.add("cal2-cell--overdue");
+        cell.innerHTML = "<span class='cal2-num'>" + day + "</span>";
+        grid.appendChild(cell);
     }
 }
 

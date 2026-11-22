@@ -45,18 +45,21 @@
 
     <main class="reservations">
 
-        <!-- ===== AVAILABILITY CALENDAR STRIP (visual) ===== -->
+        <!-- ===== AVAILABILITY CALENDAR (visual) ===== -->
         <section class="panel">
             <div class="panel__head">
-                <h2>Availability Timeline</h2>
+                <div>
+                    <h2>Availability Calendar</h2>
+                    <p class="calendar-month" id="calendarMonth">November 2026</p>
+                </div>
                 <div class="calendar-legend">
                     <span class="legend-item"><span class="legend-dot legend-dot--ok"></span> Available</span>
                     <span class="legend-item"><span class="legend-dot legend-dot--warn"></span> Reserved</span>
                     <span class="legend-item"><span class="legend-dot legend-dot--danger"></span> Overdue</span>
                 </div>
             </div>
-            <!-- The row of days is drawn by rentals.js -->
-            <div class="calendar-strip" id="calendarStrip"></div>
+            <!-- The month grid is drawn by rentals.js -->
+            <div class="calendar-grid" id="calendarGrid"></div>
         </section>
 
         <!-- ===== HIRE FORM + ACTIVE RENTALS (two columns) ===== -->
