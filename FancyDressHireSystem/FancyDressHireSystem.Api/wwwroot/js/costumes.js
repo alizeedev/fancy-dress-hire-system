@@ -228,9 +228,11 @@ async function submitCostumeForm(event) {
             await apiPost("/api/costumes/" + id, payload);   /* PUT in the real API */
             const i = allCostumes.findIndex(x => x.costumeId === id);
             if (i !== -1) allCostumes[i] = payload;
+            toast("Costume updated", "ok");
         } else {
             await apiPost("/api/costumes", payload);
             allCostumes.push(payload);
+            toast("Costume added", "ok");
         }
         closeModal("formModal");
         render();
@@ -255,6 +257,7 @@ function openDeleteConfirm(costume) {
             allCostumes = allCostumes.filter(x => x.costumeId !== costume.costumeId);
             closeModal("deleteModal");
             render();
+            toast("Costume removed", "ok");
         } catch (e) { /* keep modal open on failure */ }
     });
 

@@ -97,6 +97,7 @@ async function submitCustomer(event) {
         select.value = id;
 
         document.getElementById("customerModal").classList.remove("is-open");
+        toast("Customer added", "ok");
     } catch (e) {
         msg.textContent = "Could not save the customer. Please try again.";
     }
@@ -247,6 +248,7 @@ async function submitHire(event) {
         /* Success message in green, then refresh the table. */
         msg.className = "message message--ok";
         msg.textContent = "Reservation confirmed.";
+        toast("Reservation confirmed", "ok");
         document.getElementById("hireForm").reset();
         updateCost();
         await loadRentals();
@@ -292,6 +294,7 @@ async function loadRentals() {
 async function returnCostume(rentalId) {
     try {
         await apiPost("/api/rentals/" + rentalId + "/return", {});
+        toast("Costume returned", "ok");
         await loadRentals();      /* refresh so the returned one disappears */
         await loadCostumes();     /* it's available again now */
     } catch (e) {

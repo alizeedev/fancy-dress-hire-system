@@ -120,3 +120,29 @@ function statusBadge(status) {
 function isCostumeAvailable(c) {
     return c.availableQuantity > 0;
 }
+
+/* ---- Toast notifications ----
+   Shows a small message bottom-right that slides in, waits, then
+   fades out. type can be "ok" (green) or "error" (red). */
+function toast(message, type) {
+    /* Make the container once, then reuse it. */
+    let stack = document.getElementById("toastStack");
+    if (!stack) {
+        stack = document.createElement("div");
+        stack.id = "toastStack";
+        stack.className = "toast-stack";
+        document.body.appendChild(stack);
+    }
+
+    const t = document.createElement("div");
+    t.className = "toast" + (type === "error" ? " toast--error" : " toast--ok");
+    t.innerHTML = "<span class='toast__icon'>" + (type === "error" ? "✕" : "✓") + "</span>" +
+        "<span>" + escapeHtml(message) + "</span>";
+    stack.appendChild(t);
+
+    /* After 3 seconds, slide it out and remove it. */
+    setTimeout(function () {
+        t.classList.add("is-leaving");
+        setTimeout(function () { t.remove(); }, 350);
+    }, 3000);
+}
