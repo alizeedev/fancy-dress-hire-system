@@ -70,10 +70,14 @@
                 <div class="panel__head"><h2>New Reservation</h2></div>
 
                 <form id="hireForm" novalidate>
-                    <!-- Customer dropdown (filled from GET /api/customers) -->
+                    <!-- Customer dropdown (filled from GET /api/customers)
+                         with a "+ New" button to add a customer on the fly -->
                     <div class="field">
                         <label for="customerSelect">Customer</label>
-                        <select id="customerSelect"></select>
+                        <div class="field-with-btn">
+                            <select id="customerSelect"></select>
+                            <button type="button" class="btn btn--outline field-add-btn" id="newCustomerBtn">+ New</button>
+                        </div>
                     </div>
 
                     <!-- Costume dropdown (only available ones) -->
@@ -136,6 +140,37 @@
         <div class="wax-seal"><img src="images/logo-mono.png" alt="The Grand Atelier"></div>
         <p class="atelier-foot__quote">"Preserving the past for extraordinary tomorrows."</p>
     </footer>
+
+    <!-- ===== ADD CUSTOMER MODAL ===== -->
+    <div class="modal-overlay" id="customerModal">
+        <div class="modal">
+            <button class="modal__close" data-close-customer aria-label="Close">×</button>
+            <h2 class="modal__title">Add Customer</h2>
+            <form id="customerForm" novalidate style="text-align:left;">
+                <div class="field">
+                    <label for="c_id">Customer ID</label>
+                    <input type="text" id="c_id" placeholder="e.g. C006">
+                </div>
+                <div class="field">
+                    <label for="c_name">Full Name</label>
+                    <input type="text" id="c_name" placeholder="e.g. Grace Hopper">
+                </div>
+                <div class="field">
+                    <label for="c_email">Email</label>
+                    <input type="text" id="c_email" placeholder="name@email.com">
+                </div>
+                <div class="field">
+                    <label for="c_phone">Phone</label>
+                    <input type="text" id="c_phone" placeholder="12345678">
+                </div>
+                <p id="customerMessage" class="message message--error"></p>
+                <div class="modal__actions">
+                    <button type="button" class="btn btn--outline" data-close-customer>Cancel</button>
+                    <button type="submit" class="btn btn--primary">Save Customer</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- ===== LOGOUT CONFIRMATION MODAL ===== -->
     <div class="modal-overlay" id="logoutModal">

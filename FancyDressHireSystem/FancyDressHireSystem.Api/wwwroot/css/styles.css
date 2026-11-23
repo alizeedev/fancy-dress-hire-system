@@ -944,6 +944,248 @@ table.atelier {
         flex: 1;
     }
 
+/* ---- Extra modal styles for costume management ---- */
+.modal--wide {
+    max-width: 680px;
+    text-align: left;
+}
+
+.modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #9a948a;
+    transition: color 0.2s;
+}
+
+    .modal__close:hover {
+        color: var(--emerald);
+    }
+
+#formModal .modal, #filtersModal .modal {
+    text-align: left;
+}
+
+#formModal .modal__title, #filtersModal .modal__title {
+    text-align: center;
+}
+
+.btn--danger {
+    background: var(--burgundy);
+    color: var(--ivory);
+    border: 1px solid var(--burgundy);
+}
+
+    .btn--danger:hover {
+        background: var(--burgundy-light);
+    }
+
+.btn--danger-outline {
+    background: transparent;
+    color: var(--burgundy);
+    border: 1px solid var(--burgundy);
+}
+
+    .btn--danger-outline:hover {
+        background: rgba(122,45,53,0.08);
+    }
+
+/* A horizontal row of fields (for the add/edit form) */
+.field-row-h {
+    display: flex;
+    gap: 1rem;
+}
+
+    .field-row-h .field {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+/* Costume details modal layout (image + info side by side) */
+.details {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.details-image {
+    flex: 0 0 280px; /* wider, more balanced */
+    align-self: stretch; /* match the height of the details beside it */
+    border-radius: var(--radius);
+    background: radial-gradient(circle at 50% 38%, rgba(201,165,106,0.20), transparent 62%), linear-gradient(160deg, var(--emerald-light) 0%, var(--emerald-deep) 90%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    min-height: 280px;
+    border: 1px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+}
+    /* A fine double gold frame inset inside the image */
+    .details-image::before {
+        content: "";
+        position: absolute;
+        inset: 0.9rem;
+        border: 1px solid rgba(216,193,154,0.45);
+        border-radius: 2px;
+    }
+
+    .details-image::after {
+        content: "";
+        position: absolute;
+        inset: 1.3rem;
+        border: 1px solid rgba(216,193,154,0.18);
+        border-radius: 2px;
+    }
+/* Decorative gold corner ticks */
+.details-image__corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    z-index: 1;
+    border-color: var(--gold-light);
+    border-style: solid;
+    border-width: 0;
+}
+
+.details-image__corner--tl {
+    top: 0.6rem;
+    left: 0.6rem;
+    border-top-width: 1px;
+    border-left-width: 1px;
+}
+
+.details-image__corner--tr {
+    top: 0.6rem;
+    right: 0.6rem;
+    border-top-width: 1px;
+    border-right-width: 1px;
+}
+
+.details-image__corner--bl {
+    bottom: 0.6rem;
+    left: 0.6rem;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.details-image__corner--br {
+    bottom: 0.6rem;
+    right: 0.6rem;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+}
+/* The GA monogram — gold, with the A in italic for an elegant touch */
+.details-image__mono {
+    font-family: var(--serif);
+    font-size: 3.2rem;
+    font-weight: 500;
+    color: var(--gold-light);
+    letter-spacing: 4px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+}
+
+    .details-image__mono i {
+        font-style: italic;
+        color: var(--gold);
+    }
+/* A small caption under the monogram */
+.details-image__caption {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.8rem;
+    color: rgba(216,193,154,0.6);
+    letter-spacing: 1px;
+    z-index: 1;
+}
+
+.details-info {
+    flex: 1;
+}
+
+.details-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+}
+
+.details-name {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--emerald);
+    margin: 0.3rem 0 0.6rem;
+}
+
+.details-badge {
+    margin-bottom: 1rem;
+}
+
+.details-grid {
+    margin: 1rem 0 1.5rem;
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--ivory-warm);
+    font-size: 0.9rem;
+}
+
+    .details-row dt {
+        color: #9a948a;
+        letter-spacing: 0.5px;
+    }
+
+    .details-row dd {
+        color: var(--charcoal);
+        font-family: var(--serif);
+        font-size: 1.05rem;
+    }
+
+.details-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+    .details-actions .btn {
+        flex: 1;
+    }
+
+@media (max-width: 600px) {
+    .details {
+        flex-direction: column;
+    }
+
+    .details-image {
+        flex: 0 0 auto;
+    }
+}
+
+/* ---- Add-customer button beside the dropdown (reservations) ---- */
+.field-with-btn {
+    display: flex;
+    gap: 0.5rem;
+}
+
+    .field-with-btn select {
+        flex: 1;
+    }
+
+.field-add-btn {
+    white-space: nowrap;
+    padding: 0.85rem 1rem;
+}
+
 /* ---- Wax-seal footer flourish (the GA seal + quote) ---- */
 .atelier-foot {
     display: flex;

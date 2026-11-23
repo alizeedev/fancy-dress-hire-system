@@ -62,6 +62,7 @@
                     <input type="text" id="searchInput" placeholder="Search costumes…">
                 </div>
                 <button class="filter-btn" id="filtersBtn">⚟ Filters</button>
+                <button class="btn btn--primary" id="addCostumeBtn">+ Add Costume</button>
             </div>
         </div>
 
@@ -76,6 +77,125 @@
         <div class="wax-seal"><img src="images/logo-mono.png" alt="The Grand Atelier"></div>
         <p class="atelier-foot__quote">"Preserving the past for extraordinary tomorrows."</p>
     </footer>
+
+    <!-- ===== VIEW DETAILS MODAL ===== -->
+    <div class="modal-overlay" id="detailsModal">
+        <div class="modal modal--wide">
+            <button class="modal__close" data-close aria-label="Close">×</button>
+            <div class="details" id="detailsBody"><!-- filled by costumes.js --></div>
+        </div>
+    </div>
+
+    <!-- ===== ADD / EDIT COSTUME FORM MODAL ===== -->
+    <div class="modal-overlay" id="formModal">
+        <div class="modal">
+            <button class="modal__close" data-close aria-label="Close">×</button>
+            <h2 class="modal__title" id="formTitle">Add Costume</h2>
+            <form id="costumeForm" novalidate>
+                <div class="field">
+                    <label for="f_id">Costume ID</label>
+                    <input type="text" id="f_id" placeholder="e.g. GA013">
+                </div>
+                <div class="field">
+                    <label for="f_name">Name</label>
+                    <input type="text" id="f_name" placeholder="e.g. Tudor Gown">
+                </div>
+                <div class="field-row-h">
+                    <div class="field">
+                        <label for="f_cat">Category</label>
+                        <select id="f_cat">
+                            <option value="Royal">Royal</option>
+                            <option value="Historical">Historical</option>
+                            <option value="Masquerade">Masquerade</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="f_size">Size</label>
+                        <select id="f_size">
+                            <option>XS</option>
+                            <option>S</option>
+                            <option selected>M</option>
+                            <option>L</option>
+                            <option>XL</option>
+                            <option>XXL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="f_era">Era</label>
+                    <input type="text" id="f_era" placeholder="e.g. Tudor">
+                </div>
+                <div class="field-row-h">
+                    <div class="field">
+                        <label for="f_price">Price / day (Rs)</label>
+                        <input type="number" id="f_price" min="1" placeholder="1200">
+                    </div>
+                    <div class="field">
+                        <label for="f_total">Total Qty</label>
+                        <input type="number" id="f_total" min="0" placeholder="3">
+                    </div>
+                    <div class="field">
+                        <label for="f_avail">Available</label>
+                        <input type="number" id="f_avail" min="0" placeholder="3">
+                    </div>
+                </div>
+                <p id="formMessage" class="message message--error"></p>
+                <div class="modal__actions">
+                    <button type="button" class="btn btn--outline" data-close>Cancel</button>
+                    <button type="submit" class="btn btn--primary">Save Costume</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== DELETE CONFIRMATION MODAL ===== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal__icon"><img src="images/logo-mono.png" alt=""></div>
+            <h2 class="modal__title">Remove from Collection?</h2>
+            <p class="modal__text">
+                You are about to permanently remove
+                <strong id="deleteName">this costume</strong> from the archive.
+                This cannot be undone.
+            </p>
+            <div class="modal__actions">
+                <button class="btn btn--outline" data-close>Cancel</button>
+                <button class="btn btn--danger" id="deleteConfirm">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FILTERS MODAL ===== -->
+    <div class="modal-overlay" id="filtersModal">
+        <div class="modal">
+            <button class="modal__close" data-close aria-label="Close">×</button>
+            <h2 class="modal__title">Filters</h2>
+            <div class="field">
+                <label for="filterSize">Size</label>
+                <select id="filterSize">
+                    <option value="">Any size</option>
+                    <option>XS</option>
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                    <option>XL</option>
+                    <option>XXL</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="filterAvail">Availability</label>
+                <select id="filterAvail">
+                    <option value="">Any</option>
+                    <option value="available">Available only</option>
+                    <option value="onhire">On loan only</option>
+                </select>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--outline" id="clearFilters">Clear</button>
+                <button class="btn btn--primary" id="applyFilters">Apply</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== LOGOUT CONFIRMATION MODAL ===== -->
     <div class="modal-overlay" id="logoutModal">

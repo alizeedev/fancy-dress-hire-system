@@ -31,7 +31,75 @@ async function init() {
     /* Handle the hire form submit. */
     document.getElementById("hireForm").addEventListener("submit", submitHire);
 
+    /* Add Customer modal wiring. */
+    wireCustomerModal();
+
     /* Logout is handled by logout.js (shows a confirmation modal). */
+}
+
+/* ============================================================
+   ADD CUSTOMER MODAL
+   ============================================================ */
+function wireCustomerModal() {
+    const overlay = document.getElementById("customerModal");
+
+    /* Open when the "+ New" button is clicked. */
+    document.getElementById("newCustomerBtn").addEventListener("click", function () {
+        document.getElementById("customerForm").reset();
+        document.getElementById("customerMessage").textContent = "";
+        overlay.classList.add("is-open");
+    });
+
+    /* Close via the X, Cancel, or clicking the backdrop. */
+    overlay.querySelectorAll("[data-close-customer]").forEach(function (btn) {
+        btn.addEventListener("click", function () { overlay.classList.remove("is-open"); });
+    });
+    overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) overlay.classList.remove("is-open");
+    });
+
+    /* Validate and save the new customer. */
+    document.getElementById("customerForm").addEventListener("submit", submitCustomer);
+}
+
+async function submitCustomer(event) {
+    event.preventDefault();
+    const msg = document.getElementById("customerMessage");
+    msg.className = "message message--error";
+    msg.textContent = "";
+
+    const id = document.getElementById("c_id").value.trim();
+    const name = document.getElementById("c_name").value.trim();
+    const email = document.getElementById("c_email").value.trim();
+    const phone = document.getElementById("c_phone").value.trim();
+
+    /* --- Validation (matches the backend Customer rules) --- */
+    if (id === "") { msg.textContent = "Please enter a customer ID."; return; }
+    if (name === "") { msg.textContent = "Please enter the full name."; return; }
+    if (!email.includes("@")) { msg.textContent = "Email must contain an @ sign."; return; }
+    if (phone.length < 7 || phone.length > 15) {
+        msg.textContent = "Phone must be 7 to 15 digits."; return;
+    }
+    if (!/^[0-9]+$/.test(phone)) {
+        msg.textContent = "Phone must contain digits only."; return;
+    }
+
+    try {
+        await apiPost("/api/customers", {
+            customerId: id, fullName: name, email: email, phone: phone
+        });
+        /* Add to the dropdown and select the new customer. */
+        const select = document.getElementById("customerSelect");
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = name;
+        select.appendChild(opt);
+        select.value = id;
+
+        document.getElementById("customerModal").classList.remove("is-open");
+    } catch (e) {
+        msg.textContent = "Could not save the customer. Please try again.";
+    }
 }
 
 /* ---- 1. Availability calendar (visual only) ----
