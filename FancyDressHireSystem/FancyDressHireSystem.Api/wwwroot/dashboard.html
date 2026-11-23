@@ -12,132 +12,133 @@
     <!-- Our shared stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="dash">
+<body>
 
-    <!-- ===== TOP NAVIGATION (appears on every page) ===== -->
-    <nav class="nav">
-        <a href="dashboard.html" class="nav__brand">
-            <img src="images/logo-mono.png" alt="The Grand Atelier logo" class="nav__logo">
-            <span class="nav__title">THE GRAND ATELIER</span>
-        </a>
-        <ul class="nav__links">
-            <li><a href="dashboard.html" class="is-active">Dashboard</a></li>
-            <li><a href="costumes.html">Collection</a></li>
-            <li><a href="rentals.html">Reservations</a></li>
-        </ul>
-        <div class="nav__right">
-            <span class="nav__user" id="navUser">Sophia</span>
-            <span class="nav__avatar" id="navAvatar">S</span>
-            <button class="btn btn--link" id="logoutBtn">Logout</button>
-        </div>
-    </nav>
+    <!-- ===== APP SHELL: left sidebar + content on the right ===== -->
+    <div class="shell">
 
-    <!-- ===== CINEMATIC HERO (photo + welcome + inline stats) ===== -->
-    <header class="dash-hero">
-        <div class="dash-hero__inner">
-            <p class="dash-hero__eyebrow">A Legacy in Every Stitch</p>
-
-            <h1 class="dash-hero__welcome">Welcome back,<br><span id="welcomeName">Sophia</span></h1>
-
-            <div class="dash-hero__rule"></div>
-
-            <p class="dash-hero__sub">
-                Museum-quality costumes for theatre, opera and film.
-            </p>
-
-            <!-- Inline statistics, like the design (filled by dashboard.js) -->
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat__value" id="statTotal">—</div>
-                    <div class="hero-stat__label">Total Costumes</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat__value" id="statAvailable">—</div>
-                    <div class="hero-stat__label">Available</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat__value" id="statOnHire">—</div>
-                    <div class="hero-stat__label">On Hire</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat__value" id="statOverdue">—</div>
-                    <div class="hero-stat__label">Overdue</div>
-                </div>
-            </div>
-
-            <!-- Two buttons, like the design -->
-            <div class="dash-hero__actions">
-                <a href="costumes.html" class="btn btn--primary">Explore Collection →</a>
-                <a href="rentals.html" class="btn btn--ghost">New Reservation</a>
-            </div>
-
-            <p class="dash-hero__quote">"Costume is the silent storyteller."</p>
-        </div>
-    </header>
-
-    <!-- ===== MAIN CONTENT AREA ===== -->
-    <main class="dash-body">
-
-        <!-- QUICK ACTION CARDS -->
-        <section class="quick-actions">
-            <a href="costumes.html" class="quick-card">
-                <span class="quick-card__icon">⚜</span>
-                <span class="quick-card__title">Browse Collection</span>
-                <span class="quick-card__sub">Explore every garment in the archive</span>
+        <!-- ===== SIDEBAR (the same block appears on every page) ===== -->
+        <aside class="sidebar">
+            <a href="dashboard.html" class="sidebar__brand">
+                <img src="images/logo-mono.png" alt="The Grand Atelier" class="sidebar__logo">
+                <span class="sidebar__name">THE GRAND<br>ATELIER</span>
             </a>
-            <a href="rentals.html" class="quick-card">
-                <span class="quick-card__icon">✦</span>
-                <span class="quick-card__title">New Reservation</span>
-                <span class="quick-card__sub">Create a hire for a customer</span>
-            </a>
-            <a href="rentals.html" class="quick-card">
-                <span class="quick-card__icon">◷</span>
-                <span class="quick-card__title">Active Rentals</span>
-                <span class="quick-card__sub">Track returns and overdue items</span>
-            </a>
-        </section>
 
-        <!-- COSTUME SEARCH -->
-        <section class="panel">
-            <div class="panel__head">
-                <h2>Find a Costume</h2>
-                <span class="panel__hint">Search the collection by name or category</span>
+            <ul class="sidebar__nav">
+                <li><a href="dashboard.html" class="sidebar__link is-active"><span class="sidebar__icon">⌂</span> Dashboard</a></li>
+                <li><a href="costumes.html" class="sidebar__link"><span class="sidebar__icon">◇</span> Collection</a></li>
+                <li><a href="rentals.html" class="sidebar__link"><span class="sidebar__icon">▤</span> Reservations</a></li>
+            </ul>
+
+            <p class="sidebar__note">"Costume is the silent storyteller."</p>
+
+            <div class="sidebar__profile">
+                <span class="sidebar__avatar" id="sideAvatar">S</span>
+                <span class="sidebar__who">
+                    <span class="sidebar__username" id="sideUser">Sophia</span>
+                    <span class="sidebar__role" id="sideRole">Admin</span>
+                </span>
+                <button class="sidebar__logout" id="logoutBtn" title="Sign out">⏻</button>
             </div>
-            <div class="dash-search__row">
-                <input type="text" id="searchInput" placeholder="Search costumes…">
-                <button class="btn btn--primary" id="searchBtn">Search</button>
+        </aside>
+
+        <!-- ===== CONTENT COLUMN ===== -->
+        <div class="content">
+
+            <!-- Slim topbar: page title + today's date -->
+            <div class="topbar">
+                <div>
+                    <div class="topbar__crumb">Management</div>
+                    <h1 class="topbar__title">Dashboard</h1>
+                </div>
+                <div class="topbar__date" id="todayDate">—</div>
             </div>
-            <div class="dash-search__results" id="searchResults"></div>
-        </section>
 
-        <!-- RECENT RESERVATIONS -->
-        <section class="panel">
-            <div class="panel__head">
-                <h2>Recent Reservations</h2>
-                <a href="rentals.html" class="btn btn--link">View All →</a>
-            </div>
-            <table class="atelier">
-                <thead>
-                    <tr>
-                        <th>Customer</th>
-                        <th>Costume</th>
-                        <th>Due Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="recentBody"></tbody>
-            </table>
-        </section>
+            <div class="content__body">
 
-    </main>
+                <!-- Hero banner (keeps the costume-rail photo) -->
+                <header class="hero-banner">
+                    <p class="hero-banner__eyebrow">A Legacy in Every Stitch</p>
+                    <h2 class="hero-banner__welcome">Welcome back,<br><span id="welcomeName">Sophia</span></h2>
+                    <p class="hero-banner__sub">Museum-quality costumes for theatre, opera and film, kept and hired from one elegant register.</p>
+                    <div class="hero-banner__actions">
+                        <a href="costumes.html" class="btn btn--primary">Explore Collection →</a>
+                        <a href="rentals.html" class="btn btn--ghost">New Reservation</a>
+                    </div>
+                </header>
 
-    <!-- ===== WAX-SEAL FOOTER ===== -->
-    <footer class="atelier-foot">
-        <hr class="gold-divider" style="width:200px;">
-        <div class="wax-seal"><img src="images/logo-mono.png" alt="The Grand Atelier"></div>
-        <p class="atelier-foot__quote">"Preserving the past for extraordinary tomorrows."</p>
-    </footer>
+                <!-- Four statistics as cards (filled by dashboard.js) -->
+                <section class="stat-row">
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statTotal">—</div>
+                        <div class="stat-card__label">Pieces in Collection</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statAvailable">—</div>
+                        <div class="stat-card__label">Available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statOnHire">—</div>
+                        <div class="stat-card__label">On Hire</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statOverdue">—</div>
+                        <div class="stat-card__label">Overdue</div>
+                    </div>
+                </section>
 
+                <!-- Two columns: recent reservations table | quick actions -->
+                <section class="section-grid">
+
+                    <!-- Recent reservations -->
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2>Recent Reservations</h2>
+                            <a href="rentals.html" class="btn btn--link">View All →</a>
+                        </div>
+                        <table class="atelier">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Costume</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentBody"></tbody>
+                        </table>
+                    </div>
+
+                    <!-- Quick actions -->
+                    <div class="action-stack">
+                        <a href="costumes.html" class="action-card">
+                            <span class="action-card__icon">◇</span>
+                            <span>
+                                <span class="action-card__title">Browse Collection</span><br>
+                                <span class="action-card__sub">Every garment in the archive</span>
+                            </span>
+                        </a>
+                        <a href="rentals.html" class="action-card">
+                            <span class="action-card__icon">✦</span>
+                            <span>
+                                <span class="action-card__title">New Reservation</span><br>
+                                <span class="action-card__sub">Create a hire for a customer</span>
+                            </span>
+                        </a>
+                        <a href="rentals.html" class="action-card">
+                            <span class="action-card__icon">◷</span>
+                            <span>
+                                <span class="action-card__title">Active Rentals</span><br>
+                                <span class="action-card__sub">Track returns and overdue items</span>
+                            </span>
+                        </a>
+                    </div>
+
+                </section>
+
+            </div><!-- /content__body -->
+        </div><!-- /content -->
+    </div><!-- /shell -->
     <!-- ===== LOGOUT CONFIRMATION MODAL ===== -->
     <div class="modal-overlay" id="logoutModal">
         <div class="modal">
@@ -151,7 +152,7 @@
         </div>
     </div>
 
-    <!-- Our scripts: api.js (shared helper), dashboard.js, logout.js -->
+    <!-- Our scripts -->
     <script src="js/api.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/logout.js"></script>

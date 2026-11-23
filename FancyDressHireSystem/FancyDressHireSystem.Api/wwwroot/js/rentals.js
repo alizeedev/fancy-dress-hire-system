@@ -9,14 +9,28 @@ let availableCostumes = [];   /* costumes we can hire out */
 
 document.addEventListener("DOMContentLoaded", init);
 
+/* Shared helper: fill the sidebar profile chip. */
+function fillSidebar(me) {
+    const user = document.getElementById("sideUser");
+    const avatar = document.getElementById("sideAvatar");
+    const role = document.getElementById("sideRole");
+    if (user) user.textContent = me.userName;
+    if (avatar) avatar.textContent = me.userName.charAt(0).toUpperCase();
+    if (role && me.userRole) role.textContent = me.userRole;
+}
+
 async function init() {
 
-    /* Show who is logged in. */
+    /* Show who is logged in, in the sidebar chip. */
     try {
         const me = await apiGet("/api/auth/me");
-        document.getElementById("navUser").textContent = me.userName;
-        document.getElementById("navAvatar").textContent = me.userName.charAt(0).toUpperCase();
+        fillSidebar(me);
     } catch (e) { return; }
+
+    /* Today's date in the topbar. */
+    const dateEl = document.getElementById("todayDate");
+    if (dateEl) dateEl.textContent =
+        new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
     drawCalendar();           /* the visual availability calendar */
     await loadCostumes();     /* fill the costume dropdown */

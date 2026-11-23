@@ -9,18 +9,21 @@
 
 let allCostumes = [];
 let activeCategory = "All";
-let extraFilters = { size: "", availability: "" };   /* from the Filters panel */
+let extraFilters = { size: "", availability: "" };   /* size from the More modal, availability from the toolbar */
 
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
 
-    /* Show who is logged in, in the nav. */
+    /* Show who is logged in, in the sidebar chip. Today's date in the topbar. */
     try {
         const me = await apiGet("/api/auth/me");
-        document.getElementById("navUser").textContent = me.userName;
-        document.getElementById("navAvatar").textContent = me.userName.charAt(0).toUpperCase();
+        fillSidebar(me);
     } catch (e) { return; }
+
+    const dateEl = document.getElementById("todayDate");
+    if (dateEl) dateEl.textContent =
+        new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
     /* Load every costume once, then show them. */
     try {
@@ -31,12 +34,15 @@ async function init() {
             `<div class="empty-state">Could not load the collection.</div>`;
     }
 
-    /* Category tabs filter the grid. */
-    document.getElementById("filterTabs").addEventListener("click", function (e) {
-        if (!e.target.classList.contains("filter-tab")) return;
-        document.querySelectorAll(".filter-tab").forEach(t => t.classList.remove("is-active"));
-        e.target.classList.add("is-active");
-        activeCategory = e.target.dataset.category;
+    /* Category dropdown filters the grid. */
+    document.getElementById("categorySelect").addEventListener("change", function (e) {
+        activeCategory = e.target.value;
+        render();
+    });
+
+    /* Availability dropdown filters the grid. */
+    document.getElementById("availSelect").addEventListener("change", function (e) {
+        extraFilters.availability = e.target.value;
         render();
     });
 
@@ -49,6 +55,16 @@ async function init() {
     wireModalClosing();
 
     /* Logout is handled by logout.js (shows a confirmation modal). */
+}
+
+/* Shared helper: fill the sidebar profile chip. */
+function fillSidebar(me) {
+    const user = document.getElementById("sideUser");
+    const avatar = document.getElementById("sideAvatar");
+    const role = document.getElementById("sideRole");
+    if (user) user.textContent = me.userName;
+    if (avatar) avatar.textContent = me.userName.charAt(0).toUpperCase();
+    if (role && me.userRole) role.textContent = me.userRole;
 }
 
 /* ============================================================
@@ -75,6 +91,13 @@ function render() {
 function drawGrid(costumes) {
     const grid = document.getElementById("costumeGrid");
     grid.innerHTML = "";
+
+    /* Live result count in the toolbar. */
+    const count = document.getElementById("resultCount");
+    if (count) {
+        count.innerHTML = "<b>" + costumes.length + "</b> " +
+            (costumes.length === 1 ? "piece" : "pieces");
+    }
 
     if (costumes.length === 0) {
         grid.innerHTML = `<div class="empty-state">No costumes match your search.</div>`;
@@ -271,16 +294,16 @@ function wireFilters() {
     document.getElementById("filtersBtn").addEventListener("click", function () {
         openModal("filtersModal");
     });
+    /* The More modal now holds the size filter only; availability
+       lives in the toolbar dropdown, so we leave it untouched here. */
     document.getElementById("applyFilters").addEventListener("click", function () {
         extraFilters.size = getVal("filterSize");
-        extraFilters.availability = getVal("filterAvail");
         closeModal("filtersModal");
         render();
     });
     document.getElementById("clearFilters").addEventListener("click", function () {
-        extraFilters = { size: "", availability: "" };
+        extraFilters.size = "";
         setVal("filterSize", "");
-        setVal("filterAvail", "");
         closeModal("filtersModal");
         render();
     });

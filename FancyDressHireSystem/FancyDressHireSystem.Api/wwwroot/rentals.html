@@ -12,135 +12,136 @@
     <!-- Our shared stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="dash">
+<body>
 
-    <!-- ===== TOP NAVIGATION (solid: light title area sits below it) ===== -->
-    <nav class="nav nav--solid">
-        <a href="dashboard.html" class="nav__brand">
-            <img src="images/logo-mono.png" alt="The Grand Atelier logo" class="nav__logo">
-            <span class="nav__title">THE GRAND ATELIER</span>
-        </a>
-        <ul class="nav__links">
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="costumes.html">Collection</a></li>
-            <li><a href="rentals.html" class="is-active">Reservations</a></li>
-        </ul>
-        <div class="nav__right">
-            <span class="nav__user" id="navUser">Sophia</span>
-            <span class="nav__avatar" id="navAvatar">S</span>
-            <button class="btn btn--link" id="logoutBtn">Logout</button>
-        </div>
-    </nav>
+    <div class="shell">
 
-    <!-- ===== PAGE HEADER ===== -->
-    <header class="catalogue-hero">
-        <div class="catalogue-hero__inner">
-            <p class="page__eyebrow">Reservations &amp; Availability</p>
-            <h1 class="catalogue-hero__title">Manage Reservations</h1>
-            <p class="catalogue-hero__sub">
-                Create a hire, track returns and view availability.
-            </p>
-        </div>
-    </header>
-
-    <main class="reservations">
-
-        <!-- ===== AVAILABILITY CALENDAR (visual) ===== -->
-        <section class="panel">
-            <div class="panel__head">
-                <div>
-                    <h2>Availability Calendar</h2>
-                    <p class="calendar-month" id="calendarMonth">November 2026</p>
-                </div>
-                <div class="calendar-legend">
-                    <span class="legend-item"><span class="legend-dot legend-dot--ok"></span> Available</span>
-                    <span class="legend-item"><span class="legend-dot legend-dot--warn"></span> Reserved</span>
-                    <span class="legend-item"><span class="legend-dot legend-dot--danger"></span> Overdue</span>
-                </div>
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <a href="dashboard.html" class="sidebar__brand">
+                <img src="images/logo-mono.png" alt="The Grand Atelier" class="sidebar__logo">
+                <span class="sidebar__name">THE GRAND<br>ATELIER</span>
+            </a>
+            <ul class="sidebar__nav">
+                <li><a href="dashboard.html" class="sidebar__link"><span class="sidebar__icon">⌂</span> Dashboard</a></li>
+                <li><a href="costumes.html" class="sidebar__link"><span class="sidebar__icon">◇</span> Collection</a></li>
+                <li><a href="rentals.html" class="sidebar__link is-active"><span class="sidebar__icon">▤</span> Reservations</a></li>
+            </ul>
+            <p class="sidebar__note">"Costume is the silent storyteller."</p>
+            <div class="sidebar__profile">
+                <span class="sidebar__avatar" id="sideAvatar">S</span>
+                <span class="sidebar__who">
+                    <span class="sidebar__username" id="sideUser">Sophia</span>
+                    <span class="sidebar__role" id="sideRole">Admin</span>
+                </span>
+                <button class="sidebar__logout" id="logoutBtn" title="Sign out">⏻</button>
             </div>
-            <!-- The month grid is drawn by rentals.js -->
-            <div class="calendar-grid" id="calendarGrid"></div>
-        </section>
+        </aside>
 
-        <!-- ===== HIRE FORM + ACTIVE RENTALS (two columns) ===== -->
-        <div class="reservations__grid">
+        <!-- ===== CONTENT COLUMN ===== -->
+        <div class="content">
 
-            <!-- LEFT: New hire form -->
-            <section class="panel">
-                <div class="panel__head"><h2>New Reservation</h2></div>
-
-                <form id="hireForm" novalidate>
-                    <!-- Customer dropdown (filled from GET /api/customers)
-                         with a "+ New" button to add a customer on the fly -->
-                    <div class="field">
-                        <label for="customerSelect">Customer</label>
-                        <div class="field-with-btn">
-                            <select id="customerSelect"></select>
-                            <button type="button" class="btn btn--outline field-add-btn" id="newCustomerBtn">+ New</button>
-                        </div>
-                    </div>
-
-                    <!-- Costume dropdown (only available ones) -->
-                    <div class="field">
-                        <label for="costumeSelect">Costume</label>
-                        <select id="costumeSelect"></select>
-                    </div>
-
-                    <!-- Dates -->
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="startDate">Start Date</label>
-                            <input type="date" id="startDate">
-                        </div>
-                        <div class="field">
-                            <label for="dueDate">Due Date</label>
-                            <input type="date" id="dueDate">
-                        </div>
-                    </div>
-
-                    <!-- Live cost summary -->
-                    <div class="cost-summary">
-                        <div class="cost-row"><span>Duration</span><span id="costDays">0 days</span></div>
-                        <div class="cost-row cost-row--total"><span>Total Cost</span><span id="costTotal">Rs 0</span></div>
-                    </div>
-
-                    <!-- Validation / success message -->
-                    <p id="hireMessage" class="message message--error"></p>
-
-                    <button type="submit" class="btn btn--primary btn--block">Confirm Reservation</button>
-                </form>
-            </section>
-
-            <!-- RIGHT: Active rentals table -->
-            <section class="panel">
-                <div class="panel__head">
-                    <h2>Active Rentals</h2>
-                    <span class="panel__hint">Overdue shown in red</span>
+            <div class="topbar">
+                <div>
+                    <div class="topbar__crumb">Register</div>
+                    <h1 class="topbar__title">Reservations</h1>
                 </div>
-                <table class="atelier">
-                    <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Costume</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="rentalsBody"></tbody>
-                </table>
-            </section>
+                <div class="topbar__date" id="todayDate">—</div>
+            </div>
 
-        </div>
-    </main>
+            <div class="content__body">
 
-    <!-- ===== WAX-SEAL FOOTER ===== -->
-    <footer class="atelier-foot">
-        <hr class="gold-divider" style="width:200px;">
-        <div class="wax-seal"><img src="images/logo-mono.png" alt="The Grand Atelier"></div>
-        <p class="atelier-foot__quote">"Preserving the past for extraordinary tomorrows."</p>
-    </footer>
+                <!-- ===== AVAILABILITY CALENDAR (visual) ===== -->
+                <section class="panel">
+                    <div class="panel__head">
+                        <div>
+                            <h2>Availability Calendar</h2>
+                            <p class="calendar-month" id="calendarMonth">November 2026</p>
+                        </div>
+                        <div class="calendar-legend">
+                            <span class="legend-item"><span class="legend-dot legend-dot--ok"></span> Available</span>
+                            <span class="legend-item"><span class="legend-dot legend-dot--warn"></span> Reserved</span>
+                            <span class="legend-item"><span class="legend-dot legend-dot--danger"></span> Overdue</span>
+                        </div>
+                    </div>
+                    <!-- The month grid is drawn by rentals.js -->
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </section>
 
+                <!-- ===== HIRE FORM + ACTIVE RENTALS (two columns) ===== -->
+                <div class="reservations__grid">
+
+                    <!-- LEFT: New hire form -->
+                    <section class="panel">
+                        <div class="panel__head"><h2>New Reservation</h2></div>
+
+                        <form id="hireForm" novalidate>
+                            <!-- Customer dropdown (filled from GET /api/customers)
+                                 with a "+ New" button to add a customer on the fly -->
+                            <div class="field">
+                                <label for="customerSelect">Customer</label>
+                                <div class="field-with-btn">
+                                    <select id="customerSelect"></select>
+                                    <button type="button" class="btn btn--outline field-add-btn" id="newCustomerBtn">+ New</button>
+                                </div>
+                            </div>
+
+                            <!-- Costume dropdown (only available ones) -->
+                            <div class="field">
+                                <label for="costumeSelect">Costume</label>
+                                <select id="costumeSelect"></select>
+                            </div>
+
+                            <!-- Dates -->
+                            <div class="field-row">
+                                <div class="field">
+                                    <label for="startDate">Start Date</label>
+                                    <input type="date" id="startDate">
+                                </div>
+                                <div class="field">
+                                    <label for="dueDate">Due Date</label>
+                                    <input type="date" id="dueDate">
+                                </div>
+                            </div>
+
+                            <!-- Live cost summary -->
+                            <div class="cost-summary">
+                                <div class="cost-row"><span>Duration</span><span id="costDays">0 days</span></div>
+                                <div class="cost-row cost-row--total"><span>Total Cost</span><span id="costTotal">Rs 0</span></div>
+                            </div>
+
+                            <!-- Validation / success message -->
+                            <p id="hireMessage" class="message message--error"></p>
+
+                            <button type="submit" class="btn btn--primary btn--block">Confirm Reservation</button>
+                        </form>
+                    </section>
+
+                    <!-- RIGHT: Active rentals table -->
+                    <section class="panel">
+                        <div class="panel__head">
+                            <h2>Active Rentals</h2>
+                            <span class="panel__hint">Overdue shown in red</span>
+                        </div>
+                        <table class="atelier">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Costume</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="rentalsBody"></tbody>
+                        </table>
+                    </section>
+
+                </div><!-- /reservations__grid -->
+
+            </div><!-- /content__body -->
+        </div><!-- /content -->
+    </div><!-- /shell -->
     <!-- ===== ADD CUSTOMER MODAL ===== -->
     <div class="modal-overlay" id="customerModal">
         <div class="modal">
@@ -189,5 +190,6 @@
     <script src="js/api.js"></script>
     <script src="js/rentals.js"></script>
     <script src="js/logout.js"></script>
+    <script src="js/dropdown.js"></script>
 </body>
 </html>

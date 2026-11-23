@@ -1827,3 +1827,822 @@ table.atelier {
     }
     /* form fills the width */
 }
+
+/* ============================================================
+   SIDEBAR SHELL  (the app layout — a fixed left rail + content)
+   This is the management-platform layout: a slim column on the
+   left holds the brand, navigation and the signed-in user; the
+   page content scrolls on the right. Used on dashboard,
+   collection and reservations.
+   ============================================================ */
+.shell {
+    display: grid;
+    grid-template-columns: 256px 1fr; /* sidebar fixed, content fills */
+    min-height: 100vh;
+}
+
+/* ---- The left rail itself ---- */
+.sidebar {
+    position: sticky; /* stays put while the content scrolls */
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    background: linear-gradient(180deg, var(--emerald) 0%, var(--emerald-deep) 100%);
+    border-right: 1px solid rgba(201,165,106,0.25);
+    display: flex;
+    flex-direction: column;
+    padding: 1.8rem 1.2rem;
+    color: var(--ivory-warm);
+}
+
+/* Brand block at the top of the sidebar (logo + name) */
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0 0.6rem 1.4rem;
+    border-bottom: 1px solid rgba(201,165,106,0.18);
+}
+
+.sidebar__logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.sidebar__name {
+    font-family: var(--serif);
+    font-size: 0.98rem;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    color: var(--ivory);
+}
+
+/* Navigation links down the rail */
+.sidebar__nav {
+    list-style: none;
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1; /* push the profile chip to the bottom */
+}
+
+.sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: var(--radius);
+    font-size: 0.86rem;
+    letter-spacing: 0.6px;
+    color: var(--ivory-warm);
+    position: relative;
+    transition: background 0.22s var(--ease), color 0.22s var(--ease);
+}
+
+    .sidebar__link:hover {
+        background: rgba(201,165,106,0.10);
+        color: #fff;
+    }
+    /* The active page: a soft gold panel with a bright gold edge */
+    .sidebar__link.is-active {
+        background: rgba(201,165,106,0.16);
+        color: var(--gold-light);
+    }
+
+        .sidebar__link.is-active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 18%;
+            height: 64%;
+            width: 3px;
+            border-radius: 3px;
+            background: var(--gold);
+        }
+/* The little glyph in front of each link */
+.sidebar__icon {
+    font-size: 1.05rem;
+    width: 1.2rem;
+    text-align: center;
+    color: var(--gold);
+    opacity: 0.9;
+}
+
+/* A quiet decorative note between nav and profile */
+.sidebar__note {
+    margin: 1rem 0.6rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    line-height: 1.4;
+}
+
+/* The signed-in user chip at the bottom of the rail */
+.sidebar__profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 0.7rem 0.3rem;
+    border-top: 1px solid rgba(201,165,106,0.18);
+    margin-top: 0.4rem;
+}
+
+.sidebar__avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--gold-deep);
+    color: var(--emerald-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.sidebar__who {
+    line-height: 1.2;
+    min-width: 0;
+}
+
+.sidebar__username {
+    font-size: 0.9rem;
+    color: var(--ivory);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar__role {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0.8;
+}
+
+.sidebar__logout {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--gold-light);
+    cursor: pointer;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+
+    .sidebar__logout:hover {
+        opacity: 1;
+        color: #fff;
+    }
+
+/* ---- The content column on the right ---- */
+.content {
+    min-width: 0; /* lets tables/grids shrink instead of overflow */
+    display: flex;
+    flex-direction: column;
+}
+
+/* The slim topbar inside the content: page title + today's date */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 2.8rem;
+    border-bottom: 1px solid rgba(201,165,106,0.22);
+    background: #fff;
+}
+
+.topbar__title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--emerald);
+    line-height: 1.1;
+}
+
+.topbar__crumb {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 0.15rem;
+}
+
+.topbar__date {
+    font-size: 0.82rem;
+    color: #8a847a;
+    text-align: right;
+}
+
+/* The scrolling body of each page */
+.content__body {
+    padding: 2.4rem 2.8rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+}
+
+/* ============================================================
+   DASHBOARD — sidebar version
+   The hero now sits INSIDE the content column as a wide banner
+   (keeping the photo), with stat cards and panels below it.
+   ============================================================ */
+/* The hero banner in the sidebar layout */
+.hero-banner {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    padding: 3rem 3rem 2.6rem;
+    color: var(--ivory);
+    background-image: linear-gradient(90deg, rgba(7,27,23,0.92) 0%, rgba(7,27,23,0.62) 45%, rgba(7,27,23,0.25) 100%), url("../images/dashboard-hero.jpg");
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--gold);
+}
+
+.hero-banner__eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+}
+
+.hero-banner__welcome {
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    line-height: 1.08;
+}
+
+    .hero-banner__welcome span {
+        color: var(--gold-light);
+        font-style: italic;
+    }
+
+.hero-banner__sub {
+    color: var(--ivory-warm);
+    max-width: 30rem;
+    margin-top: 0.8rem;
+    font-size: 0.98rem;
+}
+
+.hero-banner__actions {
+    margin-top: 1.6rem;
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+
+/* ---- Stat cards (the four figures) — gold left-bar style ---- */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.3rem;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lift);
+    }
+
+.stat-card__value {
+    font-family: var(--serif);
+    font-size: 2.3rem;
+    color: var(--emerald);
+    line-height: 1;
+}
+
+.stat-card__label {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-top: 0.5rem;
+}
+
+/* ---- Dashboard two-column area: table | quick actions ---- */
+.section-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.6rem;
+    align-items: start;
+}
+
+/* Quick-action list used in the dashboard side column */
+.action-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.action-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.1rem 1.2rem;
+    transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease), border-color 0.28s var(--ease);
+}
+
+    .action-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lift);
+        border-color: var(--gold);
+    }
+
+.action-card__icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(201,165,106,0.14);
+    color: var(--gold-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.action-card__title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--emerald);
+    line-height: 1.1;
+}
+
+.action-card__sub {
+    font-size: 0.78rem;
+    color: #9a948a;
+}
+
+/* ============================================================
+   COLLECTION — toolbar (sidebar version)
+   A single clean toolbar: search, category, availability, count.
+   ============================================================ */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.1rem 1.3rem;
+}
+
+.toolbar__search {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+}
+
+    .toolbar__search span {
+        position: absolute;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+        font-size: 0.9rem;
+    }
+
+    .toolbar__search input {
+        width: 100%;
+        padding: 0.7rem 1rem 0.7rem 2.4rem;
+        border: 1px solid #e0d9cb;
+        border-radius: 30px;
+        font-family: var(--sans);
+        font-size: 0.9rem;
+        background: #fffdf9;
+    }
+
+        .toolbar__search input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+        }
+
+.toolbar select {
+    padding: 0.7rem 2.4rem 0.7rem 1rem;
+    border: 1px solid #e0d9cb;
+    border-radius: 30px;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    background: #fffdf9;
+    color: var(--charcoal);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B88A44' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+}
+
+    .toolbar select:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+    }
+
+.toolbar__count {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: #8a847a;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+    .toolbar__count b {
+        color: var(--emerald);
+        font-weight: 600;
+    }
+/* "+ Add Costume" sits at the far right of the toolbar */
+.toolbar .btn {
+    padding: 0.7rem 1.3rem;
+    font-size: 0.72rem;
+}
+
+/* ============================================================
+   RESERVATIONS — tabs (sidebar version)
+   ============================================================ */
+.res-tabs {
+    display: flex;
+    gap: 0.3rem;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.3);
+    border-radius: 30px;
+    padding: 0.3rem;
+    width: fit-content;
+}
+
+.res-tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--charcoal);
+    padding: 0.5rem 1.1rem;
+    border-radius: 30px;
+    transition: all 0.2s;
+}
+
+    .res-tab:hover {
+        color: var(--gold-deep);
+    }
+
+    .res-tab.is-active {
+        background: var(--emerald);
+        color: var(--gold-light);
+    }
+
+/* ============================================================
+   RESPONSIVE — the sidebar collapses to a top strip on narrow
+   screens so the content never gets crushed.
+   ============================================================ */
+@media (max-width: 900px) {
+    .shell {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0.9rem 1.2rem;
+    }
+
+    .sidebar__brand {
+        border-bottom: none;
+        padding: 0 1rem 0 0;
+    }
+
+    .sidebar__nav {
+        flex-direction: row;
+        margin-top: 0;
+        flex: 1;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .sidebar__link.is-active::before {
+        display: none;
+    }
+
+    .sidebar__note {
+        display: none;
+    }
+
+    .sidebar__profile {
+        border-top: none;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .sidebar__who {
+        display: none;
+    }
+
+    .topbar {
+        padding: 1.2rem 1.4rem;
+    }
+
+    .content__body {
+        padding: 1.6rem 1.4rem 2.4rem;
+    }
+
+    .stat-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reservations__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .stat-row {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-banner__welcome {
+        font-size: 2rem;
+    }
+}
+
+/* ============================================================
+   LOGIN — refinements for the new design
+   Keeps the real photo on the left, adds a hand-drawn gold
+   dress-form illustration layered over it (CSS only, no image),
+   and polishes the form panel.
+   ============================================================ */
+/* A centred CSS dress-form silhouette drawn with borders +
+   gradients, sitting over the photo so the panel feels bespoke. */
+.login-figure {
+    position: relative;
+    width: 180px;
+    height: 300px;
+    margin: 2.2rem 0 0;
+    align-self: center;
+}
+/* The bodice: a rounded trapezoid tapering to the waist */
+.login-figure__bodice {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 150px;
+    border: 1.5px solid var(--gold);
+    border-radius: 60px 60px 18px 18px / 80px 80px 30px 30px;
+    background: linear-gradient(160deg, rgba(201,165,106,0.12), transparent);
+    clip-path: polygon(16% 0, 84% 0, 68% 100%, 32% 100%);
+}
+/* The skirt: a wide bell flaring from the waist */
+.login-figure__skirt {
+    position: absolute;
+    top: 142px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 150px;
+    border: 1.5px solid var(--gold);
+    border-radius: 0 0 90px 90px / 0 0 60px 60px;
+    background: linear-gradient(180deg, rgba(201,165,106,0.14), rgba(201,165,106,0.02));
+    clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%);
+}
+/* The stand neck + base */
+.login-figure__neck {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 26px;
+    background: var(--gold);
+}
+
+    .login-figure__neck::before {
+        content: "";
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 26px;
+        height: 26px;
+        border: 1.5px solid var(--gold);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(201,165,106,0.18), transparent 70%);
+    }
+/* A few vertical "seam" lines on the skirt */
+.login-figure__seam {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    width: 1px;
+    height: 130px;
+    background: linear-gradient(180deg, rgba(216,193,154,0.6), transparent);
+}
+
+.login-figure__seam--l {
+    transform: translateX(-34px) rotate(10deg);
+    transform-origin: top;
+}
+
+.login-figure__seam--r {
+    transform: translateX(34px) rotate(-10deg);
+    transform-origin: top;
+}
+
+/* Gentle framing corners on the brand panel */
+.login-hero::after {
+    content: "";
+    position: absolute;
+    inset: 1.6rem;
+    border: 1px solid rgba(201,165,106,0.28);
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+/* ============================================================
+   TABLE TIDY — keep dates and status on one line so they don't
+   wrap awkwardly (e.g. "2026-12-02" splitting across two lines).
+   The Due Date is the 3rd column and Status the 4th on the
+   dashboard and reservations tables.
+   ============================================================ */
+table.atelier td:nth-child(3),
+table.atelier td:nth-child(4),
+table.atelier th:nth-child(3),
+table.atelier th:nth-child(4) {
+    white-space: nowrap;
+}
+
+/* ============================================================
+   CUSTOM DROPDOWNS (dropdown.js)
+   Elegant replacement for the browser's native select menu,
+   which can't be styled. The real <select> is hidden; we draw
+   our own button + menu in the site's fonts and colours.
+   ============================================================ */
+.dd {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hide the real select but keep it in the page for form submits. */
+.dd__native {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* The visible button. Shares the look of our toolbar pills. */
+.dd__button {
+    width: 100%;
+    text-align: left;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    background: #fffdf9;
+    border: 1px solid #e0d9cb;
+    border-radius: 30px;
+    padding: 0.7rem 2.4rem 0.7rem 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+    /* The gold chevron on the right. */
+    .dd__button::after {
+        content: "";
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        width: 9px;
+        height: 9px;
+        border-right: 1.5px solid var(--gold-deep);
+        border-bottom: 1.5px solid var(--gold-deep);
+        transform: translateY(-65%) rotate(45deg);
+        transition: transform 0.2s var(--ease);
+    }
+
+.dd.is-open .dd__button {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+}
+
+    .dd.is-open .dd__button::after {
+        transform: translateY(-35%) rotate(-135deg); /* flip the chevron up */
+    }
+
+/* The dropdown menu panel. */
+.dd__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 100%;
+    z-index: 120;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.4);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+    padding: 0.35rem;
+    display: none;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.dd.is-open .dd__menu {
+    display: block;
+    animation: dd-in 0.16s var(--ease);
+}
+
+@keyframes dd-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* One option row. Gold wash on hover, not the grey system highlight. */
+.dd__option {
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    color: var(--charcoal);
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+    .dd__option:hover {
+        background: var(--ivory-warm);
+        color: var(--gold-deep);
+    }
+    /* The currently chosen option: soft gold fill + a tick. */
+    .dd__option.is-selected {
+        background: rgba(201,165,106,0.14);
+        color: var(--gold-deep);
+        position: relative;
+        padding-right: 1.8rem;
+    }
+
+        .dd__option.is-selected::after {
+            content: "✓";
+            position: absolute;
+            right: 0.7rem;
+            color: var(--gold-deep);
+            font-size: 0.8rem;
+        }
+
+/* Inside a form field, the button fills the width and squares off
+   to match our other inputs (not a pill). */
+.field .dd, .field .dd__button {
+    width: 100%;
+}
+
+.field .dd__button {
+    border-radius: var(--radius);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+    font-size: 0.95rem;
+    background: #fffdf9;
+}
+/* In the hire form the customer select sits next to a "+ New"
+   button, so its dropdown must stretch to fill the space. */
+.field-with-btn .dd {
+    flex: 1;
+}
