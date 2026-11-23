@@ -9,36 +9,34 @@
    A "CSS variable" lets us name a colour once and reuse it
    everywhere. Change it here and it changes across every page. */
 :root {
-    --emerald-deep:  #071B17;   /* darkest green (backgrounds) */
-    --emerald:       #0C241F;   /* main deep green */
-    --emerald-light: #14332C;   /* slightly lighter green */
+    --emerald-deep: #071B17; /* darkest green (backgrounds) */
+    --emerald: #0C241F; /* main deep green */
+    --emerald-light: #14332C; /* slightly lighter green */
 
-    --gold-light:    #D8C19A;   /* pale gold (text on dark) */
-    --gold:          #C9A56A;   /* main antique gold */
-    --gold-deep:     #B88A44;   /* darker gold (labels) */
+    --gold-light: #D8C19A; /* pale gold (text on dark) */
+    --gold: #C9A56A; /* main antique gold */
+    --gold-deep: #B88A44; /* darker gold (labels) */
 
-    --ivory:         #FBF8F2;   /* warm off-white (page background) */
-    --ivory-warm:    #F4EEE3;   /* slightly deeper ivory */
+    --ivory: #FBF8F2; /* warm off-white (page background) */
+    --ivory-warm: #F4EEE3; /* slightly deeper ivory */
 
-    --burgundy:      #5B1F25;   /* deep red (overdue, wax seal) */
-    --burgundy-light:#7A2D35;   /* lighter red */
-    --charcoal:      #2B2B2B;   /* near-black body text */
+    --burgundy: #5B1F25; /* deep red (overdue, wax seal) */
+    --burgundy-light: #7A2D35; /* lighter red */
+    --charcoal: #2B2B2B; /* near-black body text */
 
-    --ok:      #2f6b4f;   /* green  = available */
-    --warn:    #B88A44;   /* gold   = on hire   */
-    --danger:  #7A2D35;   /* red    = overdue   */
-
+    --ok: #2f6b4f; /* green  = available */
+    --warn: #B88A44; /* gold   = on hire   */
+    --danger: #7A2D35; /* red    = overdue   */
     /* Fonts: a serif for headings, a sans-serif for body text */
     --serif: "Cormorant Garamond", Georgia, serif;
-    --sans:  "Jost", "Helvetica Neue", Arial, sans-serif;
-
+    --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
     /* Layered shadows for real depth (soft + tight) */
     --shadow-soft: 0 10px 40px rgba(7, 27, 23, 0.18);
     --shadow-card: 0 2px 6px rgba(7,27,23,0.04), 0 14px 38px rgba(7,27,23,0.10);
     --shadow-lift: 0 4px 10px rgba(7,27,23,0.08), 0 22px 60px rgba(7,27,23,0.22);
-    --radius: 6px;                 /* standard corner rounding */
-    --radius-lg: 12px;             /* larger panels */
-    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);   /* smooth, refined easing */
+    --radius: 6px; /* standard corner rounding */
+    --radius-lg: 12px; /* larger panels */
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1); /* smooth, refined easing */
 }
 
 /* ---- Reset: remove the browser's default spacing ----
@@ -55,19 +53,19 @@
    so large empty areas don't feel flat. */
 body::before {
     content: "";
-    position: fixed; inset: 0; z-index: -1;
-    background:
-        radial-gradient(circle at 15% 15%, rgba(201,165,106,0.05), transparent 40%),
-        radial-gradient(circle at 85% 80%, rgba(12,36,31,0.04), transparent 45%);
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 15% 15%, rgba(201,165,106,0.05), transparent 40%), radial-gradient(circle at 85% 80%, rgba(12,36,31,0.04), transparent 45%);
     pointer-events: none;
 }
 
 body {
-    font-family: var(--sans);      /* use our sans-serif font */
-    color: var(--charcoal);        /* near-black text */
-    background: var(--ivory);      /* warm off-white background */
-    line-height: 1.6;              /* comfortable spacing between lines */
-    -webkit-font-smoothing: antialiased;  /* crisper text on Mac/Chrome */
+    font-family: var(--sans); /* use our sans-serif font */
+    color: var(--charcoal); /* near-black text */
+    background: var(--ivory); /* warm off-white background */
+    line-height: 1.6; /* comfortable spacing between lines */
+    -webkit-font-smoothing: antialiased; /* crisper text on Mac/Chrome */
 }
 
 /* ---- Headings all use the serif font ---- */
@@ -77,7 +75,10 @@ h1, h2, h3, .serif {
 }
 
 /* Links: no underline, inherit their colour from the parent */
-a { color: inherit; text-decoration: none; }
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
 /* ---- Thin gold divider line (reused across the pages) ----
    A horizontal line that fades gold in the middle. */
@@ -96,16 +97,18 @@ a { color: inherit; text-decoration: none; }
    NAVIGATION BAR (top of dashboard / costumes / rentals)
    ============================================================ */
 .nav {
-    display: flex;              /* lay children in a row, side by side */
-    align-items: center;        /* line them up vertically centred */
-    padding: 0 3.5rem;          /* generous side space, institution feel */
+    display: flex; /* lay children in a row, side by side */
+    align-items: center; /* line them up vertically centred */
+    padding: 0 3.5rem; /* generous side space, institution feel */
     height: 84px;
     color: var(--ivory);
     /* The nav floats OVER the hero. A soft dark gradient at the very
        top keeps the gold text readable, then fades to nothing so the
        bar "merges" into the image rather than sitting in a box. */
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 10;
     background: linear-gradient(180deg, rgba(7,27,23,0.80) 0%, rgba(7,27,23,0.30) 55%, transparent 100%);
     border-bottom: none;
@@ -117,15 +120,27 @@ a { color: inherit; text-decoration: none; }
     border-bottom: 1px solid rgba(201,165,106,0.4);
 }
 /* The logo is a link back to the dashboard; remove the link underline */
-.nav__brand { text-decoration: none; cursor: pointer; }
-.nav__brand:hover .nav__title { color: var(--gold); transition: color 0.25s var(--ease); }
-.nav__brand { display: flex; align-items: center; gap: 0.9rem; }
+.nav__brand {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .nav__brand:hover .nav__title {
+        color: var(--gold);
+        transition: color 0.25s var(--ease);
+    }
+
+.nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
 
 /* The transparent GA monogram on the left of the nav */
 .nav__logo {
-    height: 46px;               /* width adjusts automatically */
+    height: 46px; /* width adjusts automatically */
     width: auto;
-    object-fit: contain;        /* show the whole logo, no cropping */
+    object-fit: contain; /* show the whole logo, no cropping */
 }
 /* (Old text-based monogram kept for anywhere we still use it) */
 .nav__monogram {
@@ -141,6 +156,7 @@ a { color: inherit; text-decoration: none; }
     font-size: 1.1rem;
     letter-spacing: 1px;
 }
+
 .nav__title {
     font-family: var(--serif);
     letter-spacing: 3px;
@@ -151,41 +167,73 @@ a { color: inherit; text-decoration: none; }
 /* The menu links (Dashboard, Collection, Reservations) */
 .nav__links {
     display: flex;
-    gap: 2rem;                  /* space between each link */
-    margin: 0 auto;             /* auto both sides = pushes to the centre */
-    list-style: none;           /* remove the bullet points */
+    gap: 2rem; /* space between each link */
+    margin: 0 auto; /* auto both sides = pushes to the centre */
+    list-style: none; /* remove the bullet points */
     font-size: 0.82rem;
-    letter-spacing: 1.5px;      /* spread letters apart (elegant look) */
-    text-transform: uppercase;  /* ALL CAPS */
+    letter-spacing: 1.5px; /* spread letters apart (elegant look) */
+    text-transform: uppercase; /* ALL CAPS */
 }
-/* Links get an animated gold underline that grows from the centre */
-.nav__links a {
-    position: relative;
-    padding-bottom: 6px;
-    color: var(--ivory-warm);
-    transition: color 0.25s var(--ease);
-}
-.nav__links a::after {
-    content: "";
-    position: absolute; left: 50%; bottom: 0;
-    width: 0; height: 1px; background: var(--gold);
-    transform: translateX(-50%);
-    transition: width 0.3s var(--ease);
-}
-.nav__links a:hover { color: var(--gold); }
-.nav__links a:hover::after { width: 100%; }
-/* The current page's link keeps a full gold underline */
-.nav__links a.is-active { color: var(--gold); }
-.nav__links a.is-active::after { width: 100%; }
+    /* Links get an animated gold underline that grows from the centre */
+    .nav__links a {
+        position: relative;
+        padding-bottom: 6px;
+        color: var(--ivory-warm);
+        transition: color 0.25s var(--ease);
+    }
 
-.nav__right { display: flex; align-items: center; gap: 1.2rem; }
-.nav__avatar {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: var(--gold-deep); color: var(--emerald-deep);
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 600; font-size: 0.85rem;
+        .nav__links a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transform: translateX(-50%);
+            transition: width 0.3s var(--ease);
+        }
+
+        .nav__links a:hover {
+            color: var(--gold);
+        }
+
+            .nav__links a:hover::after {
+                width: 100%;
+            }
+        /* The current page's link keeps a full gold underline */
+        .nav__links a.is-active {
+            color: var(--gold);
+        }
+
+            .nav__links a.is-active::after {
+                width: 100%;
+            }
+
+.nav__right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
 }
-.nav__user { font-size: 0.85rem; letter-spacing: 1px; color: var(--ivory-warm); }
+
+.nav__avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--gold-deep);
+    color: var(--emerald-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.nav__user {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: var(--ivory-warm);
+}
 
 /* ============================================================
    BUTTONS — editorial emerald with a fine gold outline
@@ -198,125 +246,182 @@ a { color: inherit; text-decoration: none; }
     font-size: 0.8rem;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 0.9rem 1.9rem;     /* top/bottom  left/right space inside */
+    padding: 0.9rem 1.9rem; /* top/bottom  left/right space inside */
     border-radius: var(--radius);
-    cursor: pointer;            /* show the hand cursor on hover */
+    cursor: pointer; /* show the hand cursor on hover */
     border: 1px solid transparent;
     transition: all 0.28s var(--ease);
 }
-/* A soft gold sheen that sweeps across the button on hover */
-.btn::after {
-    content: "";
-    position: absolute; top: 0; left: -120%;
-    width: 60%; height: 100%;
-    background: linear-gradient(100deg, transparent, rgba(216,193,154,0.35), transparent);
-    transition: left 0.6s var(--ease);
-}
-.btn:hover::after { left: 130%; }
+    /* A soft gold sheen that sweeps across the button on hover */
+    .btn::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -120%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(100deg, transparent, rgba(216,193,154,0.35), transparent);
+        transition: left 0.6s var(--ease);
+    }
+
+    .btn:hover::after {
+        left: 130%;
+    }
 /* Main button: deep green with a gold border */
 .btn--primary {
     background: var(--emerald);
     color: var(--gold-light);
     border: 1px solid var(--gold);
 }
-.btn--primary:hover {
-    background: var(--emerald-deep);
-    color: #fff;
-    box-shadow: inset 0 0 0 1px var(--gold-light);  /* inner gold line */
-}
+
+    .btn--primary:hover {
+        background: var(--emerald-deep);
+        color: #fff;
+        box-shadow: inset 0 0 0 1px var(--gold-light); /* inner gold line */
+    }
 /* Outline-only button for dark backgrounds */
 .btn--ghost {
     background: transparent;
     border: 1px solid var(--gold);
     color: var(--gold-light);
 }
-.btn--ghost:hover { background: rgba(201,165,106,0.12); color: #fff; }
+
+    .btn--ghost:hover {
+        background: rgba(201,165,106,0.12);
+        color: #fff;
+    }
 /* Quiet text button with a gold underline on hover */
 .btn--link {
-    background: none; border: none; padding: 0.4rem 0;
-    color: var(--gold-deep); letter-spacing: 1.5px;
+    background: none;
+    border: none;
+    padding: 0.4rem 0;
+    color: var(--gold-deep);
+    letter-spacing: 1.5px;
     border-bottom: 1px solid transparent;
 }
-.btn--link:hover { border-bottom-color: var(--gold); }
+
+    .btn--link:hover {
+        border-bottom-color: var(--gold);
+    }
 /* A quiet outline button for light backgrounds (e.g. modal cancel) */
 .btn--outline {
     background: transparent;
     border: 1px solid #d8d2c4;
     color: var(--charcoal);
 }
-.btn--outline:hover { border-color: var(--gold); color: var(--gold-deep); }
-.btn--block { width: 100%; }   /* stretch full width (login form) */
+
+    .btn--outline:hover {
+        border-color: var(--gold);
+        color: var(--gold-deep);
+    }
+
+.btn--block {
+    width: 100%;
+}
+/* stretch full width (login form) */
 
 /* ============================================================
    FORMS (login fields, add-costume form, hire form)
    ============================================================ */
-.field { margin-bottom: 1.2rem; }
-.field label {
-    display: block;             /* label sits on its own line above the box */
-    font-size: 0.72rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--gold-deep);
-    margin-bottom: 0.4rem;
-}
-/* The actual input boxes / dropdowns / text areas */
-.field input, .field select, .field textarea {
-    width: 100%;
-    padding: 0.85rem 1rem;
-    border: 1px solid #e0d9cb;
-    border-radius: var(--radius);
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    background: #fffdf9;        /* a hair warmer than pure white */
-    color: var(--charcoal);
-    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
-}
-.field input::placeholder { color: #bdb6a8; }
-.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--gold-deep); }
-/* When a box is clicked into (focused), give it a gold border + glow */
-.field input:focus, .field select:focus, .field textarea:focus {
-    outline: none;
-    border-color: var(--gold);
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(201,165,106,0.18);
-}
-/* Make the date-picker calendar icon match our gold theme */
-.field input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0.55;
-    cursor: pointer;
-    transition: opacity 0.2s;
-}
-.field input[type="date"]:hover::-webkit-calendar-picker-indicator { opacity: 0.9; }
-/* Custom dropdown arrow for selects */
-.field select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B88A44' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
+.field {
+    margin-bottom: 1.2rem;
 }
 
+    .field label {
+        display: block; /* label sits on its own line above the box */
+        font-size: 0.72rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+        margin-bottom: 0.4rem;
+    }
+    /* The actual input boxes / dropdowns / text areas */
+    .field input, .field select, .field textarea {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border: 1px solid #e0d9cb;
+        border-radius: var(--radius);
+        font-family: var(--sans);
+        font-size: 0.95rem;
+        background: #fffdf9; /* a hair warmer than pure white */
+        color: var(--charcoal);
+        transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+    }
+
+        .field input::placeholder {
+            color: #bdb6a8;
+        }
+
+        .field input:hover, .field select:hover, .field textarea:hover {
+            border-color: var(--gold-deep);
+        }
+        /* When a box is clicked into (focused), give it a gold border + glow */
+        .field input:focus, .field select:focus, .field textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(201,165,106,0.18);
+        }
+        /* Make the date-picker calendar icon match our gold theme */
+        .field input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0.55;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .field input[type="date"]:hover::-webkit-calendar-picker-indicator {
+            opacity: 0.9;
+        }
+    /* Custom dropdown arrow for selects */
+    .field select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B88A44' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        padding-right: 2.5rem;
+    }
+
 /* ---- Password field with a Show/Hide button inside it ---- */
-.password-wrap { position: relative; }   /* lets us place the icon inside */
-.password-wrap input { padding-right: 3rem; }   /* room for the eye icon */
+.password-wrap {
+    position: relative;
+}
+    /* lets us place the icon inside */
+    .password-wrap input {
+        padding-right: 3rem;
+    }
+/* room for the eye icon */
 .password-toggle {
     position: absolute;
     right: 0.7rem;
     top: 50%;
-    transform: translateY(-50%);   /* vertically centre the icon */
+    transform: translateY(-50%); /* vertically centre the icon */
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;             /* size of the eye icon */
+    font-size: 1.1rem; /* size of the eye icon */
     line-height: 1;
     opacity: 0.7;
 }
-.password-toggle:hover { opacity: 1; }
+
+    .password-toggle:hover {
+        opacity: 1;
+    }
 
 /* Validation / error messages under a form */
-.message { font-size: 0.85rem; margin-top: 0.3rem; min-height: 1.2rem; }
-.message--error { color: var(--danger); }   /* red for errors */
-.message--ok    { color: var(--ok); }        /* green for success */
+.message {
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    min-height: 1.2rem;
+}
+
+.message--error {
+    color: var(--danger);
+}
+/* red for errors */
+.message--ok {
+    color: var(--ok);
+}
+/* green for success */
 
 /* ============================================================
    STATUS BADGES  (green = available, gold = on hire, red = overdue)
@@ -330,72 +435,111 @@ a { color: inherit; text-decoration: none; }
     border-radius: 2px;
     font-weight: 600;
 }
-.badge--available { background: rgba(47,107,79,0.12);  color: var(--ok); }
-.badge--onhire    { background: rgba(184,138,68,0.15); color: var(--gold-deep); }
-.badge--overdue   { background: rgba(122,45,53,0.12);  color: var(--danger); }
+
+.badge--available {
+    background: rgba(47,107,79,0.12);
+    color: var(--ok);
+}
+
+.badge--onhire {
+    background: rgba(184,138,68,0.15);
+    color: var(--gold-deep);
+}
+
+.badge--overdue {
+    background: rgba(122,45,53,0.12);
+    color: var(--danger);
+}
 
 /* ============================================================
    LOGIN PAGE  (two halves: photo panel + sign-in form)
    ============================================================ */
 .login-wrap {
-    min-height: 100vh;          /* 100vh = full height of the screen */
-    display: flex;              /* the two halves sit side by side */
+    min-height: 100vh; /* 100vh = full height of the screen */
+    display: flex; /* the two halves sit side by side */
 }
 /* LEFT HALF: the photo panel with a dark emerald tint over it
    so the white title stays readable on top of the image. */
 .login-hero {
-    flex: 1;                    /* grow to fill the remaining space */
-    background-image:
-        linear-gradient(160deg, rgba(7,27,23,0.80) 0%, rgba(7,27,23,0.45) 55%, rgba(7,27,23,0.70) 100%),
-        url("../images/atelier-hero.jpg");
-    background-size: cover;     /* photo fills the panel, no stretching */
+    flex: 1; /* grow to fill the remaining space */
+    background-image: linear-gradient(160deg, rgba(7,27,23,0.80) 0%, rgba(7,27,23,0.45) 55%, rgba(7,27,23,0.70) 100%), url("../images/atelier-hero.jpg");
+    background-size: cover; /* photo fills the panel, no stretching */
     background-position: center;
     position: relative;
     display: flex;
-    flex-direction: column;     /* stack the text items vertically */
+    flex-direction: column; /* stack the text items vertically */
     justify-content: center;
     padding: 4rem;
     color: var(--ivory);
     overflow: hidden;
 }
+
 .login-hero__eyebrow {
-    font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
 }
+
 .login-hero__title {
     font-family: var(--serif);
     font-size: 3.4rem;
     line-height: 1.05;
     letter-spacing: 2px;
 }
+
 .login-hero__sub {
-    margin-top: 1.2rem; max-width: 24rem;
-    color: var(--ivory-warm); font-size: 1rem;
+    margin-top: 1.2rem;
+    max-width: 24rem;
+    color: var(--ivory-warm);
+    font-size: 1rem;
 }
+
 .login-hero__quote {
-    position: absolute; bottom: 3rem; left: 4rem;
-    font-family: var(--serif); font-style: italic;
-    color: var(--gold-light); font-size: 1.05rem;
+    position: absolute;
+    bottom: 3rem;
+    left: 4rem;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--gold-light);
+    font-size: 1.05rem;
 }
 
 /* RIGHT HALF: the sign-in form panel */
 .login-panel {
     width: 460px;
     background: var(--ivory);
-    display: flex; flex-direction: column; justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 4rem 3.5rem;
 }
+
 .login-panel__brand {
-    display: flex; align-items: center; gap: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
     margin-bottom: 0.5rem;
 }
+
 .login-panel__monogram {
-    width: 44px; height: 44px; border: 1px solid var(--gold);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    color: var(--gold-deep); font-family: var(--serif); font-size: 1.2rem;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-deep);
+    font-family: var(--serif);
+    font-size: 1.2rem;
 }
+
 .login-panel__name {
-    font-family: var(--serif); letter-spacing: 3px; font-size: 1.1rem;
+    font-family: var(--serif);
+    letter-spacing: 3px;
+    font-size: 1.1rem;
     color: var(--emerald);
 }
 /* The full transparent logo badge at the top of the login form */
@@ -405,21 +549,39 @@ a { color: inherit; text-decoration: none; }
     margin: 0 auto 0.5rem;
     display: block;
 }
+
 .login-panel h1 {
-    font-size: 2rem; color: var(--emerald); margin: 1rem 0 0.3rem;
+    font-size: 2rem;
+    color: var(--emerald);
+    margin: 1rem 0 0.3rem;
     text-align: center;
 }
-.login-panel__hint { text-align: center; }
-.login-panel__hint { font-size: 0.9rem; color: #7a756b; margin-bottom: 1.8rem; }
+
+.login-panel__hint {
+    text-align: center;
+}
+
+.login-panel__hint {
+    font-size: 0.9rem;
+    color: #7a756b;
+    margin-bottom: 1.8rem;
+}
+
 .login-panel__footer {
-    margin-top: 2rem; font-size: 0.75rem; color: #9a948a; text-align: center;
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: #9a948a;
+    text-align: center;
     letter-spacing: 0.5px;
 }
 
 /* ============================================================
    DASHBOARD
    ============================================================ */
-.dash { background: var(--ivory); min-height: 100vh; }
+.dash {
+    background: var(--ivory);
+    min-height: 100vh;
+}
 
 /* Cinematic hero with the costume-rail photo behind it */
 .dash-hero {
@@ -432,34 +594,60 @@ a { color: inherit; text-decoration: none; }
     padding: 7rem 3.5rem 4rem;
     color: var(--ivory);
     /* Two layers: a dark gradient ON TOP of the photo (so text reads) */
-    background-image:
-        linear-gradient(90deg, rgba(7,27,23,0.94) 0%, rgba(7,27,23,0.70) 40%, rgba(7,27,23,0.15) 75%, rgba(7,27,23,0.30) 100%),
-        url("../images/dashboard-hero.jpg");
+    background-image: linear-gradient(90deg, rgba(7,27,23,0.94) 0%, rgba(7,27,23,0.70) 40%, rgba(7,27,23,0.15) 75%, rgba(7,27,23,0.30) 100%), url("../images/dashboard-hero.jpg");
     background-size: cover;
     background-position: center;
     border-bottom: 1px solid var(--gold);
 }
-.dash-hero__inner { max-width: 620px; position: relative; z-index: 1; }
-.dash-hero__eyebrow {
-    font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 1rem;
+
+.dash-hero__inner {
+    max-width: 620px;
+    position: relative;
+    z-index: 1;
 }
+
+.dash-hero__eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+}
+
 .dash-hero__welcome {
     font-family: var(--serif);
-    font-size: 3.4rem; line-height: 1.08; letter-spacing: 1px;
+    font-size: 3.4rem;
+    line-height: 1.08;
+    letter-spacing: 1px;
 }
-.dash-hero__welcome span { color: var(--gold-light); font-style: italic; }
+
+    .dash-hero__welcome span {
+        color: var(--gold-light);
+        font-style: italic;
+    }
 /* Small decorative rule with a ✦ at the end */
 .dash-hero__rule {
-    width: 90px; height: 1px; margin: 1.4rem 0;
+    width: 90px;
+    height: 1px;
+    margin: 1.4rem 0;
     background: linear-gradient(90deg, var(--gold), transparent);
     position: relative;
 }
-.dash-hero__rule::after {
-    content: "✦"; color: var(--gold); font-size: 0.7rem;
-    position: absolute; left: 100px; top: -0.7rem;
+
+    .dash-hero__rule::after {
+        content: "✦";
+        color: var(--gold);
+        font-size: 0.7rem;
+        position: absolute;
+        left: 100px;
+        top: -0.7rem;
+    }
+
+.dash-hero__sub {
+    color: var(--ivory-warm);
+    max-width: 28rem;
+    font-size: 1.02rem;
 }
-.dash-hero__sub { color: var(--ivory-warm); max-width: 28rem; font-size: 1.02rem; }
 
 /* ---- Inline statistics inside the hero (like the design) ----
    Four figures in a row, separated by thin gold dividers. */
@@ -468,29 +656,49 @@ a { color: inherit; text-decoration: none; }
     gap: 2.5rem;
     margin: 2rem 0;
 }
-.hero-stat { position: relative; padding-right: 2.5rem; }
-/* A faint gold divider line after each stat except the last */
-.hero-stat:not(:last-child)::after {
-    content: "";
-    position: absolute; right: 0; top: 10%;
-    width: 1px; height: 80%;
-    background: rgba(216,193,154,0.3);
+
+.hero-stat {
+    position: relative;
+    padding-right: 2.5rem;
 }
+    /* A faint gold divider line after each stat except the last */
+    .hero-stat:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        width: 1px;
+        height: 80%;
+        background: rgba(216,193,154,0.3);
+    }
+
 .hero-stat__value {
     font-family: var(--serif);
     font-size: 2.4rem;
     color: #fff;
     line-height: 1;
 }
+
 .hero-stat__label {
-    font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--gold-light); margin-top: 0.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-top: 0.4rem;
 }
 
-.dash-hero__actions { margin-top: 0.5rem; display: flex; gap: 1rem; }
+.dash-hero__actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
 .dash-hero__quote {
-    margin-top: 2rem; font-family: var(--serif); font-style: italic;
-    color: var(--gold-light); font-size: 1.05rem;
+    margin-top: 2rem;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--gold-light);
+    font-size: 1.05rem;
 }
 
 /* ---- Main content area below the hero ---- */
@@ -503,6 +711,74 @@ a { color: inherit; text-decoration: none; }
     gap: 2.5rem;
 }
 
+/* ---- Quick action cards on the dashboard ---- */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.quick-card {
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.25);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.8rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+
+    .quick-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold-light), var(--gold-deep));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s var(--ease);
+    }
+
+    .quick-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lift);
+        border-color: var(--gold);
+    }
+
+        .quick-card:hover::before {
+            transform: scaleX(1);
+        }
+
+.quick-card__icon {
+    font-size: 1.6rem;
+    color: var(--gold-deep);
+    line-height: 1;
+}
+
+.quick-card__title {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    color: var(--emerald);
+    margin-top: 0.3rem;
+}
+
+.quick-card__sub {
+    font-size: 0.85rem;
+    color: #9a948a;
+}
+
+@media (max-width: 760px) {
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* A white "panel" box that wraps each section (search, table) */
 .panel {
     position: relative;
@@ -513,13 +789,17 @@ a { color: inherit; text-decoration: none; }
     padding: 2.2rem 2.4rem;
     overflow: hidden;
 }
-/* A whisper-thin gold line along the very top of each panel */
-.panel::before {
-    content: "";
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0.6;
-}
+    /* A whisper-thin gold line along the very top of each panel */
+    .panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        opacity: 0.6;
+    }
 /* The heading row at the top of a panel */
 .panel__head {
     display: flex;
@@ -529,68 +809,141 @@ a { color: inherit; text-decoration: none; }
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--ivory-warm);
 }
-.panel__head h2 { font-size: 1.7rem; color: var(--emerald); }
-.panel__hint { font-size: 0.82rem; color: #9a948a; }
+
+    .panel__head h2 {
+        font-size: 1.7rem;
+        color: var(--emerald);
+    }
+
+.panel__hint {
+    font-size: 0.82rem;
+    color: #9a948a;
+}
 
 /* Search row inside the panel */
-.dash-search__row { display: flex; gap: 0.8rem; }
-.dash-search__row input { flex: 1; }   /* input grows, button stays its size */
-.dash-search__results { margin-top: 1.2rem; }
-.search-item {
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--ivory); border: 1px solid var(--ivory-warm);
-    border-left: 2px solid var(--gold);
-    padding: 0.8rem 1rem; margin-bottom: 0.5rem; border-radius: var(--radius);
+.dash-search__row {
+    display: flex;
+    gap: 0.8rem;
 }
-.search-item__name { font-family: var(--serif); font-size: 1.15rem; color: var(--emerald); }
-.search-item__meta { font-size: 0.8rem; color: #8a847a; }
+
+    .dash-search__row input {
+        flex: 1;
+    }
+/* input grows, button stays its size */
+.dash-search__results {
+    margin-top: 1.2rem;
+}
+
+.search-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--ivory);
+    border: 1px solid var(--ivory-warm);
+    border-left: 2px solid var(--gold);
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius);
+}
+
+.search-item__name {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--emerald);
+}
+
+.search-item__meta {
+    font-size: 0.8rem;
+    color: #8a847a;
+}
 
 /* ============================================================
    TABLES  (reused on dashboard, costumes and rentals)
    ============================================================ */
-.table-wrap { padding: 0.5rem 3.5rem 3rem; }
+.table-wrap {
+    padding: 0.5rem 3.5rem 3rem;
+}
+
 table.atelier {
     width: 100%;
-    border-collapse: collapse;   /* no gaps between cells */
+    border-collapse: collapse; /* no gaps between cells */
     background: #fff;
     box-shadow: var(--shadow-soft);
     border-radius: var(--radius);
     overflow: hidden;
 }
-/* The header row: emerald background, gold text */
-table.atelier thead th {
-    background: var(--emerald);
-    color: var(--gold-light);
-    font-family: var(--sans); font-weight: 500;
-    font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
-    text-align: left; padding: 1rem 1.2rem;
-}
-/* The body cells */
-table.atelier tbody td {
-    padding: 1.1rem 1.3rem;
-    border-bottom: 1px solid var(--ivory-warm);
-    font-size: 0.92rem;
-    transition: background 0.2s var(--ease);
-}
-table.atelier tbody tr:last-child td { border-bottom: none; }
-table.atelier tbody tr { transition: background 0.2s var(--ease); }
-table.atelier tbody tr:hover { background: var(--ivory-warm); }   /* highlight row on hover */
-table.atelier tbody tr.is-overdue { background: rgba(122,45,53,0.06); }  /* overdue rows tinted red */
-table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
+    /* The header row: emerald background, gold text */
+    table.atelier thead th {
+        background: var(--emerald);
+        color: var(--gold-light);
+        font-family: var(--sans);
+        font-weight: 500;
+        font-size: 0.72rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-align: left;
+        padding: 1rem 1.2rem;
+    }
+    /* The body cells */
+    table.atelier tbody td {
+        padding: 1.1rem 1.3rem;
+        border-bottom: 1px solid var(--ivory-warm);
+        font-size: 0.92rem;
+        transition: background 0.2s var(--ease);
+    }
+
+    table.atelier tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    table.atelier tbody tr {
+        transition: background 0.2s var(--ease);
+    }
+
+        table.atelier tbody tr:hover {
+            background: var(--ivory-warm);
+        }
+        /* highlight row on hover */
+        table.atelier tbody tr.is-overdue {
+            background: rgba(122,45,53,0.06);
+        }
+            /* overdue rows tinted red */
+            table.atelier tbody tr.is-overdue:hover {
+                background: rgba(122,45,53,0.1);
+            }
 
 /* ---- Page shell (title area used on costumes / rentals) ---- */
-.page { max-width: 1240px; margin: 0 auto; padding: 2.5rem; }
+.page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
+
 .page__eyebrow {
-    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
     color: var(--gold-deep);
 }
-.page__title { font-size: 2.4rem; color: var(--emerald); }
-.page__sub { color: #7a756b; margin-top: 0.2rem; }
+
+.page__title {
+    font-size: 2.4rem;
+    color: var(--emerald);
+}
+
+.page__sub {
+    color: #7a756b;
+    margin-top: 0.2rem;
+}
 
 /* Message shown when a table/list is empty */
 .empty-state {
-    text-align: center; padding: 2.5rem; color: #9a948a;
-    font-family: var(--serif); font-style: italic; font-size: 1.1rem;
+    text-align: center;
+    padding: 2.5rem;
+    color: #9a948a;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
 }
 
 /* ============================================================
@@ -598,67 +951,451 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
    ============================================================ */
 /* The dark overlay that covers the page. Hidden by default. */
 .modal-overlay {
-    position: fixed; inset: 0; z-index: 100;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
     background: rgba(7,27,23,0.6);
-    display: none;                  /* shown by JS when needed */
-    align-items: center; justify-content: center;
+    display: none; /* shown by JS when needed */
+    align-items: center;
+    justify-content: center;
     padding: 1rem;
 }
-.modal-overlay.is-open { display: flex; }   /* JS adds this class to show it */
+
+    .modal-overlay.is-open {
+        display: flex;
+    }
+/* JS adds this class to show it */
 
 /* The white dialog box in the middle */
 .modal {
     background: var(--ivory);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lift);
-    max-width: 400px; width: 100%;
+    max-width: 400px;
+    width: 100%;
     padding: 2.5rem 2.2rem;
     text-align: center;
     border-top: 3px solid var(--gold);
 }
+
 .modal__icon {
-    width: 54px; height: 54px; margin: 0 auto 1rem;
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 1rem;
 }
-.modal__icon img { width: 100%; height: 100%; object-fit: contain; }
-.modal__title { font-family: var(--serif); font-size: 1.6rem; color: var(--emerald); }
-.modal__text { color: #7a756b; font-size: 0.95rem; margin: 0.5rem 0 1.8rem; }
-.modal__actions { display: flex; gap: 0.8rem; justify-content: center; }
-.modal__actions .btn { flex: 1; }
+
+    .modal__icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+.modal__title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    color: var(--emerald);
+}
+
+.modal__text {
+    color: #7a756b;
+    font-size: 0.95rem;
+    margin: 0.5rem 0 1.8rem;
+}
+
+.modal__actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+    .modal__actions .btn {
+        flex: 1;
+    }
+
+/* ---- Extra modal styles for costume management ---- */
+.modal--wide {
+    max-width: 680px;
+    text-align: left;
+}
+
+.modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #9a948a;
+    transition: color 0.2s;
+}
+
+    .modal__close:hover {
+        color: var(--emerald);
+    }
+
+#formModal .modal, #filtersModal .modal {
+    text-align: left;
+}
+
+#formModal .modal__title, #filtersModal .modal__title {
+    text-align: center;
+}
+
+.btn--danger {
+    background: var(--burgundy);
+    color: var(--ivory);
+    border: 1px solid var(--burgundy);
+}
+
+    .btn--danger:hover {
+        background: var(--burgundy-light);
+    }
+
+.btn--danger-outline {
+    background: transparent;
+    color: var(--burgundy);
+    border: 1px solid var(--burgundy);
+}
+
+    .btn--danger-outline:hover {
+        background: rgba(122,45,53,0.08);
+    }
+
+/* A horizontal row of fields (for the add/edit form) */
+.field-row-h {
+    display: flex;
+    gap: 1rem;
+}
+
+    .field-row-h .field {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+/* Costume details modal layout (image + info side by side) */
+.details {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.details-image {
+    flex: 0 0 280px; /* wider, more balanced */
+    align-self: stretch; /* match the height of the details beside it */
+    border-radius: var(--radius);
+    background: radial-gradient(circle at 50% 38%, rgba(201,165,106,0.20), transparent 62%), linear-gradient(160deg, var(--emerald-light) 0%, var(--emerald-deep) 90%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    min-height: 280px;
+    border: 1px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+}
+    /* A fine double gold frame inset inside the image */
+    .details-image::before {
+        content: "";
+        position: absolute;
+        inset: 0.9rem;
+        border: 1px solid rgba(216,193,154,0.45);
+        border-radius: 2px;
+    }
+
+    .details-image::after {
+        content: "";
+        position: absolute;
+        inset: 1.3rem;
+        border: 1px solid rgba(216,193,154,0.18);
+        border-radius: 2px;
+    }
+/* Decorative gold corner ticks */
+.details-image__corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    z-index: 1;
+    border-color: var(--gold-light);
+    border-style: solid;
+    border-width: 0;
+}
+
+.details-image__corner--tl {
+    top: 0.6rem;
+    left: 0.6rem;
+    border-top-width: 1px;
+    border-left-width: 1px;
+}
+
+.details-image__corner--tr {
+    top: 0.6rem;
+    right: 0.6rem;
+    border-top-width: 1px;
+    border-right-width: 1px;
+}
+
+.details-image__corner--bl {
+    bottom: 0.6rem;
+    left: 0.6rem;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.details-image__corner--br {
+    bottom: 0.6rem;
+    right: 0.6rem;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+}
+/* The GA monogram — gold, with the A in italic for an elegant touch */
+.details-image__mono {
+    font-family: var(--serif);
+    font-size: 3.2rem;
+    font-weight: 500;
+    color: var(--gold-light);
+    letter-spacing: 4px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+}
+
+    .details-image__mono i {
+        font-style: italic;
+        color: var(--gold);
+    }
+/* A small caption under the monogram */
+.details-image__caption {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.8rem;
+    color: rgba(216,193,154,0.6);
+    letter-spacing: 1px;
+    z-index: 1;
+}
+
+.details-info {
+    flex: 1;
+}
+
+.details-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+}
+
+.details-name {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--emerald);
+    margin: 0.3rem 0 0.6rem;
+}
+
+.details-badge {
+    margin-bottom: 1rem;
+}
+
+.details-grid {
+    margin: 1rem 0 1.5rem;
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--ivory-warm);
+    font-size: 0.9rem;
+}
+
+    .details-row dt {
+        color: #9a948a;
+        letter-spacing: 0.5px;
+    }
+
+    .details-row dd {
+        color: var(--charcoal);
+        font-family: var(--serif);
+        font-size: 1.05rem;
+    }
+
+.details-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+    .details-actions .btn {
+        flex: 1;
+    }
+
+@media (max-width: 600px) {
+    .details {
+        flex-direction: column;
+    }
+
+    .details-image {
+        flex: 0 0 auto;
+    }
+}
+
+/* ---- Add-customer button beside the dropdown (reservations) ---- */
+.field-with-btn {
+    display: flex;
+    gap: 0.5rem;
+}
+
+    .field-with-btn select {
+        flex: 1;
+    }
+
+.field-add-btn {
+    white-space: nowrap;
+    padding: 0.85rem 1rem;
+}
 
 /* ---- Wax-seal footer flourish (the GA seal + quote) ---- */
 .atelier-foot {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 2rem 0 3rem; gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0 3rem;
+    gap: 1rem;
 }
+
+/* ============================================================
+   TOAST NOTIFICATIONS (little "saved" messages, bottom-right)
+   ============================================================ */
+.toast-stack {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.toast {
+    background: var(--emerald);
+    color: var(--ivory);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 0.9rem 1.3rem;
+    box-shadow: var(--shadow-lift);
+    font-size: 0.9rem;
+    min-width: 240px;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    /* Slide in from the right, then fade out (set by JS). */
+    animation: toast-in 0.35s var(--ease);
+}
+
+.toast--ok {
+    border-left-color: var(--ok);
+}
+
+.toast--error {
+    border-left-color: var(--danger);
+}
+
+.toast__icon {
+    color: var(--gold-light);
+    font-size: 1rem;
+}
+
+.toast.is-leaving {
+    animation: toast-out 0.35s var(--ease) forwards;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+}
+
 .wax-seal {
-    width: 70px; height: 70px;
-    display: flex; align-items: center; justify-content: center;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-/* The GA monogram logo inside the footer flourish */
-.wax-seal img { width: 100%; height: 100%; object-fit: contain; }
+    /* The GA monogram logo inside the footer flourish */
+    .wax-seal img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
 .atelier-foot__quote {
-    font-family: var(--serif); font-style: italic;
-    color: #8a847a; font-size: 1rem;
+    font-family: var(--serif);
+    font-style: italic;
+    color: #8a847a;
+    font-size: 1rem;
 }
 
 /* ============================================================
    COSTUME CATALOGUE PAGE
    ============================================================ */
 /* The banner at the top of the catalogue */
+/* Light page-title area that sits cleanly BELOW the nav,
+   clearly separated from it (no more dark-on-dark slab). */
 .catalogue-hero {
-    background: linear-gradient(120deg, var(--emerald-deep), var(--emerald-light));
-    border-bottom: 1px solid var(--gold);
-    /* Extra top padding so the floating nav merges over this banner */
-    padding: 8rem 3.5rem 3.5rem;
-    color: var(--ivory);
+    background: var(--ivory);
+    border-bottom: 1px solid rgba(201,165,106,0.3);
+    padding: 3rem 3.5rem 2.5rem;
+    text-align: center;
 }
+
+    .catalogue-hero .page__eyebrow {
+        color: var(--gold-deep);
+    }
+
 .catalogue-hero__title {
-    font-size: 3rem; color: #fff; margin: 0.3rem 0;
+    font-size: 3.2rem;
+    color: var(--emerald);
+    margin: 0.4rem 0 0.3rem;
 }
-.catalogue-hero__sub { color: var(--ivory-warm); font-size: 1.05rem; }
+
+.catalogue-hero__sub {
+    color: #7a756b;
+    font-size: 1.05rem;
+}
+/* A small gold flourish under the title */
+.catalogue-hero__inner::after {
+    content: "✦";
+    display: block;
+    color: var(--gold);
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
 
 /* The main area that holds the filter bar and the grid */
-.catalogue { max-width: 1200px; margin: 0 auto; padding: 2.5rem; }
+.catalogue {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
 
 /* Filter bar: category tabs on the left, search on the right */
 .filter-bar {
@@ -667,13 +1404,16 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 2rem;
-    flex-wrap: wrap;   /* wrap to a new line on small screens */
+    flex-wrap: wrap; /* wrap to a new line on small screens */
 }
+
 .filter-tabs {
-    display: flex; gap: 0.3rem; flex-wrap: wrap;
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
     background: #fff;
     border: 1px solid rgba(201,165,106,0.3);
-    border-radius: 30px;          /* pill-shaped container, like the design */
+    border-radius: 30px; /* pill-shaped container, like the design */
     padding: 0.3rem;
 }
 /* Each category tab */
@@ -688,25 +1428,39 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
     border-radius: 30px;
     transition: all 0.2s;
 }
-.filter-tab:hover { color: var(--gold-deep); }
-/* The currently selected tab: filled emerald pill */
-.filter-tab.is-active {
-    background: var(--emerald);
-    color: var(--gold-light);
-}
+
+    .filter-tab:hover {
+        color: var(--gold-deep);
+    }
+    /* The currently selected tab: filled emerald pill */
+    .filter-tab.is-active {
+        background: var(--emerald);
+        color: var(--gold-light);
+    }
 
 /* Right side of the filter bar: search + Filters button */
-.filter-right { display: flex; gap: 0.6rem; align-items: center; }
+.filter-right {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
 
 /* Search box with the magnifier icon inside it */
-.filter-search { position: relative; }
-.filter-search__icon {
-    position: absolute; left: 0.8rem; top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.85rem; opacity: 0.5;
+.filter-search {
+    position: relative;
 }
+
+.filter-search__icon {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    opacity: 0.5;
+}
+
 .filter-search input {
-    padding: 0.7rem 1rem 0.7rem 2.3rem;   /* extra left padding for the icon */
+    padding: 0.7rem 1rem 0.7rem 2.3rem; /* extra left padding for the icon */
     border: 1px solid #d8d2c4;
     border-radius: 30px;
     font-family: var(--sans);
@@ -714,11 +1468,12 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
     min-width: 260px;
     background: #fff;
 }
-.filter-search input:focus {
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
-}
+
+    .filter-search input:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+    }
 
 /* The "Filters" button */
 .filter-btn {
@@ -732,7 +1487,11 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
     cursor: pointer;
     transition: all 0.2s;
 }
-.filter-btn:hover { border-color: var(--gold); color: var(--gold-deep); }
+
+    .filter-btn:hover {
+        border-color: var(--gold);
+        color: var(--gold-deep);
+    }
 
 /* The grid of costume cards: auto-fit as many as fit per row */
 .costume-grid {
@@ -749,53 +1508,108 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
     box-shadow: var(--shadow-card);
     transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
 }
-.costume-card:hover {
-    transform: translateY(-6px);   /* lift on hover */
-    box-shadow: var(--shadow-lift);
+
+    .costume-card:hover {
+        transform: translateY(-6px); /* lift on hover */
+        box-shadow: var(--shadow-lift);
+    }
+        /* The faint "GA" placeholder drifts up gently as the card lifts */
+        .costume-card:hover .costume-card__placeholder {
+            transform: scale(1.08);
+        }
+
+.costume-card__placeholder {
+    transition: transform 0.5s var(--ease);
 }
-/* The faint "GA" placeholder drifts up gently as the card lifts */
-.costume-card:hover .costume-card__placeholder { transform: scale(1.08); }
-.costume-card__placeholder { transition: transform 0.5s var(--ease); }
 /* The image area (elegant gold-framed placeholder for now) */
 .costume-card__image {
     position: relative;
-    height: 230px;
-    background: linear-gradient(135deg, var(--emerald), var(--emerald-deep));
+    height: 240px;
+    background: radial-gradient(circle at 50% 42%, rgba(201,165,106,0.12), transparent 60%), linear-gradient(160deg, var(--emerald-light), var(--emerald-deep));
     display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid var(--gold);
 }
-/* The big faint "GA" monogram standing in for a photo */
+    /* A thin gold frame inset inside the image area (museum placard feel) */
+    .costume-card__image::before {
+        content: "";
+        position: absolute;
+        inset: 0.9rem;
+        border: 1px solid rgba(216,193,154,0.25);
+        border-radius: 2px;
+        pointer-events: none;
+    }
+/* The faint "GA" monogram standing in for a photo */
 .costume-card__placeholder {
     font-family: var(--serif);
-    font-size: 3rem;
-    color: rgba(216,193,154,0.35);
-    letter-spacing: 2px;
+    font-size: 2.6rem;
+    color: rgba(216,193,154,0.45);
+    letter-spacing: 3px;
+    position: relative;
 }
+    /* A small decorative line under the monogram */
+    .costume-card__placeholder::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -0.7rem;
+        width: 34px;
+        height: 1px;
+        background: rgba(216,193,154,0.4);
+        transform: translateX(-50%);
+    }
 /* The status badge sits in the top-left corner of the image */
-.costume-card__badge { position: absolute; top: 0.8rem; left: 0.8rem; }
+.costume-card__badge {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+}
 /* The favourite heart sits in the top-right corner */
 .costume-card__heart {
-    position: absolute; top: 0.8rem; right: 0.8rem;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(255,255,255,0.9); border: none; cursor: pointer;
-    font-size: 1rem; color: var(--burgundy);
-    display: flex; align-items: center; justify-content: center;
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--burgundy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s;
 }
-.costume-card__heart:hover { background: #fff; transform: scale(1.1); }
+
+    .costume-card__heart:hover {
+        background: #fff;
+        transform: scale(1.1);
+    }
 
 /* Card text area */
-.costume-card__body { padding: 1.2rem 1.3rem; }
+.costume-card__body {
+    padding: 1.2rem 1.3rem;
+}
+
 .costume-card__name {
-    font-family: var(--serif); font-size: 1.3rem; color: var(--emerald);
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    color: var(--emerald);
 }
+
 .costume-card__era {
-    font-size: 0.78rem; color: #9a948a; margin: 0.1rem 0 0.7rem;
+    font-size: 0.78rem;
+    color: #9a948a;
+    margin: 0.1rem 0 0.7rem;
 }
+
 .costume-card__price {
-    font-family: var(--serif); font-size: 1.15rem; color: var(--charcoal);
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--charcoal);
     margin-bottom: 1rem;
 }
 /* The View Details button fills the card width */
@@ -809,50 +1623,144 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
    RESERVATIONS PAGE
    ============================================================ */
 .reservations {
-    max-width: 1100px; margin: 0 auto; padding: 2.5rem;
-    display: flex; flex-direction: column; gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
-/* ---- Availability calendar strip ---- */
-.calendar-legend { display: flex; gap: 1.2rem; font-size: 0.78rem; color: #7a756b; }
-.legend-item { display: flex; align-items: center; gap: 0.4rem; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.legend-dot--ok     { background: var(--ok); }
-.legend-dot--warn   { background: var(--warn); }
-.legend-dot--danger { background: var(--danger); }
+/* ---- Availability calendar (elegant month grid) ---- */
+.calendar-month {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gold-deep);
+    margin-top: 0.1rem;
+}
 
-.calendar-strip {
+.calendar-legend {
+    display: flex;
+    gap: 1.3rem;
+    font-size: 0.78rem;
+    color: #7a756b;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-dot--ok {
+    background: var(--ok);
+}
+
+.legend-dot--warn {
+    background: var(--warn);
+}
+
+.legend-dot--danger {
+    background: var(--danger);
+}
+
+/* The month grid: 7 columns (Mon..Sun) */
+.calendar-grid {
     display: grid;
-    grid-template-columns: repeat(14, 1fr);   /* 14 days in a row */
-    gap: 0.4rem;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
-/* One day block */
-.cal-day {
+/* Weekday header labels */
+.cal2-dow {
     text-align: center;
-    padding: 0.7rem 0.2rem;
-    border-radius: var(--radius);
-    border-top: 3px solid transparent;
-    background: var(--ivory);
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    padding-bottom: 0.6rem;
 }
-.cal-day__dow { display: block; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: #9a948a; }
-.cal-day__num { display: block; font-family: var(--serif); font-size: 1.2rem; color: var(--emerald); }
-/* Status colours along the top of each day */
-.cal-day--ok     { border-top-color: var(--ok); }
-.cal-day--warn   { border-top-color: var(--warn); }
-.cal-day--danger { border-top-color: var(--danger); }
+/* One date cell */
+.cal2-cell {
+    aspect-ratio: 1 / 1; /* perfect squares */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    background: var(--ivory);
+    border: 1px solid transparent;
+    transition: all 0.2s var(--ease);
+    cursor: default;
+}
+
+    .cal2-cell:hover {
+        border-color: rgba(201,165,106,0.4);
+    }
+
+.cal2-cell--empty {
+    background: transparent;
+}
+/* padding days */
+.cal2-num {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--emerald);
+}
+
+/* Today: a gold ring */
+.cal2-cell--today {
+    border-color: var(--gold);
+    box-shadow: inset 0 0 0 1px var(--gold);
+}
+/* Reserved: soft gold fill */
+.cal2-cell--reserved {
+    background: rgba(184,138,68,0.14);
+}
+
+    .cal2-cell--reserved .cal2-num {
+        color: var(--gold-deep);
+    }
+/* Overdue: soft burgundy fill */
+.cal2-cell--overdue {
+    background: rgba(122,45,53,0.12);
+}
+
+    .cal2-cell--overdue .cal2-num {
+        color: var(--danger);
+    }
 
 /* ---- Two-column layout: hire form | rentals table ---- */
 .reservations__grid {
     display: grid;
-    grid-template-columns: 360px 1fr;   /* form fixed width, table fills rest */
+    grid-template-columns: 360px 1fr; /* form fixed width, table fills rest */
     gap: 2rem;
     align-items: start;
 }
 
 /* Two date fields side by side */
-.field-row { display: flex; gap: 1rem; }
-.field-row .field { flex: 1; }
+/* Stack the two date fields vertically so each gets full width
+   and the year is never cut off. */
+.field-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
 
+    .field-row .field {
+        width: 100%;
+    }
+
+        .field-row .field input {
+            width: 100%;
+        }
 /* ---- Cost summary box ---- */
 .cost-summary {
     background: var(--ivory);
@@ -861,32 +1769,880 @@ table.atelier tbody tr.is-overdue:hover { background: rgba(122,45,53,0.1); }
     padding: 1rem 1.2rem;
     margin: 0.5rem 0 1.2rem;
 }
+
 .cost-row {
-    display: flex; justify-content: space-between;
-    font-size: 0.9rem; padding: 0.3rem 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    padding: 0.3rem 0;
     color: #7a756b;
 }
+
 .cost-row--total {
     border-top: 1px solid var(--ivory-warm);
-    margin-top: 0.3rem; padding-top: 0.6rem;
-    font-family: var(--serif); font-size: 1.2rem; color: var(--emerald);
+    margin-top: 0.3rem;
+    padding-top: 0.6rem;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--emerald);
 }
 
 /* Return button in the rentals table */
-.return-btn { color: var(--burgundy); }
-.return-btn:hover { border-bottom-color: var(--burgundy); }
+.return-btn {
+    color: var(--burgundy);
+}
+
+    .return-btn:hover {
+        border-bottom-color: var(--burgundy);
+    }
 
 /* ============================================================
    RESPONSIVE: adjust for smaller screens
    @media = "apply these rules only when the screen is this size"
    ============================================================ */
 @media (max-width: 900px) {
-    .nav__links { display: none; }                     /* hide the centre menu */
-    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }      /* stats wrap on small screens */
-    .reservations__grid { grid-template-columns: 1fr; }/* stack form above table */
-    .calendar-strip { grid-template-columns: repeat(7, 1fr); }  /* 7 days per row */
+    .nav__links {
+        display: none;
+    }
+    /* hide the centre menu */
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    /* stats wrap on small screens */
+    .reservations__grid {
+        grid-template-columns: 1fr;
+    }
+    /* stack form above table */
+    /* calendar grid already uses 7 columns, no change needed on mobile */
 }
+
 @media (max-width: 820px) {
-    .login-hero { display: none; }   /* hide the photo panel on narrow screens */
-    .login-panel { width: 100%; }    /* form fills the width */
+    .login-hero {
+        display: none;
+    }
+    /* hide the photo panel on narrow screens */
+    .login-panel {
+        width: 100%;
+    }
+    /* form fills the width */
+}
+
+/* ============================================================
+   SIDEBAR SHELL  (the app layout — a fixed left rail + content)
+   This is the management-platform layout: a slim column on the
+   left holds the brand, navigation and the signed-in user; the
+   page content scrolls on the right. Used on dashboard,
+   collection and reservations.
+   ============================================================ */
+.shell {
+    display: grid;
+    grid-template-columns: 256px 1fr; /* sidebar fixed, content fills */
+    min-height: 100vh;
+}
+
+/* ---- The left rail itself ---- */
+.sidebar {
+    position: sticky; /* stays put while the content scrolls */
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    background: linear-gradient(180deg, var(--emerald) 0%, var(--emerald-deep) 100%);
+    border-right: 1px solid rgba(201,165,106,0.25);
+    display: flex;
+    flex-direction: column;
+    padding: 1.8rem 1.2rem;
+    color: var(--ivory-warm);
+}
+
+/* Brand block at the top of the sidebar (logo + name) */
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0 0.6rem 1.4rem;
+    border-bottom: 1px solid rgba(201,165,106,0.18);
+}
+
+.sidebar__logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.sidebar__name {
+    font-family: var(--serif);
+    font-size: 0.98rem;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    color: var(--ivory);
+}
+
+/* Navigation links down the rail */
+.sidebar__nav {
+    list-style: none;
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1; /* push the profile chip to the bottom */
+}
+
+.sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: var(--radius);
+    font-size: 0.86rem;
+    letter-spacing: 0.6px;
+    color: var(--ivory-warm);
+    position: relative;
+    transition: background 0.22s var(--ease), color 0.22s var(--ease);
+}
+
+    .sidebar__link:hover {
+        background: rgba(201,165,106,0.10);
+        color: #fff;
+    }
+    /* The active page: a soft gold panel with a bright gold edge */
+    .sidebar__link.is-active {
+        background: rgba(201,165,106,0.16);
+        color: var(--gold-light);
+    }
+
+        .sidebar__link.is-active::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 18%;
+            height: 64%;
+            width: 3px;
+            border-radius: 3px;
+            background: var(--gold);
+        }
+/* The little glyph in front of each link */
+.sidebar__icon {
+    font-size: 1.05rem;
+    width: 1.2rem;
+    text-align: center;
+    color: var(--gold);
+    opacity: 0.9;
+}
+
+/* A quiet decorative note between nav and profile */
+.sidebar__note {
+    margin: 1rem 0.6rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    line-height: 1.4;
+}
+
+/* The signed-in user chip at the bottom of the rail */
+.sidebar__profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 0.7rem 0.3rem;
+    border-top: 1px solid rgba(201,165,106,0.18);
+    margin-top: 0.4rem;
+}
+
+.sidebar__avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--gold-deep);
+    color: var(--emerald-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.sidebar__who {
+    line-height: 1.2;
+    min-width: 0;
+}
+
+.sidebar__username {
+    font-size: 0.9rem;
+    color: var(--ivory);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar__role {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0.8;
+}
+
+.sidebar__logout {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--gold-light);
+    cursor: pointer;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+
+    .sidebar__logout:hover {
+        opacity: 1;
+        color: #fff;
+    }
+
+/* ---- The content column on the right ---- */
+.content {
+    min-width: 0; /* lets tables/grids shrink instead of overflow */
+    display: flex;
+    flex-direction: column;
+}
+
+/* The slim topbar inside the content: page title + today's date */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 2.8rem;
+    border-bottom: 1px solid rgba(201,165,106,0.22);
+    background: #fff;
+}
+
+.topbar__title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--emerald);
+    line-height: 1.1;
+}
+
+.topbar__crumb {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 0.15rem;
+}
+
+.topbar__date {
+    font-size: 0.82rem;
+    color: #8a847a;
+    text-align: right;
+}
+
+/* The scrolling body of each page */
+.content__body {
+    padding: 2.4rem 2.8rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+}
+
+/* ============================================================
+   DASHBOARD — sidebar version
+   The hero now sits INSIDE the content column as a wide banner
+   (keeping the photo), with stat cards and panels below it.
+   ============================================================ */
+/* The hero banner in the sidebar layout */
+.hero-banner {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    padding: 3rem 3rem 2.6rem;
+    color: var(--ivory);
+    background-image: linear-gradient(90deg, rgba(7,27,23,0.92) 0%, rgba(7,27,23,0.62) 45%, rgba(7,27,23,0.25) 100%), url("../images/dashboard-hero.jpg");
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--gold);
+}
+
+.hero-banner__eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+}
+
+.hero-banner__welcome {
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    line-height: 1.08;
+}
+
+    .hero-banner__welcome span {
+        color: var(--gold-light);
+        font-style: italic;
+    }
+
+.hero-banner__sub {
+    color: var(--ivory-warm);
+    max-width: 30rem;
+    margin-top: 0.8rem;
+    font-size: 0.98rem;
+}
+
+.hero-banner__actions {
+    margin-top: 1.6rem;
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+
+/* ---- Stat cards (the four figures) — gold left-bar style ---- */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.3rem;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lift);
+    }
+
+.stat-card__value {
+    font-family: var(--serif);
+    font-size: 2.3rem;
+    color: var(--emerald);
+    line-height: 1;
+}
+
+.stat-card__label {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-top: 0.5rem;
+}
+
+/* ---- Dashboard two-column area: table | quick actions ---- */
+.section-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.6rem;
+    align-items: start;
+}
+
+/* Quick-action list used in the dashboard side column */
+.action-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.action-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.1rem 1.2rem;
+    transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease), border-color 0.28s var(--ease);
+}
+
+    .action-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lift);
+        border-color: var(--gold);
+    }
+
+.action-card__icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(201,165,106,0.14);
+    color: var(--gold-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.action-card__title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--emerald);
+    line-height: 1.1;
+}
+
+.action-card__sub {
+    font-size: 0.78rem;
+    color: #9a948a;
+}
+
+/* ============================================================
+   COLLECTION — toolbar (sidebar version)
+   A single clean toolbar: search, category, availability, count.
+   ============================================================ */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.22);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 1.1rem 1.3rem;
+}
+
+.toolbar__search {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+}
+
+    .toolbar__search span {
+        position: absolute;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+        font-size: 0.9rem;
+    }
+
+    .toolbar__search input {
+        width: 100%;
+        padding: 0.7rem 1rem 0.7rem 2.4rem;
+        border: 1px solid #e0d9cb;
+        border-radius: 30px;
+        font-family: var(--sans);
+        font-size: 0.9rem;
+        background: #fffdf9;
+    }
+
+        .toolbar__search input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+        }
+
+.toolbar select {
+    padding: 0.7rem 2.4rem 0.7rem 1rem;
+    border: 1px solid #e0d9cb;
+    border-radius: 30px;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    background: #fffdf9;
+    color: var(--charcoal);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B88A44' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+}
+
+    .toolbar select:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+    }
+
+.toolbar__count {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: #8a847a;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+    .toolbar__count b {
+        color: var(--emerald);
+        font-weight: 600;
+    }
+/* "+ Add Costume" sits at the far right of the toolbar */
+.toolbar .btn {
+    padding: 0.7rem 1.3rem;
+    font-size: 0.72rem;
+}
+
+/* ============================================================
+   RESERVATIONS — tabs (sidebar version)
+   ============================================================ */
+.res-tabs {
+    display: flex;
+    gap: 0.3rem;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.3);
+    border-radius: 30px;
+    padding: 0.3rem;
+    width: fit-content;
+}
+
+.res-tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--charcoal);
+    padding: 0.5rem 1.1rem;
+    border-radius: 30px;
+    transition: all 0.2s;
+}
+
+    .res-tab:hover {
+        color: var(--gold-deep);
+    }
+
+    .res-tab.is-active {
+        background: var(--emerald);
+        color: var(--gold-light);
+    }
+
+/* ============================================================
+   RESPONSIVE — the sidebar collapses to a top strip on narrow
+   screens so the content never gets crushed.
+   ============================================================ */
+@media (max-width: 900px) {
+    .shell {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0.9rem 1.2rem;
+    }
+
+    .sidebar__brand {
+        border-bottom: none;
+        padding: 0 1rem 0 0;
+    }
+
+    .sidebar__nav {
+        flex-direction: row;
+        margin-top: 0;
+        flex: 1;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .sidebar__link.is-active::before {
+        display: none;
+    }
+
+    .sidebar__note {
+        display: none;
+    }
+
+    .sidebar__profile {
+        border-top: none;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .sidebar__who {
+        display: none;
+    }
+
+    .topbar {
+        padding: 1.2rem 1.4rem;
+    }
+
+    .content__body {
+        padding: 1.6rem 1.4rem 2.4rem;
+    }
+
+    .stat-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reservations__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .stat-row {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-banner__welcome {
+        font-size: 2rem;
+    }
+}
+
+/* ============================================================
+   LOGIN — refinements for the new design
+   Keeps the real photo on the left, adds a hand-drawn gold
+   dress-form illustration layered over it (CSS only, no image),
+   and polishes the form panel.
+   ============================================================ */
+/* A centred CSS dress-form silhouette drawn with borders +
+   gradients, sitting over the photo so the panel feels bespoke. */
+.login-figure {
+    position: relative;
+    width: 180px;
+    height: 300px;
+    margin: 2.2rem 0 0;
+    align-self: center;
+}
+/* The bodice: a rounded trapezoid tapering to the waist */
+.login-figure__bodice {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 150px;
+    border: 1.5px solid var(--gold);
+    border-radius: 60px 60px 18px 18px / 80px 80px 30px 30px;
+    background: linear-gradient(160deg, rgba(201,165,106,0.12), transparent);
+    clip-path: polygon(16% 0, 84% 0, 68% 100%, 32% 100%);
+}
+/* The skirt: a wide bell flaring from the waist */
+.login-figure__skirt {
+    position: absolute;
+    top: 142px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 150px;
+    border: 1.5px solid var(--gold);
+    border-radius: 0 0 90px 90px / 0 0 60px 60px;
+    background: linear-gradient(180deg, rgba(201,165,106,0.14), rgba(201,165,106,0.02));
+    clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%);
+}
+/* The stand neck + base */
+.login-figure__neck {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 26px;
+    background: var(--gold);
+}
+
+    .login-figure__neck::before {
+        content: "";
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 26px;
+        height: 26px;
+        border: 1.5px solid var(--gold);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(201,165,106,0.18), transparent 70%);
+    }
+/* A few vertical "seam" lines on the skirt */
+.login-figure__seam {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    width: 1px;
+    height: 130px;
+    background: linear-gradient(180deg, rgba(216,193,154,0.6), transparent);
+}
+
+.login-figure__seam--l {
+    transform: translateX(-34px) rotate(10deg);
+    transform-origin: top;
+}
+
+.login-figure__seam--r {
+    transform: translateX(34px) rotate(-10deg);
+    transform-origin: top;
+}
+
+/* Gentle framing corners on the brand panel */
+.login-hero::after {
+    content: "";
+    position: absolute;
+    inset: 1.6rem;
+    border: 1px solid rgba(201,165,106,0.28);
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+/* ============================================================
+   TABLE TIDY — keep dates and status on one line so they don't
+   wrap awkwardly (e.g. "2026-12-02" splitting across two lines).
+   The Due Date is the 3rd column and Status the 4th on the
+   dashboard and reservations tables.
+   ============================================================ */
+table.atelier td:nth-child(3),
+table.atelier td:nth-child(4),
+table.atelier th:nth-child(3),
+table.atelier th:nth-child(4) {
+    white-space: nowrap;
+}
+
+/* ============================================================
+   CUSTOM DROPDOWNS (dropdown.js)
+   Elegant replacement for the browser's native select menu,
+   which can't be styled. The real <select> is hidden; we draw
+   our own button + menu in the site's fonts and colours.
+   ============================================================ */
+.dd {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hide the real select but keep it in the page for form submits. */
+.dd__native {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* The visible button. Shares the look of our toolbar pills. */
+.dd__button {
+    width: 100%;
+    text-align: left;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    background: #fffdf9;
+    border: 1px solid #e0d9cb;
+    border-radius: 30px;
+    padding: 0.7rem 2.4rem 0.7rem 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+    /* The gold chevron on the right. */
+    .dd__button::after {
+        content: "";
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        width: 9px;
+        height: 9px;
+        border-right: 1.5px solid var(--gold-deep);
+        border-bottom: 1.5px solid var(--gold-deep);
+        transform: translateY(-65%) rotate(45deg);
+        transition: transform 0.2s var(--ease);
+    }
+
+.dd.is-open .dd__button {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,165,106,0.15);
+}
+
+    .dd.is-open .dd__button::after {
+        transform: translateY(-35%) rotate(-135deg); /* flip the chevron up */
+    }
+
+/* The dropdown menu panel. */
+.dd__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 100%;
+    z-index: 120;
+    background: #fff;
+    border: 1px solid rgba(201,165,106,0.4);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+    padding: 0.35rem;
+    display: none;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.dd.is-open .dd__menu {
+    display: block;
+    animation: dd-in 0.16s var(--ease);
+}
+
+@keyframes dd-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* One option row. Gold wash on hover, not the grey system highlight. */
+.dd__option {
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    color: var(--charcoal);
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+    .dd__option:hover {
+        background: var(--ivory-warm);
+        color: var(--gold-deep);
+    }
+    /* The currently chosen option: soft gold fill + a tick. */
+    .dd__option.is-selected {
+        background: rgba(201,165,106,0.14);
+        color: var(--gold-deep);
+        position: relative;
+        padding-right: 1.8rem;
+    }
+
+        .dd__option.is-selected::after {
+            content: "✓";
+            position: absolute;
+            right: 0.7rem;
+            color: var(--gold-deep);
+            font-size: 0.8rem;
+        }
+
+/* Inside a form field, the button fills the width and squares off
+   to match our other inputs (not a pill). */
+.field .dd, .field .dd__button {
+    width: 100%;
+}
+
+.field .dd__button {
+    border-radius: var(--radius);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+    font-size: 0.95rem;
+    background: #fffdf9;
+}
+/* In the hire form the customer select sits next to a "+ New"
+   button, so its dropdown must stretch to fill the space. */
+.field-with-btn .dd {
+    flex: 1;
 }
