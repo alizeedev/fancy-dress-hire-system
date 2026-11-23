@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
         
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-        return Ok(new { username = user.UserName, role = user.UserRole });
+        return Ok(new { userName = user.UserName, userRole = user.UserRole });
     }
     
     // Logs the user out by deleting their login cookie
@@ -73,6 +73,6 @@ public class AuthController : ControllerBase
         string? username = User.Identity?.Name;
         string? role = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        return Ok(new { username, role });
+        return Ok(new { userName = username, userRole = role });
     }
 }
