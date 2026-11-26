@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
             return BadRequest(new { error = "Please provide a username and password" });
         }
 
-        User? user = _users.GetByUsername(request.UserName);
+        User? user = await _users.GetByUsernameAsync(request.UserName);
 
         if (user == null)
         {

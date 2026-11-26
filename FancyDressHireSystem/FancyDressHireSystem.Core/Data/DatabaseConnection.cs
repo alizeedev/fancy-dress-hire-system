@@ -21,19 +21,20 @@ namespace FancyDressHireSystem.Core.Data
         }
 
         /// <summary>
-        /// Opens a new connection to the database
+        /// Opens a new connection to the database without blocking the server while it waits
         /// in order to always close the connection, it is used inside a block.
         /// </summary>
         /// <returns> An open SqlConnection</returns>
-        public SqlConnection GetConnection()
+        public async Task<SqlConnection> GetConnectionAsync()
         {
             SqlConnection connection = new SqlConnection(_connectionString);
             try
             {
-                connection.Open();
+               await connection.OpenAsync();
             }
             catch (SqlException)
             {
+                await connection.DisposeAsync();
                 throw new InvalidOperationException("Could not connect to the database. Please check that Sql Server is running");
             }
             return connection;

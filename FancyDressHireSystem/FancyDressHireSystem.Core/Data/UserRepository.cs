@@ -24,28 +24,35 @@ namespace FancyDressHireSystem.Core.Data
         ///find a user by login name
         ///</summary>
         ///<returns> The matching user or null if user not found.</returns>
-        public User? GetByUsername(string userName)
+        public async Task<User?> GetByUsernameAsync(string userName)
         {
             if (string.IsNullOrWhiteSpace(userName))
                 return null;
 
             string sql = "SELECT UserId, UserName, PasswordHash,PasswordSalt,UserRole" +
                                     " FROM Users WHERE UserName = @UserName";
-            using SqlConnection connection = _database.GetConnection();
-            using SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName.Trim();
+            using SqlConnection connection = await _database.GetConnectionAsync();
+            try
+            {
+                using SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName.Trim();
 
-            using SqlDataReader reader = command.ExecuteReader();
-            if (!reader.Read())
-                return null;
+                using SqlDataReader reader = await command.ExecuteReaderAsync();
+                if (!await reader.ReadAsync())
+                    return null;
 
-            return new User(
-                reader.GetString(reader.GetOrdinal("UserId")),
-                reader.GetString(reader.GetOrdinal("UserName")),
-                reader.GetString(reader.GetOrdinal("PasswordHash")),
-                reader.GetString(reader.GetOrdinal("PasswordSalt")),
-                reader.GetString(reader.GetOrdinal("UserRole"))
-            );
+                return new User(
+                    reader.GetString(reader.GetOrdinal("UserId")),
+                    reader.GetString(reader.GetOrdinal("UserName")),
+                    reader.GetString(reader.GetOrdinal("PasswordHash")),
+                    reader.GetString(reader.GetOrdinal("PasswordSalt")),
+                    reader.GetString(reader.GetOrdinal("UserRole")));
+            }
+            
+           catch (SqlException)
+            {
+                throw new InvalidOperationException("Database not available");
+            }
         }
     }
 }
