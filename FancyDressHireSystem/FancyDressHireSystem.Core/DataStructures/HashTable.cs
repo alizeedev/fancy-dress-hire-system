@@ -30,6 +30,30 @@ namespace FancyDressHireSystem.Core.DataStructures
 
             return total;
         }
+        
+        // Adds a new item. Throws an error if the key is already used
+        public void Add(string key, TValue value)
+        {
+            int index = Hash(key);
+            HashNode<string, TValue>? node = _buckets[index];
+
+            while (node != null)
+            {
+                if (node.Key == key)
+                {
+                    throw new ArgumentException("Key already exists: " + key);
+                }
+                node = node.Next;
+            }
+
+            HashNode<string, TValue> newNode = new HashNode<string, TValue>(key, value);
+            newNode.Next = _buckets[index];
+            _buckets[index] = newNode;
+            _count = _count + 1;
+
+            // Resize check goes here once Resize() exists
+        }
+        
 
     }
 }
