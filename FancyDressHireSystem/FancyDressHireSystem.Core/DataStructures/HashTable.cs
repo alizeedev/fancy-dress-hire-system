@@ -1,7 +1,7 @@
 namespace FancyDressHireSystem.Core.DataStructures
 {
     // Our own hash table: an array of drawers, each holding a chain of HashNode cards
-    public class HashTable<TValue>
+    public class HashTable<TValue> where TValue : class
     {
         private HashNode<string, TValue>?[] _buckets;
         private int _capacity;
@@ -52,6 +52,24 @@ namespace FancyDressHireSystem.Core.DataStructures
             _count = _count + 1;
 
             // Resize check goes here once Resize() exists
+        }
+        
+        // Finds an item by its key. Returns null if it isn't there
+        public TValue? Search(string key)
+        {
+            int index = Hash(key);
+            HashNode<string, TValue>? node = _buckets[index];
+
+            while (node != null)
+            {
+                if (node.Key == key)
+                {
+                    return node.Value;
+                }
+                node = node.Next;
+            }
+
+            return null;
         }
         
 
