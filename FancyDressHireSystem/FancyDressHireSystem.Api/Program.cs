@@ -11,6 +11,7 @@ string connectionString = builder.Configuration.GetConnectionString("GrandAtelie
 builder.Services.AddSingleton(new DatabaseConnection(connectionString));
 builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddSingleton<CostumeRepository>();
+builder.Services.AddSingleton<CustomerRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
