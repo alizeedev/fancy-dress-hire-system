@@ -18,5 +18,18 @@ namespace FancyDressHireSystem.Core.DataStructures
             _buckets = new HashNode<string, TValue>?[_capacity];
             _count = 0;
         }
+
+        // Our own hash function: turns a key like "GA001" into a drawer number
+        private int Hash(string key)
+        {
+            int total = 0;
+            foreach (char c in key)
+            {
+                total = (total * 31 + (int)c) % _capacity;
+            }
+
+            return total;
+        }
+
     }
 }
