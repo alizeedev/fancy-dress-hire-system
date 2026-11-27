@@ -10,6 +10,7 @@ string connectionString = builder.Configuration.GetConnectionString("GrandAtelie
     ?? throw new InvalidOperationException("Connection string 'GrandAtelier' not found.");
 builder.Services.AddSingleton(new DatabaseConnection(connectionString));
 builder.Services.AddSingleton<UserRepository>();
+builder.Services.AddSingleton<CostumeRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
