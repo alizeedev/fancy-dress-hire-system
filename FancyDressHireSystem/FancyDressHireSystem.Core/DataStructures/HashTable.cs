@@ -51,7 +51,12 @@ namespace FancyDressHireSystem.Core.DataStructures
             _buckets[index] = newNode;
             _count = _count + 1;
 
-            // Resize check goes here once Resize() exists
+            // Resize check 
+            // Grow the cabinet when it's more than 75% full
+            if ((double)_count / _capacity > 0.75)
+            {
+                Resize();
+            }
         }
         
         // Finds an item by its key. Returns null if it isn't there
@@ -99,6 +104,26 @@ namespace FancyDressHireSystem.Core.DataStructures
             }
 
             return false;
+        }
+        // Doubles the number of drawers and moves every card into its new drawer
+        private void Resize()
+        {
+            HashNode<string, TValue>?[] oldBuckets = _buckets;
+            _capacity = _capacity * 2;
+            _buckets = new HashNode<string, TValue>?[_capacity];
+
+            for (int i = 0; i < oldBuckets.Length; i++)
+            {
+                HashNode<string, TValue>? node = oldBuckets[i];
+                while (node != null)
+                {
+                    int index = Hash(node.Key);
+                    HashNode<string, TValue> newNode = new HashNode<string, TValue>(node.Key, node.Value);
+                    newNode.Next = _buckets[index];
+                    _buckets[index] = newNode;
+                    node = node.Next;
+                }
+            }
         }
 
     }
