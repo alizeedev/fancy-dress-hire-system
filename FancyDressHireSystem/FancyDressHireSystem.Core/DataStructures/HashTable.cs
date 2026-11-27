@@ -1,8 +1,9 @@
 namespace FancyDressHireSystem.Core.DataStructures
 {
-    public class HashTable<TKey, TValue>
+    // Our own hash table: an array of drawers, each holding a chain of HashNode cards
+    public class HashTable<TValue>
     {
-        private HashNode<TKey, TValue>?[] _buckets;
+        private HashNode<string, TValue>?[] _buckets;
         private int _capacity;
         private int _count;
 
@@ -14,7 +15,7 @@ namespace FancyDressHireSystem.Core.DataStructures
         public HashTable()
         {
             _capacity = 16;
-            _buckets = new HashNode<TKey, TValue>?[_capacity];
+            _buckets = new HashNode<string, TValue>?[_capacity];
             _count = 0;
         }
     }
