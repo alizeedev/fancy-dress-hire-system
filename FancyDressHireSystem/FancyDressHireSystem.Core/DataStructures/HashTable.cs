@@ -72,6 +72,34 @@ namespace FancyDressHireSystem.Core.DataStructures
             return null;
         }
         
+        // Removes an item by its key. Returns true if removed, false if not found
+        public bool Remove(string key)
+        {
+            int index = Hash(key);
+            HashNode<string, TValue>? node = _buckets[index];
+            HashNode<string, TValue>? previousNode = null;
+
+            while (node != null)
+            {
+                if (node.Key == key)
+                {
+                    if (previousNode == null)
+                    {
+                        _buckets[index] = node.Next;
+                    }
+                    else
+                    {
+                        previousNode.Next = node.Next;
+                    }
+                    _count = _count - 1;
+                    return true;
+                }
+                previousNode = node;
+                node = node.Next;
+            }
+
+            return false;
+        }
 
     }
 }
